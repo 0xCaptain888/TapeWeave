@@ -28,6 +28,8 @@
 
 Pages仅提供静态页面。网页进度在浏览器localStorage，未与SQLite同步；制品链身份为空、回放未认证，无钱包或链上消费。尚未完成独立用户验证和参赛视频；公开上线不改变这些结论或历史评分。
 
-Todos与GitHub为两个独立仓库；本次为显式授权的一次快照发布，没有配置自动镜像。后续Todos修改不会自动到GitHub；需显式同步。未变更当前Todos的origin或分支。没有添加统一开源许可证，公开可见不等于授予开源许可。
+Todos与GitHub为两个独立仓库。用户后续授权“每完成一部分就自动同步到GitHub”：今后每个完成的开发部分在当轮内同步，无需再次询问；不是后台常驻镜像，也不扩展到其他仓库。新增`scripts/sync-tapeweave-github.py`：默认只核对，传`--publish`才写入固定仓库main；检查账号、远端树完整性、文件类型与常见凭据标记，拒绝远端独有文件和并发推进，不强推不删除，发布后逐文件核对Git blob及模式。扫描不等于完整安全审计。脚本读取git已跟踪文件的当前工作树内容，新文件须先纳入索引；不提交Todos分支。
+
+运行：`python3 scripts/sync-tapeweave-github.py`先核对，再以`--publish --message 'chore(tapeweave): sync completed development snapshot'`发布。需要团队Secrets注入的GITHUB_TOKEN，不接收聊天中的令牌。Pages构建与公开HTTP内容另行检查；脚本本身不宣称构建或UI通过。本次同时同步上一轮真实点击恢复按钮的测试脚本；Chrome启动阻塞仍未解决。未变更当前Todos的origin或分支。没有添加统一开源许可证，公开可见不等于授予开源许可。
 
 来源：本次GitHub API响应与公开HTTP检查（2026-10-17）；未重新抓取比赛官方规则。

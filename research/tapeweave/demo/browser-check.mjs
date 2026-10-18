@@ -104,12 +104,20 @@ try {
  cells[1].value='1';cells[1].dispatchEvent(new Event('change'));preserved();
  $('compile').click();await new Promise(r=>setTimeout(r,30));preserved();
  expect($('fire').disabled && $('error').textContent.includes('存档已被其他页面更改'),'stale edit then compile refused');
- frame.remove();
- await new Promise(r=>setTimeout(r,30));
  expect($('reload-save').textContent.includes('放弃未保存编辑'),'explicit recovery control');
+ // Exercise the real reload handler in a child document so this harness survives.
+ const oldDocument=frame.contentDocument;
+ oldDocument.getElementById('mode').value='byte';
+ oldDocument.getElementById('rows').querySelector('select').value='1';
+ oldDocument.getElementById('reload-save').click();
+ await waitFor(()=>frame.contentDocument!==oldDocument && !!frame.contentDocument?.getElementById('artifact')?.value);
+ expect(frame.contentDocument.getElementById('mode').value==='plain','recovery restores saved mode');
+ expect(frame.contentDocument.getElementById('visual').textContent===newer,'recovery restores latest progress');
+ expect(frame.contentDocument.getElementById('rows').querySelector('select').value===String(artifact.next[0]),'recovery discards unsaved controls');
  preserved();
+ frame.remove();
  ${layoutChecks}
- out.textContent=JSON.stringify({passed:true,layoutWidths,checks:['local identity','dual host effects','four turn lock','mode reset','ordinary parity','edit invalidation','changed byte identity','compile reset','edited request consumed','stale digest ignored','creator replay results','creator replay verify','creator replay rejection nonmutating','creator import reset and mode','creator failed import nonmutating','fresh document storage recovery','second document advances','stale document rejection nonmutating','stale document preserves shared save','stale compile refused','stale mode reset refused','stale import refused','stale edit then compile refused','explicit recovery control','external storage notification'],viewport:innerWidth});
+ out.textContent=JSON.stringify({passed:true,layoutWidths,checks:['local identity','dual host effects','four turn lock','mode reset','ordinary parity','edit invalidation','changed byte identity','compile reset','edited request consumed','stale digest ignored','creator replay results','creator replay verify','creator replay rejection nonmutating','creator import reset and mode','creator failed import nonmutating','fresh document storage recovery','second document advances','stale document rejection nonmutating','stale document preserves shared save','stale compile refused','stale mode reset refused','stale import refused','stale edit then compile refused','explicit recovery control','external storage notification','recovery restores saved mode','recovery restores latest progress','recovery discards unsaved controls'],viewport:innerWidth});
 }catch(e){out.textContent=JSON.stringify({passed:false,error:e.message})}
 </script>`;
 const checks = `
