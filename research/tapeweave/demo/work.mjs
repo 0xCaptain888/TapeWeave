@@ -14,7 +14,8 @@ export async function presetArtifact(name){
 }
 export async function parseWork(input){
   if(typeof input!=='string'||new TextEncoder().encode(input).length>32768)throw Error('作品包超过32 KiB或不是文本');
-  const w=JSON.parse(input);
+  if(!input.trim())throw Error('尚未粘贴作品包，请复制完整作品包后再试；原试用进度未改变');
+  let w;try{w=JSON.parse(input);}catch{throw Error('作品包不是有效JSON，内容可能没有复制完整；请重新复制整个作品包后再试，原试用进度未改变');}
   if(!exact(w,['schema','title','description','scene','artifact','authenticated','chain_identity'])||w.schema!=='tapeweave-interactive-work-v1'||w.authenticated!==false||w.chain_identity!==null)throw Error('作品包格式或证据标记不合法');
   return createWork(w);
 }

@@ -25,15 +25,18 @@ $('accept').click();await tick();expect(!$('acceptance').value,'no default pass'
 set('result','fail');set('note','author test, not user evidence');$('accept').click();await until(()=>$('acceptance').value);
 expect(JSON.parse($('acceptance').value).result==='fail','failure recorded');
 set('note','changed');expect(!$('acceptance').value,'edited observation invalidates');
-set('incoming','{}');const old=$('state').textContent;$('load').click();await tick();expect($('state').textContent===old,'failed import preserves player');
+const old=$('state').textContent;
+for(const [input,message] of [['','尚未粘贴'],['{"title":"unfinished"','没有复制完整'],['{}','格式或证据']]){set('incoming',input);$('load').click();await tick();expect($('state').textContent===old&&$('status').textContent.includes(message),'failed import guidance and preserved player '+message);}
 set('incoming',delivered);$('load').click();await until(()=>$('state').textContent.includes('第0步'));
 $('mode').value='plain';$('mode').dispatchEvent(new Event('change'));await until(()=>!$('trigger').disabled);
 $('recharge').click();await tick();$('trigger').click();await tick();expect($('visual-effect').classList.contains('active')&&$('state').textContent.includes('普通'),'plain parity');
-set('scene','reveal');expect($('trigger').disabled&&!$('delivery').value,'edit disables stale preview');
+set('scene','reveal');expect($('trigger').disabled&&!$('delivery').value&&$('work-description').textContent.includes('恢复本机执行存档'),'edit disables stale preview with recovery hint');
 $('build').click();await until(()=>$('delivery').value);$('recharge').click();await tick();$('trigger').click();await tick();$('wait').click();await tick();expect($('visual-effect').textContent.includes('已揭开'),'persistent scene');
 $('copy-work').click();await tick();expect($('status').textContent.includes('手动复制'),'clipboard fallback');
 $('reset').click();await until(()=>$('state').textContent.includes('第0步'));expect(!$('visual-effect').classList.contains('active'),'reset effects');
 localStorage.setItem('tapeweave-work-session-v1',saved);window.dispatchEvent(new Event('storage'));expect($('trigger').disabled,'external write stops player');$('resume').click();await tick();await tick();expect($('state').textContent.includes('第2步'),'external recovery');
+set('description','先点击补能，再点击触发，观察灯亮。每次释放后需要再次补能。');set('template','alternating');expect($('description').value.includes('无需补能'),'preset description synced');
+set('description','我的自定义说明');set('template','pulse');expect($('description').value==='我的自定义说明'&&$('status').textContent.includes('保留自定义'),'custom description preserved');
 set('title','');$('build').click();await tick();expect(!$('delivery').value&&$('trigger').disabled,'invalid build removes old delivery');
 for(const width of [320,390]){const frame=document.createElement('iframe');frame.style.cssText='position:absolute;left:-5000px;border:0;width:'+width+'px;height:900px';const loaded=new Promise(r=>frame.onload=r);frame.src='work.html?layout=1';document.body.append(frame);await loaded;const doc=frame.contentDocument;expect(doc.documentElement.scrollWidth<=width,'work layout overflow '+width);expect(doc.querySelector('.work-preview').getBoundingClientRect().width<=width,'preview width '+width);frame.remove();}
 verdict.textContent='PASS work browser';

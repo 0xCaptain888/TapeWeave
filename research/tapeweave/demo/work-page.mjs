@@ -10,8 +10,10 @@ let store;try{store=sessionStorage(localStorage);}catch{}
 
 function clearAcceptance(){ clearUpgrade();$('acceptance').value='';$('copy-acceptance').disabled=true; }
 function stop(){clearUpgrade();player=null;current='';revealed=false;for(const id of ['reset','recharge','trigger','wait','accept'])$(id).disabled=true;$('trace').replaceChildren();$('work-title').textContent='尚未装载作品';$('work-description').textContent='';$('state').textContent='';$('visual-effect').classList.remove('active');$('visual-effect').textContent='等待作品';clearAcceptance();}
-function edit(){revision++;$('delivery').value='';$('copy-work').disabled=true;$('status').textContent='';stop();}
-for(const id of ['title','description','template','artifact-input','scene'])$(id).addEventListener('input',edit);
+function edit(){const hadTrial=Boolean(player||journal);revision++;$('delivery').value='';$('copy-work').disabled=true;$('status').textContent='';stop();if(hadTrial)$('work-description').textContent='制作字段已修改，当前试用已暂停。可点击上方“恢复本机执行存档”恢复原进度；尚未保存的内存试用无法恢复。';}
+for(const id of ['title','description','artifact-input','scene'])$(id).addEventListener('input',edit);
+const defaultDescriptions={pulse:'先点击补能，再点击触发，观察灯亮。每次释放后需要再次补能。',alternating:'无需补能，连续点击触发：第一次请求有效，第二次无效，循环交替。实际展示效果由所选场景决定。'};
+$('template').addEventListener('input',()=>{const previous=$('description').value;const defaultText=Object.values(defaultDescriptions).includes(previous);if(defaultText&&defaultDescriptions[$('template').value])$('description').value=defaultDescriptions[$('template').value];edit();$('status').textContent=defaultText&&defaultDescriptions[$('template').value]?'已同步默认使用说明；请检查作品名称和展示场景是否合适。':'已保留自定义说明；请检查说明和作品名称是否符合新模板。';});
 for(const id of ['incoming','result','note'])$(id).addEventListener('input',()=>{revision++;clearAcceptance();$('status').textContent='';});
 function render(){
  const s=player.snapshot();$('work-title').textContent=player.work.title;$('work-description').textContent=player.work.description;
