@@ -69,6 +69,14 @@ try {
  const corrupt={...artifact,sha256:'wrong'};
  $('import-text').value=JSON.stringify(corrupt);$('import-text').dispatchEvent(new Event('input'));$('import').click();await waitFor(()=>!!$('import-status').textContent);
  expect($('import-status').textContent.includes('导入失败') && $('visual').textContent===beforeImport,'creator failed import nonmutating');
+ // Supersede a real in-flight digest before introducing a stale save.
+ $('compile').click();cells[1].value='0';cells[1].dispatchEvent(new Event('change'));
+ await new Promise(r=>setTimeout(r,100));
+ expect(!$('artifact').value && $('fire').disabled,'stale digest ignored');
+ // Restore the intended configuration and two-turn progress for document recovery.
+ $('import-text').value=JSON.stringify(artifact);$('import-text').dispatchEvent(new Event('input'));$('import').click();
+ await waitFor(()=>$('import-status').textContent.includes('已装载'));
+ $('wait').click();$('wait').click();
  // A fresh same-origin document exercises startup recovery without recursively running this harness.
  const frame=document.createElement('iframe');frame.src='studio.html?restore=1';document.body.append(frame);
  await waitFor(()=>!!frame.contentDocument?.getElementById('artifact')?.value);
@@ -78,16 +86,30 @@ try {
  const newer=frame.contentDocument.getElementById('visual').textContent;
  expect(newer!==beforeImport,'second document advances');
  const savedAfterOther=localStorage.getItem('tapeweave-studio-local-v1');
+ await waitFor(()=>$('error').textContent.includes('重新读取存档'));
+ expect($('fire').disabled && !$('artifact').value,'external storage notification');
+ const blockedVisual=$('visual').textContent;
  $('fire').click();
- expect($('error').textContent.includes('存档已被其他页面更改') && $('visual').textContent===beforeImport,'stale document rejection nonmutating');
+ expect($('error').textContent.includes('存档已被其他页面更改') && $('visual').textContent===blockedVisual,'stale document rejection nonmutating');
  expect(localStorage.getItem('tapeweave-studio-local-v1')===savedAfterOther,'stale document preserves shared save');
+ const preserved=()=>expect(localStorage.getItem('tapeweave-studio-local-v1')===savedAfterOther,'stale reset preserves shared save');
+ $('compile').click();await new Promise(r=>setTimeout(r,30));preserved();
+ expect($('fire').disabled && !$('artifact').value,'stale compile refused');
+ $('mode').value='byte';$('mode').dispatchEvent(new Event('change'));
+ await new Promise(r=>setTimeout(r,30));preserved();
+ expect($('fire').disabled && !$('artifact').value,'stale mode reset refused');
+ $('import-text').value=JSON.stringify(artifact);$('import-text').dispatchEvent(new Event('input'));$('import').click();
+ await waitFor(()=>$('import-status').textContent.includes('未完成'));preserved();
+ expect($('fire').disabled,'stale import refused');
+ cells[1].value='1';cells[1].dispatchEvent(new Event('change'));preserved();
+ $('compile').click();await new Promise(r=>setTimeout(r,30));preserved();
+ expect($('fire').disabled && $('error').textContent.includes('存档已被其他页面更改'),'stale edit then compile refused');
  frame.remove();
- // Supersede an in-flight digest with an edit: the stale result must not unlock play.
- $('compile').click();cells[1].value='0';cells[1].dispatchEvent(new Event('change'));
- await new Promise(r=>setTimeout(r,100));
- expect(!$('artifact').value && $('fire').disabled,'stale digest ignored');
+ await new Promise(r=>setTimeout(r,30));
+ expect($('reload-save').textContent.includes('放弃未保存编辑'),'explicit recovery control');
+ preserved();
  ${layoutChecks}
- out.textContent=JSON.stringify({passed:true,layoutWidths,checks:['local identity','dual host effects','four turn lock','mode reset','ordinary parity','edit invalidation','changed byte identity','compile reset','edited request consumed','stale digest ignored','creator replay results','creator replay verify','creator replay rejection nonmutating','creator import reset and mode','creator failed import nonmutating','fresh document storage recovery','second document advances','stale document rejection nonmutating','stale document preserves shared save'],viewport:innerWidth});
+ out.textContent=JSON.stringify({passed:true,layoutWidths,checks:['local identity','dual host effects','four turn lock','mode reset','ordinary parity','edit invalidation','changed byte identity','compile reset','edited request consumed','stale digest ignored','creator replay results','creator replay verify','creator replay rejection nonmutating','creator import reset and mode','creator failed import nonmutating','fresh document storage recovery','second document advances','stale document rejection nonmutating','stale document preserves shared save','stale compile refused','stale mode reset refused','stale import refused','stale edit then compile refused','explicit recovery control','external storage notification'],viewport:innerWidth});
 }catch(e){out.textContent=JSON.stringify({passed:false,error:e.message})}
 </script>`;
 const checks = `

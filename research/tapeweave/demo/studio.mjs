@@ -1,10 +1,13 @@
 import {makeHost,presets} from './creator.mjs';
-import {openLocalSession,readLocal,clearLocal} from './studio-storage.mjs';
+import {openLocalSession,readLocal,clearLocal,localText} from './studio-storage.mjs';
 import {createArtifact,parseArtifact} from './creator-package.mjs';
 import {createCreatorReplay,verifyCreatorReplay} from './creator-replay.mjs';
 const el=id=>document.getElementById(id);
 let hosts=[], dirty=true, generation=0, local=null;
-function invalidateSave(){local=null;try{clearLocal(localStorage);}catch{} }
+function invalidateSave(){
+  try{local?.assertCurrent();clearLocal(localStorage);local=null;}
+  catch(e){el('error').textContent=e.message;}
+}
 const selects=[];
 for(let i=0;i<8;i++){
   const tr=document.createElement('tr');
@@ -30,13 +33,16 @@ function render(){
 async function build(actions=[]){
   const ticket=++generation;dirty=true;el('artifact').value='';render();
   try{
+    local?.assertCurrent();
+    let expected;
+    try{expected=localText(localStorage);}catch{}
     const next=selects.map(x=>Number(x[0].value)),request=selects.map(x=>Number(x[1].value));
     const plain=el('mode').value==='plain';
     const artifact=await createArtifact(next,request);
     if(ticket!==generation)return;
     let warning='';
-    try{local=openLocalSession(localStorage,{next,request,plain},actions);hosts=local.snapshots().map((_,i)=>({snapshot:()=>local.snapshots()[i]}));}
-    catch(e){local=null;hosts=['training','door'].map(w=>makeHost(next,request,w,plain));actions.forEach((t,v)=>hosts.forEach(h=>h.act(v,t)));warning=`本地保存不可用，仅内存模式：${e.message}`;}
+    try{local=openLocalSession(localStorage,{next,request,plain},actions,expected);hosts=local.snapshots().map((_,i)=>({snapshot:()=>local.snapshots()[i]}));}
+    catch(e){if(e.code==='STALE_SAVE')throw e;local=null;hosts=['training','door'].map(w=>makeHost(next,request,w,plain));actions.forEach((t,v)=>hosts.forEach(h=>h.act(v,t)));warning=`本地保存不可用，仅内存模式：${e.message}`;}
     dirty=false;
     el('artifact').value=JSON.stringify(artifact,null,2);
     el('error').textContent=warning;render();
@@ -77,6 +83,13 @@ el('import').onclick=async()=>{
   el('import-status').textContent=dirty?'装载未完成，请查看错误。':'创作包已装载，双宿主清零；执行模式保持原选择。未认证，无链身份。';
  }catch(e){el('import-status').textContent=`导入失败：${e.message}；当前局未改变。`;}
 };
+el('reload-save').onclick=()=>location.reload();
+window.addEventListener('storage',event=>{
+ if(event.storageArea!==localStorage || (event.key!==null && event.key!=='tapeweave-studio-local-v1'))return;
+ // Invalidate pending digest/import work without touching the shared save.
+ generation++;dirty=true;el('artifact').value='';render();
+ el('error').textContent='存档已被其他页面更改，请刷新恢复后再操作；可点击“重新读取存档”。';
+});
 try{
  const saved=readLocal(localStorage);
  if(saved){selects.forEach((x,i)=>{x[0].value=saved.record.next[i];x[1].value=saved.record.request[i];});el('mode').value=saved.record.plain?'plain':'byte';build(saved.record.actions);}

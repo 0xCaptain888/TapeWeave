@@ -9,19 +9,25 @@ export function restoreRecord(text){
   r.actions.forEach((t,v)=>hosts.forEach(h=>h.act(v,t)));
   return {record:r,hosts};
 }
-export function openLocalSession(storage,config,actions=[]){
+export function assertLocalCurrent(storage,expected){
+  if(storage.getItem(KEY)!==expected){const e=Error('存档已被其他页面更改，请刷新恢复后再操作');e.code='STALE_SAVE';throw e;}
+}
+export function localText(storage){return storage.getItem(KEY);}
+export function openLocalSession(storage,config,actions=[],expected=undefined){
   const initial={schema:'tapeweave-studio-save-v1',next:[...config.next],request:[...config.request],plain:config.plain,actions:[...actions]};
   let {record,hosts}=restoreRecord(JSON.stringify(initial));
   // Persist before exposing a successful state change. setItem is one key write,
   // not a cross-tab compare-and-swap, authenticated log or disk durability guarantee.
   let saved=JSON.stringify(record);
+  if(expected!==undefined)assertLocalCurrent(storage,expected);
   storage.setItem(KEY,saved);
   return {
+    assertCurrent:()=>assertLocalCurrent(storage,saved),
     snapshots:()=>hosts.map(h=>h.snapshot()),
     act(version,trigger){
       if(version!==record.actions.length || version>=4 || !Number.isInteger(trigger) || ![0,1].includes(trigger))throw Error('旧版本或非法动作');
       // Best-effort stale-session guard, not an atomic cross-tab lock.
-      if(storage.getItem(KEY)!==saved)throw Error('存档已被其他页面更改，请刷新恢复后再操作');
+      assertLocalCurrent(storage,saved);
       const candidate={...record,actions:[...record.actions,trigger]};
       const restored=restoreRecord(JSON.stringify(candidate));
       const encoded=JSON.stringify(candidate);
