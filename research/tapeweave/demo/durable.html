@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TapeWeave 本地持久宿主</title><link rel="stylesheet" href="style.css"></head>
+<body><main><h1>本地持久宿主 · SQLite</h1>
+<p class="notice">仅通过本机Node服务运行。不是GitHub Pages后端、账户服务或认证成绩；不连接钱包、不写链。两宿主同一SQLite事务提交，工作室localStorage与这里不自动同步。</p>
+<section><h2>建立或恢复会话</h2><label>会话ID（字母、数字、下划线、连字符，最多80字符）<input id="session" maxlength="80" value="my_session"></label><label>新会话执行模式<select id="mode"><option value="byte">字节求值</option><option value="plain">普通共享真值表</option></select></label>
+<label>粘贴工作室创作包（最多16 KiB）<textarea id="artifact" rows="7"></textarea></label>
+<button id="create">校验并新建（不覆盖同名）</button><button id="load">读取已有会话</button><p>模式仅在新建时生效，已有会话配置固定。刷新后读取本标签页最后一次已加载会话；没有会话列表或删除接口。</p></section>
+<p id="error" role="alert"></p><p id="status" role="status"></p>
+<section><h2>持久双宿主</h2><pre id="summary" aria-live="polite">尚未加载</pre><button id="wait" disabled>等待</button><button id="fire" disabled>触发</button><button id="retry" disabled>重试上次未确认命令</button><p>提交失败不猜测是否落库：保留命令ID及原载荷，禁用新动作，先重试。重试返回原回执，再读取最新快照；不会把旧回执当成当前版本。多个页面同版本提交时至多一条新命令成功，旧版本冲突须读取最新会话。</p>
+<div class="scroll"><table><caption>当前已读取快照（非认证历史）</caption><thead><tr><th>宿主</th><th>回合</th><th>旧态</th><th>触发</th><th>补能</th><th>请求</th><th>新态</th><th>遇门</th><th>效果</th></tr></thead><tbody id="trace"></tbody></table></div></section>
+<section><h2>回放交付</h2><button id="export" disabled>生成已完成会话回放</button><textarea id="replay" readonly rows="10" aria-label="未认证持久会话回放"></textarea><button id="copy" disabled>复制回放</button><p id="copy-status" role="status"></p><p>复制后可在工作室或离线CLI复核。计算一致不证明作者、玩家、时间或链消费。</p></section>
+<p>浏览器保留本地访问凭据及待确认命令于本标签页sessionStorage；停止Node服务后凭据失效。若存储不可用则拒绝提交，避免刷新丢失重试信息；同源脚本或本机其他进程仍可能获取凭据。本机凭据不是账户认证，请勿分享启动URL。</p>
+</main><script type="module" src="durable.mjs"></script></body></html>
