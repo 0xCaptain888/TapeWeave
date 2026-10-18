@@ -2,7 +2,11 @@
 
 更新：2026-10-17。本文描述本仓库作者实现，不是官方 TapeOut 文档或参赛资格确认；本轮未重新获取活动规则。
 
-## 最新：RPC宿主记录离线复核与交付汇总
+## 最新：统一回归含发布保护（2026-10-17）
+
+`node research/tapeweave/demo/check.mjs`现在先运行Python发布保护测试的普通与`-O`两种模式，再运行15组Node；加`--browser`再跑3组Chrome。需要本机`python3`；缺失、超时或任一测试失败均立即非零退出，不跳过发布保护。不联网、不读令牌、不调用钱包。最新同轮结果为18组Node／Chrome加2次Python运行（每次8个测试方法）通过，不是独立采用或实际手机验收。[完整状态](../../../docs/tapeweave-development-status-2026-10-17.md)。下文各轮数字为历史记录。
+
+## 前轮：RPC宿主记录离线复核与交付汇总
 
 新增`verify-rpc-host.mjs`，复核RPC观察、回执与双宿主快照，续跑明确保留未观察前缀；`prepare-delivery.mjs`可收第四份记录并核对回放。见[RPC-HOST.md](RPC-HOST.md)。本轮14组Node通过；Chrome启动预检超时，无本轮浏览器通过结论。不是来源认证，不补造真实制造或交易。
 
