@@ -1,0 +1,76 @@
+# 互动作品：交付与接入
+
+本轮目标：创作者可以交付一个可试用的作品，接收者可以在自己的页面中接入规则。这里只提供本地有限能力，不保证接收方愿意使用；作者自测不是独立采用证据。
+
+## 不写代码：制作与接收
+
+1. 打开 `work.html`，填作品名称、使用说明，选择模板和展示场景。
+2. 点击“生成作品并预览”。蓄能模板依次点“补能 → 触发”，灯应亮；再触发不亮。揭开场景则在有效请求后保持揭开，直到重新试用。
+3. 复制作品包发给接收者；接收者在同页“接收者粘贴作品包”中装载。作品不带创作者成绩。
+4. 接收者实际试用，选择符合／不符合／未完成并填写观察，生成记录后手动复制返回。该记录未经认证，不是客户、收入或独立使用的证明。
+5. 改执行模式会从零开始；普通真值表使用相同规则、输入和状态。编辑作品配置会停用旧预览并清空交付；导入失败保留现有试用。
+
+高级用户可从 `studio.html` 复制创作包，选择自定义模板粘贴。作品包与旧固定挑战包不兼容。只支持两个位输入、一个位状态的有限规则，不支持任意脚本、HTML或完整TAP协议。
+
+## 开发者：在自己的页面接入
+
+新接口 `connectWork` 与训练／钥匙门场景无关。调用者提供输入，不硬编码补能时间或四回合玩法。最多64步，状态仅在当前内存实例中；这是边界保护，不是生产会话管理。
+
+把以下文件复制到自己的静态项目，保持相对路径：
+
+- `work.mjs`
+- `creator.mjs`
+- `creator-package.mjs`
+
+在HTTPS或localhost的模块脚本中调用（SHA-256需要Web Crypto）：
+
+```js
+import {connectWork} from './work.mjs';
+
+// packageText是接收的JSON文本，不是可执行代码。
+const behavior = await connectWork(packageText, {mode: 'byte'});
+let version = 0;
+
+function advance(trigger, recharge) {
+  const snapshot = behavior.step(version, {trigger, recharge});
+  version = snapshot.version;
+  const request = snapshot.trace.at(-1).request;
+  // 示例：页面决定是否将请求映射为点亮效果。
+  // 真实奖励还需独立核验身份、权限及资源，不能只信任request。
+  document.querySelector('#lamp').classList.toggle('active', request === 1);
+  return snapshot;
+}
+advance(0, 1); // 补能，不触发
+advance(1, 0); // 使用默认蓄能规则时返回request=1
+```
+
+返回快照含 `version / latch / trace`；每行含 `version / old / trigger / recharge / next / request`。`step`失败不改变实例状态；旧版本、非法位及超过64步拒绝。创建新实例重新开始，返回快照和公开元数据的修改不影响内部计算。
+
+### 普通实现公平对照
+
+将 `mode` 改成 `plain`，其余接入和输入保持完全相同。它直接读取同一真值表，不运行电路字节。它不是故意弱化的对照；双方共用同一作者实现框架，也不构成独立验证。
+
+### 作品包
+
+`tapeweave-interactive-work-v1`包含：名称、说明、`lamp|reveal`展示偏好、经现有校验器重编译核对的artifact，以及固定 `authenticated:false / chain_identity:null`。展示偏好不是权限；第三方应用可以映射自己的效果。
+
+最多32 KiB，拒绝额外顶层字段、未知场景、错误摘要及证据标记。标题最多80字符、说明1200字符，界面只作为文本显示。JSON重复键按JavaScript最后值处理，不声称跨语言规范化签名。SHA只检查字节一致，不认证作者或来源。
+
+`makeAcceptance(packageText, mode, trace, {result,note})`会重新计算每步，拒绝不一致轨迹。`result`只能为 `pass|fail|incomplete`；没有自动判定“愿意使用”。即使重算通过，整个记录仍是可自造的未认证自报内容。
+
+## 应用必须承担的责任
+
+- 输入是否真实、谁有权操作、何时补能，由应用判断。
+- 当前接口无钱包认证、异步事务、重试去重、持久化或跨标签锁。
+- 状态提交和奖励需应用独立保护，不能将返回请求视为安全授权。
+- 展示层不得直接执行包中字符串；用 `textContent`，不要用 `innerHTML`。
+- 当前作品在本地运行，不调用真实RPC，不将本地制品冒充已制造电路。
+- 不自动连接已有SQLite后端；新页面不在该服务静态白名单内，请用独立静态服务或Pages。
+
+## 证据边界与下一步
+
+本轮两种场景都是作者制作的参考消费端，并非独立应用。Node与Chrome探针只能验证功能，不能证明真实任务成立、接入省时、付费或持续使用。
+
+下一步仍须经同意，在真实交付任务中记录创作、接收、实际帮助、失败和普通实现对照，见[商业验证任务单](../../../docs/tapeweave-commercial-pilot-2026-10-18.md)。不自动外联、报价或收款。
+
+X Layer上的历史两枚电路不自动成为这些新作品的链身份；真实宿主部署与广播继续暂停，需满足原审核条件。

@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import {presetArtifact,createWork,parseWork,connectWork,makeAcceptance} from './work.mjs';
+const artifact=await presetArtifact('pulse');
+const w=await createWork({title:'灯',description:'补能后触发',scene:'lamp',artifact}),text=JSON.stringify(w);
+assert.deepEqual(await parseWork(text),w);
+for(const bad of [{...w,authenticated:true},{...w,extra:1},{...w,scene:'script'},{...w,title:''},{...w,artifact:{...artifact,sha256:'bad'}}])await assert.rejects(()=>parseWork(JSON.stringify(bad)));
+await assert.rejects(()=>parseWork(' '.repeat(32769)));
+await assert.rejects(()=>presetArtifact('toString'));
+const p=await connectWork(text),plain=await connectWork(text,{mode:'plain'});
+const original=p.snapshot();assert.throws(()=>p.step(2,{trigger:1,recharge:0}));assert.deepEqual(p.snapshot(),original);
+for(const input of [{trigger:0,recharge:1},{trigger:1,recharge:0},{trigger:1,recharge:0}])assert.deepEqual(p.step(p.snapshot().version,input),plain.step(plain.snapshot().version,input));
+assert.deepEqual(p.snapshot().trace.map(x=>x.request),[0,1,0]);
+const snap=p.snapshot();snap.trace[0].next=99;assert.equal(p.snapshot().trace[0].next,1);
+p.work.artifact.next.fill(0); // Public metadata mutation must not change execution.
+assert.equal(p.step(3,{trigger:0,recharge:1}).latch,1);
+assert.equal((await connectWork(text)).snapshot().version,0);
+await assert.rejects(()=>makeAcceptance(text,'byte',[],{result:'',note:'x'}));
+const record=await makeAcceptance(text,'plain',plain.snapshot().trace,{result:'fail',note:'需要帮助'});
+assert.equal(record.authenticated,false);assert.equal(record.result,'fail');
+const forged=structuredClone(record.trace);forged[0].request=1;
+await assert.rejects(()=>makeAcceptance(text,'plain',forged,{result:'pass',note:'x'}));
+const capped=await connectWork(text);for(let i=0;i<64;i++)capped.step(i,{trigger:0,recharge:0});assert.throws(()=>capped.step(64,{trigger:0,recharge:0}));
+console.log('PASS work package boundaries, byte/plain parity, isolation, version/limit, acceptance recomputation; author tests only');
