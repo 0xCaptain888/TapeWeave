@@ -1,0 +1,308 @@
+{
+  "rpc_simulation": {
+    "schema": "tapeweave-create-simulation-v1",
+    "observed_at_utc": "2026-10-18T07:07:23.113157+00:00",
+    "endpoint": "https://rpc.xlayer.tech",
+    "factory": "0x1f09daefa827f02cbb40967cc91b259763760761",
+    "sender": "0xc055d5c6d6d02d797074829120c85e7843f8cb3f",
+    "parameters": {
+      "name": "TapeWeave",
+      "symbol": "TWAVE",
+      "story": "TapeWeave experimental portable behavior circuits. Not audited.",
+      "transistorSupply": "10000",
+      "mintPrice": "0"
+    },
+    "records": [
+      {
+        "method": "eth_chainId",
+        "params": [],
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "0xc4",
+          "id": 1
+        }
+      },
+      {
+        "method": "eth_blockNumber",
+        "params": [],
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "0x4621a9f",
+          "id": 2
+        }
+      },
+      {
+        "method": "eth_getBalance",
+        "params": [
+          "0xc055d5c6d6d02d797074829120c85e7843f8cb3f",
+          "0x4621a9f"
+        ],
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "0x1712cd2bb198c00",
+          "id": 3
+        }
+      },
+      {
+        "method": "eth_call",
+        "params": [
+          {
+            "to": "0x1f09daefa827f02cbb40967cc91b259763760761",
+            "data": "0xeb2a5d2c"
+          },
+          "0x4621a9f"
+        ],
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "0x000000000000000000000000000000000000000000000000001772aa3f848000",
+          "id": 4
+        }
+      },
+      {
+        "method": "eth_call",
+        "params": [
+          {
+            "from": "0xc055d5c6d6d02d797074829120c85e7843f8cb3f",
+            "to": "0x1f09daefa827f02cbb40967cc91b259763760761",
+            "value": "0x1772aa3f848000",
+            "data": "0x47f9b5fd00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000271000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009546170655765617665000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000055457415645000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003f546170655765617665206578706572696d656e74616c20706f727461626c65206265686176696f722063697263756974732e204e6f7420617564697465642e00"
+          },
+          "0x4621a9f"
+        ],
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "0x000000000000000000000000f009a23132f815d48b1b5275b088b780dcdcaa5a000000000000000000000000dfc1abf794ef40b9eeeba1d875e7ab2b21a0a146",
+          "id": 5
+        }
+      },
+      {
+        "method": "eth_estimateGas",
+        "params": [
+          {
+            "from": "0xc055d5c6d6d02d797074829120c85e7843f8cb3f",
+            "to": "0x1f09daefa827f02cbb40967cc91b259763760761",
+            "value": "0x1772aa3f848000",
+            "data": "0x47f9b5fd00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000271000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009546170655765617665000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000055457415645000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003f546170655765617665206578706572696d656e74616c20706f727461626c65206265686176696f722063697263756974732e204e6f7420617564697465642e00"
+          }
+        ],
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "0xb29bc",
+          "id": 6
+        }
+      },
+      {
+        "method": "eth_gasPrice",
+        "params": [],
+        "response": {
+          "jsonrpc": "2.0",
+          "result": "0x1312d01",
+          "id": 7
+        }
+      }
+    ],
+    "signed": false,
+    "broadcast": false,
+    "independent_rpc_confirmed": false,
+    "block": "0x4621a9f",
+    "balance_base_units": "103913550000000000",
+    "value_base_units": "6600000000000000",
+    "transaction": {
+      "from": "0xc055d5c6d6d02d797074829120c85e7843f8cb3f",
+      "to": "0x1f09daefa827f02cbb40967cc91b259763760761",
+      "value": "0x1772aa3f848000",
+      "data": "0x47f9b5fd00000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000120000000000000000000000000000000000000000000000000000000000000271000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009546170655765617665000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000055457415645000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003f546170655765617665206578706572696d656e74616c20706f727461626c65206265686176696f722063697263756974732e204e6f7420617564697465642e00"
+    },
+    "simulation_result": "0x000000000000000000000000f009a23132f815d48b1b5275b088b780dcdcaa5a000000000000000000000000dfc1abf794ef40b9eeeba1d875e7ab2b21a0a146",
+    "estimated_gas": "731580",
+    "gas_price_base_units": "20000001"
+  },
+  "security_scan": {
+    "ok": true,
+    "data": {
+      "action": "",
+      "riskItemDetail": [],
+      "simulator": {
+        "gasLimit": null,
+        "gasUsed": null,
+        "revertReason": ""
+      },
+      "warnings": null
+    }
+  },
+  "wallet_result": {
+    "ok": true,
+    "data": {
+      "orderId": "2061097840532944902",
+      "txHash": "0x95ea9e0a9502dd3125a86edd9bd84c1a091c9b9f8001db65a913501244fd77dd"
+    }
+  },
+  "wallet_history": {
+    "ok": true,
+    "data": [
+      {
+        "chainIndex": "196",
+        "chainSymbol": "OKB",
+        "coinAmount": "6600000000000000",
+        "coinSymbol": "OKB",
+        "confirmedCount": "6",
+        "direction": "3",
+        "explorerUrl": null,
+        "failReason": "",
+        "from": "0xc055d5c6d6d02d797074829120c85e7843f8cb3f",
+        "hideTxType": "0",
+        "input": [],
+        "output": [
+          {
+            "amount": "0.0066",
+            "direction": "",
+            "name": "OKB"
+          }
+        ],
+        "repeatTxType": "0",
+        "serviceCharge": "0",
+        "serviceChargeUsd": "0.000000",
+        "to": "0x1f09daefa827f02cbb40967cc91b259763760761",
+        "txHash": "0x95ea9e0a9502dd3125a86edd9bd84c1a091c9b9f8001db65a913501244fd77dd",
+        "txStatus": "SUCCESS",
+        "txTime": "1792307288000"
+      }
+    ]
+  },
+  "receipt": {
+    "jsonrpc": "2.0",
+    "result": {
+      "blobGasUsed": "0x30a20",
+      "blockHash": "0x717204a61810951fee215396d9b74d48f2b088b317bb531ea2486bfcab06fa26",
+      "blockNumber": "0x4621acc",
+      "contractAddress": null,
+      "cumulativeGasUsed": "0x106577",
+      "daFootprintGasScalar": "0x190",
+      "effectiveGasPrice": "0x0",
+      "from": "0x3017c541505769404a64541cfabedfebb06af9b1",
+      "gasUsed": "0xc5358",
+      "l1BaseFeeScalar": "0x0",
+      "l1BlobBaseFee": "0x230ac2",
+      "l1BlobBaseFeeScalar": "0x0",
+      "l1Fee": "0x0",
+      "l1GasPrice": "0x26aca24",
+      "l1GasUsed": "0x1f2a",
+      "logs": [
+        {
+          "address": "0x0000000071727de22e5e9d8baf0edac6f37da032",
+          "blockHash": "0x717204a61810951fee215396d9b74d48f2b088b317bb531ea2486bfcab06fa26",
+          "blockNumber": "0x4621acc",
+          "blockTimestamp": "0x6ad47058",
+          "data": "0x",
+          "logIndex": "0x5",
+          "removed": false,
+          "topics": [
+            "0xbb47ee3e183a558b1a2ff0874b079f3fc5478b7454eacf2bfc5af2ff5878f972"
+          ],
+          "transactionHash": "0x95ea9e0a9502dd3125a86edd9bd84c1a091c9b9f8001db65a913501244fd77dd",
+          "transactionIndex": "0x4"
+        },
+        {
+          "address": "0xf009a23132f815d48b1b5275b088b780dcdcaa5a",
+          "blockHash": "0x717204a61810951fee215396d9b74d48f2b088b317bb531ea2486bfcab06fa26",
+          "blockNumber": "0x4621acc",
+          "blockTimestamp": "0x6ad47058",
+          "data": "0x",
+          "logIndex": "0x6",
+          "removed": false,
+          "topics": [
+            "0x1cf3b03a6cf19fa2baba4df148e9dcabedea7f8a5c07840e207e5c089be95d3e",
+            "0x0000000000000000000000001059ad62cabb6a6925bb65aa617300556c60a51b"
+          ],
+          "transactionHash": "0x95ea9e0a9502dd3125a86edd9bd84c1a091c9b9f8001db65a913501244fd77dd",
+          "transactionIndex": "0x4"
+        },
+        {
+          "address": "0xdfc1abf794ef40b9eeeba1d875e7ab2b21a0a146",
+          "blockHash": "0x717204a61810951fee215396d9b74d48f2b088b317bb531ea2486bfcab06fa26",
+          "blockNumber": "0x4621acc",
+          "blockTimestamp": "0x6ad47058",
+          "data": "0x",
+          "logIndex": "0x7",
+          "removed": false,
+          "topics": [
+            "0x1cf3b03a6cf19fa2baba4df148e9dcabedea7f8a5c07840e207e5c089be95d3e",
+            "0x000000000000000000000000f70d1ed4f62cf3780157b0b421b7e2f45bd0991c"
+          ],
+          "transactionHash": "0x95ea9e0a9502dd3125a86edd9bd84c1a091c9b9f8001db65a913501244fd77dd",
+          "transactionIndex": "0x4"
+        },
+        {
+          "address": "0xf009a23132f815d48b1b5275b088b780dcdcaa5a",
+          "blockHash": "0x717204a61810951fee215396d9b74d48f2b088b317bb531ea2486bfcab06fa26",
+          "blockNumber": "0x4621acc",
+          "blockTimestamp": "0x6ad47058",
+          "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+          "logIndex": "0x8",
+          "removed": false,
+          "topics": [
+            "0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2"
+          ],
+          "transactionHash": "0x95ea9e0a9502dd3125a86edd9bd84c1a091c9b9f8001db65a913501244fd77dd",
+          "transactionIndex": "0x4"
+        },
+        {
+          "address": "0xdfc1abf794ef40b9eeeba1d875e7ab2b21a0a146",
+          "blockHash": "0x717204a61810951fee215396d9b74d48f2b088b317bb531ea2486bfcab06fa26",
+          "blockNumber": "0x4621acc",
+          "blockTimestamp": "0x6ad47058",
+          "data": "0x0000000000000000000000000000000000000000000000000000000000000001",
+          "logIndex": "0x9",
+          "removed": false,
+          "topics": [
+            "0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2"
+          ],
+          "transactionHash": "0x95ea9e0a9502dd3125a86edd9bd84c1a091c9b9f8001db65a913501244fd77dd",
+          "transactionIndex": "0x4"
+        },
+        {
+          "address": "0x1f09daefa827f02cbb40967cc91b259763760761",
+          "blockHash": "0x717204a61810951fee215396d9b74d48f2b088b317bb531ea2486bfcab06fa26",
+          "blockNumber": "0x4621acc",
+          "blockTimestamp": "0x6ad47058",
+          "data": "0x00000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000002710000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000095461706557656176650000000000000000000000000000000000000000000000",
+          "logIndex": "0xa",
+          "removed": false,
+          "topics": [
+            "0x2e8868f18a1eaf0222b5b09484fdf12163e9741393f8457cd79d2ae42b2d2290",
+            "0x000000000000000000000000dfc1abf794ef40b9eeeba1d875e7ab2b21a0a146",
+            "0x000000000000000000000000f009a23132f815d48b1b5275b088b780dcdcaa5a",
+            "0x000000000000000000000000c055d5c6d6d02d797074829120c85e7843f8cb3f"
+          ],
+          "transactionHash": "0x95ea9e0a9502dd3125a86edd9bd84c1a091c9b9f8001db65a913501244fd77dd",
+          "transactionIndex": "0x4"
+        },
+        {
+          "address": "0x0000000071727de22e5e9d8baf0edac6f37da032",
+          "blockHash": "0x717204a61810951fee215396d9b74d48f2b088b317bb531ea2486bfcab06fa26",
+          "blockNumber": "0x4621acc",
+          "blockTimestamp": "0x6ad47058",
+          "data": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e1895",
+          "logIndex": "0xb",
+          "removed": false,
+          "topics": [
+            "0x49628fd1471006c1482da88028e9ce4dbb080b815c9b0344d39e5a8e6ec1419f",
+            "0xd60c6e37b61edcca02125bba9e1e555f905623280cc67d16471104710e604316",
+            "0x000000000000000000000000c055d5c6d6d02d797074829120c85e7843f8cb3f",
+            "0x0000000000000000000000000000000000000000000000000000000000000000"
+          ],
+          "transactionHash": "0x95ea9e0a9502dd3125a86edd9bd84c1a091c9b9f8001db65a913501244fd77dd",
+          "transactionIndex": "0x4"
+        }
+      ],
+      "logsBloom": "0x00000000004000000000000000000000000000000400000000000004400000000008000004000001008000030000000800000000000000000000020000060000000000000200000000000000001000400040000000000000000000000000000800004000020800000000000000000800000000000200000000000002000000100000000000000000000800000040080000000300000480000000000000000000000000000000000000410000000001000000000000000000000002000000000004000000000020400001000000100000000000000004000000808000020020000000000000000000000100000000000000000000000000000000000000000000",
+      "status": "0x1",
+      "to": "0x0000000071727de22e5e9d8baf0edac6f37da032",
+      "transactionHash": "0x95ea9e0a9502dd3125a86edd9bd84c1a091c9b9f8001db65a913501244fd77dd",
+      "transactionIndex": "0x4",
+      "type": "0x4"
+    },
+    "id": 1
+  },
+  "scope": "Processor creation only; no circuits minted or consumed by a host."
+}
