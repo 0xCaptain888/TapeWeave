@@ -6,7 +6,7 @@ if (args.length > 1 || (args.length === 1 && args[0] !== '--browser')) {
   console.error('usage: node research/tapeweave/demo/check.mjs [--browser]');
   process.exit(2);
 }
-const tests = ['test-engine.mjs', 'test-host-boundaries.mjs', 'test-package.mjs', 'test-replay.mjs', 'test-creator.mjs', 'test-durable-host.mjs', 'test-studio-storage.mjs', 'test-creator-package.mjs', 'test-creator-replay.mjs', 'test-browser-process.mjs', 'test-verify-creator.mjs', 'test-local-server.mjs', 'test-xlayer-binding.mjs', 'test-rpc-host.mjs'];
+const tests = ['test-engine.mjs', 'test-host-boundaries.mjs', 'test-package.mjs', 'test-replay.mjs', 'test-creator.mjs', 'test-durable-host.mjs', 'test-studio-storage.mjs', 'test-creator-package.mjs', 'test-creator-replay.mjs', 'test-browser-process.mjs', 'test-verify-creator.mjs', 'test-local-server.mjs', 'test-xlayer-binding.mjs', 'test-rpc-host.mjs', 'test-archive-host.mjs'];
 if (args[0] === '--browser') tests.push('browser-check.mjs', 'browser-check.mjs --studio', 'test-durable-browser.mjs');
 for (const name of tests) {
   console.log(`\n=== ${name} ===`);

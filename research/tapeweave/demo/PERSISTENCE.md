@@ -18,9 +18,26 @@ node research/tapeweave/demo/local-server.mjs /tmp/tapeweave-web.sqlite 8787
 4. 完成四拍生成回放并复制，可交工作室或CLI复核；未完成不能导出。剪贴板失败选中文本供手动复制。
 5. 请求结果不确定时保留命令ID和载荷于sessionStorage，禁用新动作；点击重试。明确旧版本拒绝时重试会清理该未提交命令并读取最新快照；其他错误保留命令，不猜测是否提交。关闭标签页可能丢失待确认信息，SQLite仍保留已提交命令。
 
-接口限POST JSON、24 KiB请求、16 KiB创作包；精确字段、固定同源Origin／Host及随机启动凭据，拒绝跨源访问，不开放CORS。仅白名单HTML／JS／CSS可读取，数据库及服务源码不通过HTTP公开。数据库路径与已有WAL／SHM拒绝符号链接；这不抵御本机恶意进程、路径竞态或同源脚本入侵，不是账户权限、安全审计或可公开部署方案。禁止反向代理到公网。没有会话列表、删除、自动同步工作室localStorage、多人权限或备份恢复服务。
+接口限POST JSON、24 KiB请求、16 KiB创作包；精确字段、固定同源Origin／Host及随机启动凭据，拒绝跨源访问，不开放CORS。仅白名单HTML／JS／CSS可读取，数据库及服务源码不通过HTTP公开。数据库路径与已有WAL／SHM拒绝符号链接；这不抵御本机恶意进程、路径竞态或同源脚本入侵，不是账户权限、安全审计或可公开部署方案。禁止反向代理到公网。没有网页会话列表、删除、自动同步工作室localStorage、多人权限或HTTP备份恢复服务；本地CLI逻辑备份见下文。
 
 作者测试：首次统一15组通过（12组Node、3组Chrome）；添加HTTP客户端10秒超时后最终统一复跑在工作室探针120秒超时，单独重跑工作室及持久网页均通过，不能称最终同一次15组通过。HTTP覆盖双模式、去重、冲突、重启、导出复核及Host／Origin／凭据／请求／静态边界；真实Chrome覆盖两模式新建四拍、回放导出、刷新恢复、丢回执后重试不重复提交及320px布局。不是实际手机、系统剪贴板或独立采用验证。历史下述“无网页接入”只描述旧CLI阶段；公开Pages仍不能运行SQLite。
+
+## 新增：本地逻辑备份与恢复
+
+新增`archive-host.mjs`，不是复制活动SQLite主文件，而是在一致读事务内重算全部会话并导出配置、命令ID、版本、动作与双宿主回执。支持未完成局续跑及旧命令重试；普通模式获得同等支持。不含钱包、启动凭据、认证身份或RPC来源证明。
+
+```sh
+# macOS下/tmp可能是符号链接，使用其真实目录/private/tmp；其他系统用真实外部目录
+node research/tapeweave/demo/archive-host.mjs backup /private/tmp/tapeweave-web.sqlite /private/tmp/tapeweave-archive.json
+node research/tapeweave/demo/archive-host.mjs restore /private/tmp/tapeweave-restored.sqlite /private/tmp/tapeweave-archive.json
+node research/tapeweave/demo/host-cli.mjs /private/tmp/tapeweave-restored.sqlite show SESSION
+```
+
+源库必须存在，备份文件必须不存在；恢复目标DB及WAL／SHM必须不存在，拒绝覆盖和合并。归档先严格UTF-8读取（2 MiB），精确字段及最多100会话、每局4命令，逐局从零重算核对后才创建目标。恢复全部会话处于一个SQLite事务，失败回滚；CLI失败清理本次新建目标。输出文件权限0600；源库及归档均要求仓库外真实父目录，拒绝符号链接路径。需要先建立输出父目录，不向静态服务公开文件。不要用shell重定向覆盖DB或归档。
+
+一致读只表示导出时点，之后新提交不自动进入旧备份；备份后继续操作不会被镜像。工具使用SQLite打开源库，可能维护WAL，不是文件系统只读。归档包含完整行为及动作，请自行安全保存；它是未认证逻辑记录，不是数据库字节备份、可信历史或物理灾难恢复保证。不能抵御本机恶意进程／路径竞态；没有加密、定时任务、公网恢复接口或自动删库。
+
+本轮统一18组作者测试通过（15 Node＋3 Chrome），新增覆盖两模式部分局备份恢复、旧ID重试不重复推进、续跑完成、同名拒绝、损坏拒绝且不创建库、事务异常回滚。首次专项因macOS `/tmp`指向真实目录而被安全限制拒绝；测试改用真实目录后通过，没有放宽路径校验。Chrome通过仍不等于手机、系统剪贴板或独立采用；也不解释前轮启动超时。
 
 ## 运行（Node 24，内置node:sqlite）
 
@@ -75,6 +92,6 @@ node research/tapeweave/demo/verify-creator.mjs replay /tmp/tapeweave-durable-re
 
 此适配器**没有接入浏览器工作室**；网页另有同源localStorage保存编译配置与动作，刷新时重算恢复；那不是此SQLite适配器，不能继承其事务保证。CLI与SQLite用于开发者离线接入，不是网页持久化产品。没有HTTP服务、账户、授权、签名、历史真实性、钱包、链消费或跨数据库事务。浏览器保存模式先重算两个候选并写入单个localStorage键，再发布内存状态；写入失败不推进当前局，但不提供跨标签CAS、账户隔离或SQLite的原子事务。内存回退模式仍顺序调用。
 
-本地有文件写权限的人能篡改配置与动作并重算回执；恢复比对只发现计算不一致，不认证历史。数据库文件损坏、磁盘故障、备份恢复与所有操作系统断电语义未全面验证。SIGKILL测试不等于物理断电测试。若备份运行中数据库，应使用SQLite备份机制或停写关闭后按SQLite要求操作，不只复制一个活动DB文件。
+本地有文件写权限的人能篡改配置与动作并重算回执；恢复比对只发现计算不一致，不认证历史。新增逻辑归档恢复已做作者测试，但数据库物理损坏、磁盘故障与所有操作系统断电语义未全面验证。SIGKILL测试不等于物理断电测试。若备份运行中数据库，应使用SQLite备份机制或停写关闭后按SQLite要求操作，不只复制一个活动DB文件。
 
 `beforeCommit`仅供故障注入测试，调用方不得传入不可信代码。此模块是本地开发接口，不是公网安全边界。

@@ -3,6 +3,22 @@ import {DatabaseSync} from 'node:sqlite';
 import {makeHost,compile} from './creator.mjs';
 const exact=(x,keys)=>x && typeof x==='object' && !Array.isArray(x) && Object.keys(x).sort().join(',')===[...keys].sort().join(',');
 const name=x=>typeof x==='string' && /^[a-zA-Z0-9_-]{1,80}$/.test(x);
+export function validateArchive(archive){
+  if(!exact(archive,['schema','authenticated','chain_identity','sessions']) || archive.schema!=='tapeweave-local-archive-v1' || archive.authenticated!==false || archive.chain_identity!==null || !Array.isArray(archive.sessions) || archive.sessions.length>100)throw Error('非法本地归档');
+  const ids=new Set();
+  for(const s of archive.sessions){
+    if(!exact(s,['id','config','commands']) || !name(s.id) || ids.has(s.id) || !exact(s.config,['next','request','plain']) || typeof s.config.plain!=='boolean' || !Array.isArray(s.commands) || s.commands.length>4)throw Error('非法归档会话');
+    ids.add(s.id);compile(s.config.next,s.config.request);
+    const hosts=['training','door'].map(w=>makeHost(s.config.next,s.config.request,w,s.config.plain));
+    const commands=new Set();
+    s.commands.forEach((c,i)=>{
+      if(!exact(c,['id','version','trigger','hosts']) || !name(c.id) || commands.has(c.id) || c.version!==i || ![0,1].includes(c.trigger))throw Error('非法归档命令');
+      commands.add(c.id);
+      if(JSON.stringify(hosts.map(h=>h.act(i,c.trigger)))!==JSON.stringify(c.hosts))throw Error('归档回放不一致');
+    });
+  }
+  return structuredClone(archive);
+}
 export function openStore(path, {beforeCommit=()=>{}}={}) {
   const db=new DatabaseSync(path);
   db.exec(`PRAGMA busy_timeout=5000; PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL;
@@ -66,6 +82,29 @@ export function openStore(path, {beforeCommit=()=>{}}={}) {
         const hosts=s.hosts.map(h=>h.act(command.version,command.trigger));
         db.prepare('INSERT INTO commands VALUES(?,?,?,?,?)').run(id,command.id,command.version,command.trigger,JSON.stringify(hosts));
         return {session:id,command_id:command.id,version:command.version+1,hosts,authenticated:false,chain_identity:null};
+      });
+    },
+    archive(){
+      db.exec('BEGIN');
+      try{
+        const sessions=db.prepare('SELECT id FROM sessions ORDER BY id').all().map(({id})=>{
+          const s=load(id);
+          const commands=db.prepare('SELECT * FROM commands WHERE session_id=? ORDER BY version').all(id).map(c=>({id:c.command_id,version:c.version,trigger:c.trigger,hosts:JSON.parse(c.receipt)}));
+          return {id,config:s.config,commands};
+        });
+        const result=validateArchive({schema:'tapeweave-local-archive-v1',authenticated:false,chain_identity:null,sessions});
+        db.exec('COMMIT');return result;
+      }catch(e){db.exec('ROLLBACK');throw e;}
+    },
+    restoreArchive(input){
+      const archive=validateArchive(input);
+      return transaction(()=>{
+        if(db.prepare('SELECT COUNT(*) AS n FROM sessions').get().n!==0 || db.prepare('SELECT COUNT(*) AS n FROM commands').get().n!==0)throw Error('仅允许恢复到空数据库');
+        for(const s of archive.sessions){
+          db.prepare('INSERT INTO sessions VALUES(?,?)').run(s.id,JSON.stringify(s.config));
+          for(const c of s.commands)db.prepare('INSERT INTO commands VALUES(?,?,?,?,?)').run(s.id,c.id,c.version,c.trigger,JSON.stringify(c.hosts));
+        }
+        return {restored_sessions:archive.sessions.length,authenticated:false,chain_identity:null};
       });
     },
     close(){db.close();}
