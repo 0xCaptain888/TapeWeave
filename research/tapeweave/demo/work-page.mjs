@@ -1,12 +1,15 @@
 import {presetArtifact,createWork,parseWork,connectWork,makeAcceptance} from './work.mjs';
+import {inspectUpgrade,applyUpgrade} from './work-upgrade.mjs';
 import {parseArtifact} from './creator-package.mjs';
 import {createSession,restoreSession,advanceSession,sessionStorage} from './work-session.mjs';
 const $=id=>document.getElementById(id);
 let revision=0,player=null,current='',revealed=false,journal=null,busy=false;
+let upgrade=null;
+function clearUpgrade(){upgrade=null;$('upgrade-review').textContent='';$('apply-upgrade').disabled=true;$('previous-session').value='';}
 let store;try{store=sessionStorage(localStorage);}catch{}
 
-function clearAcceptance(){ $('acceptance').value='';$('copy-acceptance').disabled=true; }
-function stop(){player=null;current='';revealed=false;for(const id of ['reset','recharge','trigger','wait','accept'])$(id).disabled=true;$('trace').replaceChildren();$('work-title').textContent='尚未装载作品';$('work-description').textContent='';$('state').textContent='';$('visual-effect').classList.remove('active');$('visual-effect').textContent='等待作品';clearAcceptance();}
+function clearAcceptance(){ clearUpgrade();$('acceptance').value='';$('copy-acceptance').disabled=true; }
+function stop(){clearUpgrade();player=null;current='';revealed=false;for(const id of ['reset','recharge','trigger','wait','accept'])$(id).disabled=true;$('trace').replaceChildren();$('work-title').textContent='尚未装载作品';$('work-description').textContent='';$('state').textContent='';$('visual-effect').classList.remove('active');$('visual-effect').textContent='等待作品';clearAcceptance();}
 function edit(){revision++;$('delivery').value='';$('copy-work').disabled=true;$('status').textContent='';stop();}
 for(const id of ['title','description','template','artifact-input','scene'])$(id).addEventListener('input',edit);
 for(const id of ['incoming','result','note'])$(id).addEventListener('input',()=>{revision++;clearAcceptance();$('status').textContent='';});
@@ -44,4 +47,6 @@ $('resume').onclick=async()=>{if(!store){$('status').textContent='浏览器存�
 window.addEventListener('storage',()=>{if(store&&!store.current()){revision++;stop();$('status').textContent='其他页面已更改存档，请先恢复最新存档';}});
 $('accept').onclick=async()=>{if(!player)return;const token=++revision;clearAcceptance();try{const record=await makeAcceptance(current,$('mode').value,player.snapshot().trace,{result:$('result').value,note:$('note').value});if(token!==revision)return;$('acceptance').value=JSON.stringify(record,null,2);$('copy-acceptance').disabled=false;$('status').textContent='生成的是自报记录，不是独立采用或认证成绩。';}catch(e){if(token===revision)$('status').textContent=e.message;}};
 for(const [button,output]of [['copy-work','delivery'],['copy-acceptance','acceptance']])$(button).onclick=async()=>{const text=$(output).value,token=revision;if(!text)return;try{await navigator.clipboard.writeText(text);if(token===revision&&$(output).value===text)$('status').textContent='已复制';}catch{if(token===revision&&$(output).value===text){$(output).focus();$(output).select();$('status').textContent='请手动复制已选中的文本';}}};
+$('review-upgrade').onclick=async()=>{if(!journal||!player||busy){$('status').textContent='请先装载或恢复当前作品';return;}const token=++revision;clearUpgrade();try{const text=$('incoming').value,base=JSON.stringify(journal),review=await inspectUpgrade(journal,text);if(token!==revision)return;upgrade={text,base};$('upgrade-review').textContent=JSON.stringify({same_behavior:review.same_behavior,can_preserve:review.can_preserve,steps:review.steps,changes:review.changes},null,2);$('apply-upgrade').disabled=false;$('upgrade-policy').value='';}catch(e){if(token===revision)$('status').textContent=e.message;}};
+$('apply-upgrade').onclick=async()=>{if(!upgrade||busy)return;const chosen=upgrade,policy=$('upgrade-policy').value,token=++revision;busy=true;try{if(chosen.base!==JSON.stringify(journal)||chosen.text!==$('incoming').value)throw Error('当前局已变化，请重新比较');const next=await applyUpgrade(journal,chosen.text,policy);const restored=await restoreSession(JSON.stringify(next.record));if(token!==revision)return;if(store)await store.save(next.record);if(token!==revision)return;journal=restored.record;player=restored.player;current=JSON.stringify(player.work);clearAcceptance();$('delivery').value='';$('copy-work').disabled=true;render();$('previous-session').value=JSON.stringify(next.previous,null,2);$('status').textContent=policy==='preserve'?'已保留并重算原步骤；旧局备份已生成':'已从零开始；旧局备份已生成';}catch(e){if(token===revision)$('status').textContent=e.message;}finally{busy=false;}};
 stop();
