@@ -25,6 +25,10 @@ try{
  assert.equal((await fetch(app.origin+'/state.sqlite')).status,404);
  assert.equal((await fetch(app.origin+'/local-server.mjs')).status,404);
  const page=await fetch(app.origin+'/');assert.equal(page.status,200);assert.ok(page.headers.get('content-security-policy').includes("frame-ancestors 'none'"));assert.ok((await page.text()).includes('SQLite'));
+ assert.deepEqual((await call('list',{after:''})).data,{sessions:[],next:null,authenticated:false});
+ assert.equal((await call('list',{after:''},{Authorization:''})).status,403);
+ assert.equal((await call('list',{after:'bad cursor'})).status,400);
+ assert.equal((await call('list',{after:'',extra:1})).status,400);
  const artifact=await createArtifact(presets.pulse.next,presets.pulse.request);
  for(const plain of [false,true]){
   const session=plain?'plain':'byte';
@@ -47,6 +51,13 @@ try{
  const races=await call('create',{session:'race',artifact:JSON.stringify(artifact),plain:false});assert.equal(races.status,200);
  const concurrent=await Promise.all(['one','two'].map(id=>call('act',{session:'race',command:{id,version:0,trigger:0}})));
  assert.deepEqual(concurrent.map(x=>x.status).sort(),[200,400]);
+ for(let i=0;i<52;i++)assert.equal((await call('create',{session:'page_'+String(i).padStart(2,'0'),artifact:JSON.stringify(artifact),plain:false})).status,200);
+ const first=(await call('list',{after:''})).data;
+ assert.equal(first.sessions.length,50);assert.ok(first.next);
+ const second=(await call('list',{after:first.next})).data;
+ assert.equal(second.next,null);
+ const ids=[...first.sessions,...second.sessions].map(s=>s.session);assert.equal(ids.length,55);assert.equal(new Set(ids).size,55);assert.deepEqual(ids,[...ids].sort());
+ assert.deepEqual(first.sessions.find(s=>s.session==='byte'),{session:'byte',version:4,plain:false});
  await assert.rejects(startLocalServer({database:join(process.cwd(),'bad.sqlite')}),/仓库目录之外/);
  console.log('PASS local loopback HTTP: two modes, export verification, restart, dedup, concurrent version, auth/origin/host/body/static boundaries; not browser or security audit');
 }finally{await app?.close();await rm(dir,{recursive:true,force:true});}

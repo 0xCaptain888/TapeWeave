@@ -84,6 +84,16 @@ export function openStore(path, {beforeCommit=()=>{}}={}) {
         return {session:id,command_id:command.id,version:command.version+1,hosts,authenticated:false,chain_identity:null};
       });
     },
+    list(after=''){
+      if(after!==''&&!name(after))throw Error('非法列表游标');
+      db.exec('BEGIN');
+      try{
+        const rows=db.prepare('SELECT id FROM sessions WHERE id>? ORDER BY id LIMIT 51').all(after);
+        const sessions=rows.slice(0,50).map(({id})=>{const s=load(id);return {session:id,version:s.version,plain:s.config.plain};});
+        const result={sessions,next:rows.length>50?sessions.at(-1).session:null,authenticated:false};
+        db.exec('COMMIT');return result;
+      }catch(e){db.exec('ROLLBACK');throw e;}
+    },
     archive(){
       db.exec('BEGIN');
       try{

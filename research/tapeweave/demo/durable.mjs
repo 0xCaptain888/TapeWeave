@@ -1,6 +1,6 @@
 const $=id=>document.getElementById(id);
 const key='tapeweave-durable-ui-v1';
-let record,ready=false,busy=false,snapshot=null;
+let record,ready=false,busy=false,snapshot=null,listNext=null;
 function save(){sessionStorage.setItem(key,JSON.stringify(record));}
 try{
  record=JSON.parse(sessionStorage.getItem(key)??'null')??{token:'',session:'',pending:null};
@@ -9,7 +9,9 @@ try{
  save();ready=true;if(record.session)$('session').value=record.session;
 }catch(e){$('error').textContent='本地凭据／标签页存储不可用：'+e.message;}
 function render(){
- for(const id of ['create','load'])$(id).disabled=busy||!ready;
+ for(const id of ['create','load','list'])$(id).disabled=busy||!ready;
+ $('list-next').disabled=busy||!ready||!listNext;
+ for(const button of $('sessions').querySelectorAll('button'))button.disabled=busy||!ready||!!record?.pending;
  for(const id of ['wait','fire'])$(id).disabled=busy||!snapshot||snapshot.version>=4||!!record?.pending;
  $('retry').disabled=busy||!ready||!record?.pending;
  $('export').disabled=busy||!snapshot||snapshot.version!==4||!!record?.pending;
@@ -28,6 +30,25 @@ async function load(session){
  const s=await api('show',{session});
  record.session=session;save();snapshot=s;$('status').textContent='已读取持久快照；未认证、无链身份。';
 }
+async function loadSession(session){
+ if(record.pending && record.pending.session!==session)throw Error('存在待确认命令，请先处理原会话');
+ await load(session);$('session').value=session;
+}
+async function listSessions(after=''){
+ // Clear old controls before reading; an error must not leave stale pagination.
+ listNext=null;$('sessions').replaceChildren();$('list-status').textContent='读取中…';
+ try{
+  const result=await api('list',{after});listNext=result.next;
+  for(const s of result.sessions){
+   const item=document.createElement('li'),button=document.createElement('button');
+   button.textContent=`${s.session} · ${s.version}/4 · ${s.plain?'普通共享真值表':'字节求值'}`;
+   button.onclick=()=>run(()=>loadSession(s.session));item.append(button);$('sessions').append(item);
+  }
+  $('list-status').textContent=result.sessions.length?`本页${result.sessions.length}项${listNext?'，仍有下一页':'，已到末页'}。列表不是自动更新；选择会话时重新读取最新快照。`:'没有已保存会话。';
+ }catch(e){$('list-status').textContent='列表读取失败；未改变当前会话。';throw e;}
+}
+$('list').onclick=()=>run(()=>listSessions());
+$('list-next').onclick=()=>run(()=>listSessions(listNext));
 $('create').onclick=()=>run(async()=>{
  if(record.pending)throw Error('先重试或读取待确认命令的原会话，不能新建');
  const session=$('session').value;
@@ -35,8 +56,7 @@ $('create').onclick=()=>run(async()=>{
 });
 $('load').onclick=()=>run(async()=>{
  const session=$('session').value;
- if(record.pending && record.pending.session!==session)throw Error('存在待确认命令，请先处理原会话');
- await load(session);
+ await loadSession(session);
  // A successful read is an explicit refresh after a definitive version conflict.
  // Do not discard uncertain commands: retry can still obtain their receipt.
 });

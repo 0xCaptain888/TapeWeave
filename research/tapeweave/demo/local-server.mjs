@@ -51,6 +51,8 @@ export async function startLocalServer({database,port=0}={}){
      if(!exact(b,['session','artifact','plain'])||typeof b.plain!=='boolean')throw Error('非法创建参数');
      const artifact=await parseArtifact(b.artifact);
      result=store.create(b.session,{next:artifact.next,request:artifact.request,plain:b.plain});
+    }else if(url.pathname==='/api/list'){
+     if(!exact(b,['after']))throw Error('非法列表参数');result=store.list(b.after);
     }else if(url.pathname==='/api/show'){
      if(!exact(b,['session']))throw Error('非法读取参数');result=store.snapshot(b.session);
     }else if(url.pathname==='/api/act'){

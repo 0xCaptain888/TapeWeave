@@ -48,6 +48,13 @@ try{
  await wait(()=>evaluate("!document.getElementById('wait').disabled"));
  assert.ok(await evaluate("document.getElementById('summary').textContent.includes('版本 1/4')"));
  assert.equal(await evaluate("document.getElementById('trace').rows.length"),2);
+ await evaluate("document.getElementById('list').click()");
+ await wait(()=>evaluate("document.querySelectorAll('#sessions button').length===3 && !document.getElementById('list').disabled"));
+ assert.ok(await evaluate("document.getElementById('sessions').textContent.includes('byte · 4/4 · 字节求值') && document.getElementById('sessions').textContent.includes('plain · 4/4 · 普通共享真值表')"));
+ await evaluate("document.querySelector('#sessions button').click()");
+ await wait(()=>evaluate("document.getElementById('summary').textContent.includes('会话 byte · 版本 4/4') && !document.getElementById('load').disabled"));
+ assert.equal(await evaluate("document.getElementById('session').value"),'byte');
+ assert.equal(await evaluate("document.getElementById('trace').rows.length"),8);
  // Small viewport, with real top-level navigation (framing deliberately denied).
  await cdp('Emulation.setDeviceMetricsOverride',{width:320,height:900,deviceScaleFactor:1,mobile:false});
  assert.ok(await evaluate('document.documentElement.scrollWidth<=320'));
