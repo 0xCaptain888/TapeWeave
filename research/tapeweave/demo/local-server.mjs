@@ -10,7 +10,8 @@ import {createCreatorReplay} from './creator-replay.mjs';
 const root=fileURLToPath(new URL('.',import.meta.url));
 const assets=new Map([
  ['/', ['durable.html','text/html; charset=utf-8']],
- ...['durable.html','durable.mjs','style.css'].map(f=>['/'+f,[f,f.endsWith('.html')?'text/html; charset=utf-8':f.endsWith('.css')?'text/css; charset=utf-8':'text/javascript; charset=utf-8']])
+ ['/logo.svg',['logo.svg','image/svg+xml; charset=utf-8']],
+  ...['durable.html','durable.mjs','style.css'].map(f=>['/'+f,[f,f.endsWith('.html')?'text/html; charset=utf-8':f.endsWith('.css')?'text/css; charset=utf-8':'text/javascript; charset=utf-8']])
 ]);
 const exact=(v,keys)=>v && typeof v==='object' && !Array.isArray(v) && Object.keys(v).sort().join(',')===[...keys].sort().join(',');
 const inside=(parent,child)=>{const r=relative(parent,child);return r===''||(!r.startsWith('..')&&!isAbsolute(r));};

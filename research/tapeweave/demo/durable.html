@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TapeWeave 本地持久宿主</title><link rel="stylesheet" href="style.css"></head>
-<body><main><h1>本地持久宿主 · SQLite</h1>
+<body><main><nav class="brand-bar" aria-label="本地宿主导航"><a class="brand-home" href="durable.html"><span class="brand-symbol" aria-hidden="true"></span><span class="brand-label">TapeWeave<small>LOCAL PERSISTENCE LAB</small></span></a><span class="eyebrow">SQLITE / LOCAL ONLY</span></nav><h1>本地持久宿主 · SQLite</h1>
 <p class="notice">仅通过本机Node服务运行。不是GitHub Pages后端、账户服务或认证成绩；不连接钱包、不写链。两宿主同一SQLite事务提交，工作室localStorage与这里不自动同步。</p>
 <section><h2>建立或恢复会话</h2><label>会话ID（字母、数字、下划线、连字符，最多80字符）<input id="session" maxlength="80" value="my_session"></label><label>新会话执行模式<select id="mode"><option value="byte">字节求值</option><option value="plain">普通共享真值表</option></select></label>
 <label>粘贴工作室创作包（最多16 KiB）<textarea id="artifact" rows="7"></textarea></label>
