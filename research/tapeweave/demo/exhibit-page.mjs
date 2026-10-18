@@ -1,5 +1,9 @@
 import {createWork,presetArtifact,connectWork} from './work.mjs';
+import {verifyExhibitRecord} from './exhibit-record.mjs';
 const $=id=>document.getElementById(id);let worlds=null,revision=0,started=0,mode='byte',revealed=false,stock=1,stamps=0;
+let verificationRevision=0;
+$('verify-input').oninput=()=>{verificationRevision++;$('verify-result').textContent='';};
+$('verify-record').onclick=async()=>{const token=++verificationRevision,text=$('verify-input').value;$('verify-result').textContent='正在重新计算…';try{const result=await verifyExhibitRecord(text);if(token!==verificationRevision)return;$('verify-result').textContent='计算一致，但未认证；不证明实际用时或独立采用。\n'+JSON.stringify(result,null,2);}catch(e){if(token===verificationRevision)$('verify-result').textContent='复核失败：'+e.message;}};
 function presentation(){
  $('story-art').dataset.active=String(revealed);$('story-title').textContent=revealed?'光不是被带走，而是被再次点亮':'灯还没有亮';$('story-copy').textContent=revealed?'有人把一束光折进纸页。书屋用它照见故事，邮局用它留下回声。相同的点亮方式，在不同地方成为不同的作品。':'在这里借一束光，照见被折起的故事。';
  $('stamp-art').dataset.active=String(stamps>0);$('stamp-title').textContent=stamps?'回声 · 已留念':'空白的纪念页';$('stamp-copy').textContent=stamps?'你在邮局留下了一枚虚拟回声印章。库存已用完，再多行为请求也不能增加印章。':'邮局有自己的能量与一枚虚拟印章。书屋的进度不会替你领取。';
