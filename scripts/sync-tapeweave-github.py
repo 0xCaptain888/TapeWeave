@@ -42,7 +42,8 @@ def main():
     args = parser.parse_args()
     if not re.fullmatch(r'(feat|fix|refactor|perf|docs|test|build|ci|chore|style|revert)(\([^\n]+\))?: [^\n]{1,100}', args.message):
         raise ValueError('Use a conventional single-line commit message')
-    assert api('/user')['login'].lower() == '0xcaptain888', 'Unexpected GitHub identity'
+    if api('/user')['login'].lower() != '0xcaptain888':
+        raise ValueError('Unexpected GitHub identity')
     head = api(REPO + '/git/ref/heads/main')['object']['sha']
     commit = api(REPO + '/git/commits/' + head)
     remote = remote_files(commit)
@@ -82,9 +83,11 @@ def main():
         api(REPO + '/git/refs/heads/main', {'sha': created['sha'], 'force': False}, 'PATCH')
         head = created['sha']
     verified = remote_files(api(REPO + '/git/commits/' + head))
-    assert set(verified) == set(local), 'Published file set mismatch'
+    if set(verified) != set(local):
+        raise ValueError('Published file set mismatch')
     for p, (mode, content) in local.items():
-        assert verified[p]['sha'] == blob_sha(content) and verified[p]['mode'] == mode, p
+        if verified[p]['sha'] != blob_sha(content) or verified[p]['mode'] != mode:
+            raise ValueError('Published blob or mode mismatch: ' + p)
     print('Verified published snapshot:', head)
 
 

@@ -74,7 +74,7 @@ class SafetyTests(unittest.TestCase):
         self.assert_no_ref_write()
 
     def test_post_publish_mismatch_not_success(self):
-        with self.assertRaises(AssertionError):
+        with self.assertRaisesRegex(ValueError, 'Published blob or mode mismatch'):
             self.run_sync(publish=True, mismatch=True)
         # A verification failure after PATCH is NOT a rolled-back publication.
         self.assertTrue(any(c[2] == 'PATCH' for c in self.calls))
@@ -84,7 +84,7 @@ class SafetyTests(unittest.TestCase):
         self.assertEqual(sum(c[2] == 'PATCH' for c in self.calls), 1)
 
     def test_wrong_identity(self):
-        with self.assertRaisesRegex(AssertionError, 'identity'):
+        with self.assertRaisesRegex(ValueError, 'identity'):
             self.run_sync(publish=True, identity='other')
         self.assert_no_ref_write()
 
