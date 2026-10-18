@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TapeWeave 链上宿主接入准备</title><link rel="stylesheet" href="style.css"></head><body><main>
+<h1>链上宿主接入准备 · 未部署</h1>
+<p>没有官方部署地址。本页不连接钱包、不签名、不广播。只读取你显式输入的候选地址，生成供审阅的调用参数；有代码或返回相似状态不代表它是经过验证的TapeWeave宿主。</p>
+<p><a href="studio.html">本地行为工作室</a> · <a href="index.html">固定挑战</a></p>
+<label>候选宿主地址 <input id="host" maxlength="42" placeholder="尚未部署，请勿使用随机地址"></label>
+<label>会话ID <input id="session" inputmode="numeric" value="1"></label>
+<button id="read">仅从第一RPC读取固定块会话</button>
+<p id="status" role="status"></p><pre id="snapshot"></pre>
+<h2>生成调用草案（不发送）</h2>
+<label>操作 <select id="operation"><option value="open">开局</option><option value="act">动作</option></select></label>
+<label>审查卡 <select id="circuit"><option value="1">蓄能 ID1</option><option value="2">交替 ID2</option></select></label>
+<label>预期版本 <select id="version"><option>0</option><option>1</option><option>2</option><option>3</option></select></label>
+<label>动作 <select id="trigger"><option value="0">等待</option><option value="1">触发</option></select></label>
+<button id="plan">生成未验证草案</button>
+<textarea id="draft" rows="10" readonly aria-label="未发送调用草案"></textarea>
+<p>草案不代表模拟通过。真实发送前必须确认官方部署路径、运行时代码与配置、钱包调用者、最新版本及模拟；过期版本必须失败，不能自动重试成新动作。本页面不检查源码身份，不提供发送按钮。读取是单RPC观察，不是双端绑定或认证成绩。</p>
+<script type="module" src="chain-page.mjs"></script></main></body></html>

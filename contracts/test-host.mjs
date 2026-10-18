@@ -57,7 +57,22 @@ try {
   assert.deepEqual((await host.sessions(id)).toArray(true),before.toArray(true));
  }
  await send(mock.setMode(1,{gasLimit:100000}));await rejected(host.open.staticCall(1));
+ await send(mock.setMode(0,{gasLimit:100000}));
+ // Exhaust all 16 four-action sequences for both cards against an ordinary formula.
+ for(const circuit of [1,2])for(let bits=0;bits<16;bits++){
+  await send(host.open(circuit));const id=await host.sessionCount();let old=0,score=0,door=0;
+  for(let v=0;v<4;v++){
+   const t=(bits>>(3-v))&1,r=Number(v===0||v===2);
+   const request=circuit===1?old&t:(1-old)&t;
+   old=circuit===1?r|(old&(1-t)):old^t;score+=request;
+   if(v%2===1&&request&&door<2)door++;
+   await send(host.act(id,v,Boolean(t)));
+   const s=await host.sessions(id);
+   assert.equal(s.training.latch,BigInt(old));assert.equal(s.door.latch,BigInt(old));
+   assert.equal(s.training.score,BigInt(score));assert.equal(s.door.score,BigInt(door));assert.equal(s.door.resource,BigInt(2-door));
+  }
+ }
  const artifact=output.contracts['Host.sol'].TapeWeaveHost;
  if(process.env.TAPEWEAVE_BUILD_OUTPUT)await writeFile(process.env.TAPEWEAVE_BUILD_OUTPUT,JSON.stringify({compiler:solc.version(),settings:input.settings,source,abi:artifact.abi,bytecode:'0x'+artifact.evm.bytecode.object,runtime:'0x'+artifact.evm.deployedBytecode.object},null,2)+'\n',{flag:'wx'});
- console.log('PASS: both 0011 worlds; authentication; nonce; end; session isolation; five mined atomic reverts; bounded returndata; netlist admission');
+ console.log('PASS: both 0011 worlds; authentication; nonce; end; session isolation; five mined atomic reverts; bounded returndata; netlist admission; 32 exhaustive four-round sessions');
 } finally {await chain.disconnect();}

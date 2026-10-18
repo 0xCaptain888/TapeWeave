@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {plan,sessionCall,decodeSession} from './chain-host.mjs';
+const host='0x'+'12'.repeat(20),word=x=>BigInt(x).toString(16).padStart(64,'0');
+assert.equal(plan({host,circuit:'1',operation:'open'}).data,'0x56f6a897'+word(1));
+assert.equal(plan({host,session:'8',version:'3',trigger:true,operation:'act'}).data,'0x28cfd1cf'+word(8)+word(3)+word(1));
+assert.equal(sessionCall('1'),'0x83c4b7a3'+word(1));
+for(const p of [{host,circuit:'3',operation:'open'},{host,session:'1',version:'4',trigger:true,operation:'act'},{host:'0x'+'00'.repeat(20),circuit:'1',operation:'open'}])assert.throws(()=>plan(p));
+const raw='0x'+'0'.repeat(24)+'12'.repeat(20)+[1,4,0,2,2,0,1,1].map(word).join('');
+assert.equal(decodeSession(raw).door.score,1);
+assert.throws(()=>decodeSession(raw+'00'));assert.throws(()=>decodeSession('0x'+'0'.repeat(576)));
+assert.equal(plan({host,circuit:'1',operation:'open'}).broadcast,false);
+console.log('PASS chain host strict ABI and unsigned plans; no RPC or wallet');

@@ -26,6 +26,10 @@ TAPEWEAVE_SOLIDITY_TOOLS=/absolute/external/tools/node_modules node contracts/te
 
 2026-10-18作者执行通过：两卡0011预期训练2／1、门1／0；身份拒绝、旧nonce、第五拍拒绝、不同玩家会话隔离；五种处理器故障实际本地挖出失败交易且状态不变（网表变化、revert、非法位、错误合法位、大返回）。最初Mock字节类型及ethers Result比较断言有错误，已修复后完整重跑；Ganache原生µWS不兼容Node24，使用其JS回退。测试不是审计、独立开发者验证或X Layer交易。
 
+## 本轮补齐（2026-10-18）
+
+本地EVM新增两卡×16序列的32局128拍，与普通公式逐拍核对；完整重跑通过。新[前端接入准备页](../research/tapeweave/demo/chain.html)提供只读会话与未发送调用草案，无默认部署地址、无钱包或发送功能；不是完整上链交互。[部署核验与最短用户验收](../docs/tapeweave-deployment-gate-2026-10-18.md)记录官方文档超时、创建路径未知及禁止绕过的边界。
+
 ## 还不能称完成
 
 1. 当前钱包CLI `wallet contract-call --help`要求EVM必须提供to，没有公开合约创建参数；不能把创建字节码发给随意地址、零地址或未核验CREATE2工厂，亦不读取私钥绕过钱包。需核验官方支持的AA部署路径或有已验证工厂后再部署。
