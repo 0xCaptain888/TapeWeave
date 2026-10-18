@@ -47,6 +47,22 @@ GitHub API失败不代表仓库文件不可读。本次改用`raw.githubusercont
 
 该结论仅限已读取的README，不宣称整个SDK没有AA支持或不支持EVM创建。另试探`packages/coin-ethereum/README.md`返回404；该路径未经目录核验，不能据其404判断包不存在。本次没有安装或运行SDK，没有调用钱包、签名、广播或新增支出；应用及完整回归状态不变。真实部署仍等待明确适用于当前账户的官方创建与模拟依据。
 
+## 直接访问OKX／X Layer官网补证（同日后续）
+
+按用户要求，本次直接访问官网，而非只看GitHub。访问日期2026-10-18，均为只读，无钱包调用或新增支出。
+
+**访问过程不能简化为官网全部不可读：**初次Python请求OnchainOS文档根入口、X Layer首页及试探的`/xlayer/docs/developer/`返回403；web_fetch对前三个入口超时。之后使用浏览器风格User-Agent，`https://web3.okx.com/xlayer/docs/`成功重定向到下表第一项，OnchainOS产品页及Build X活动页也取得HTTP 200。没有绕过登录、验证码或权限控制。由成功页面的导航继续取得下列正文：
+
+| 官网一手来源 | 本次读到的事实 | 原始HTML SHA-256 |
+|---|---|---|
+| [X Layer开发者文档](https://web3.okx.com/onchainos/dev-docs/xlayer/developer/build-on-xlayer/about-xlayer) | 导航明确分开部署合约、验证合约、RPC、Flashblocks等文档 | `7fbf2f9564cee31729b62d19b5ae88eb1b4b917ca65eaa5e2655e98aec2ae134` |
+| [Deploy a smart contract](https://web3.okx.com/onchainos/dev-docs/xlayer/developer/deploy-a-smart-contract/deploying-contract) | 提供Hardhat、Foundry、Truffle三种部署指南入口 | `3da93d18ea2858dbab3795135019da84eeeea8d33d85d80dec441ad130e2a2bd` |
+| [Agentic Wallet介绍](https://web3.okx.com/onchainos/dev-docs/wallet/agentic-wallet) | 官方陈述TEE生成／存储／签名、Agent不能访问私钥、执行前风险模拟与评分、支持X Layer等链 | `3c52a924acd3c80a5f9230b3f6ec9cda60cf529baf1fe39426b1ff01c02189fd` |
+
+**新事实与仍缺证据：**X Layer官网确有合约部署指南，不能再笼统说“没有官方部署文档”；但部署指南索引没有说明如何让当前OnchainOS账户发起CREATE。沿索引访问[Hardhat指南](https://web3.okx.com/onchainos/dev-docs/xlayer/developer/deploy-a-smart-contract/deploy-with-hardhat)20秒超时，未读到正文，不能推断其具体签名方式。钱包介绍的“可签名／提交交易”及“执行前模拟”也不等于公开了当前账户合约创建载荷与模拟接口。**一般X Layer部署能力与当前账户可用创建通道仍须分开核验。**
+
+Agentic Wallet页面还宣称“Zero Gas on X Layer”。这属于官网产品口径，本轮未核其适用条件；不能覆盖本项目已记录的0.01052 OKB累计实付、承诺未来零费用或解释已有收费构成。页面安全宣传不是本项目或账户的安全审计。此次成功正文含导航／产品说明，但没有取得满足现有部署门槛的账户创建依据，故继续不部署、不导出私钥、不换未知factory。仅更新文档，未修改应用或重跑此前完整测试。
+
 ## 待用户参与的最短步骤
 
 1. **真机（约5分钟）**：用实际手机打开静态试玩的工作室，记录型号、系统、浏览器；默认蓄能执行等待等待触发触发，观察训练2／门1；刷新恢复，试复制并实际粘贴。记录布局、触摸和剪贴板是否成功，不用桌面窄屏替代。
