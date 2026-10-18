@@ -6,8 +6,8 @@ if (args.length > 1 || (args.length === 1 && args[0] !== '--browser')) {
   console.error('usage: node research/tapeweave/demo/check.mjs [--browser]');
   process.exit(2);
 }
-const tests = ['test-work.mjs', 'test-validation-record.mjs', 'test-chain-host.mjs', 'test-engine.mjs', 'test-host-boundaries.mjs', 'test-package.mjs', 'test-replay.mjs', 'test-creator.mjs', 'test-durable-host.mjs', 'test-studio-storage.mjs', 'test-creator-package.mjs', 'test-creator-replay.mjs', 'test-browser-process.mjs', 'test-verify-creator.mjs', 'test-local-server.mjs', 'test-xlayer-binding.mjs', 'test-rpc-host.mjs', 'test-archive-host.mjs'];
-if (args[0] === '--browser') tests.push('test-work-browser.mjs', 'test-validation-browser.mjs', 'test-chain-browser.mjs', 'browser-check.mjs', 'browser-check.mjs --studio', 'test-durable-browser.mjs');
+const tests = ['test-work-library.mjs', 'test-work.mjs', 'test-validation-record.mjs', 'test-chain-host.mjs', 'test-engine.mjs', 'test-host-boundaries.mjs', 'test-package.mjs', 'test-replay.mjs', 'test-creator.mjs', 'test-durable-host.mjs', 'test-studio-storage.mjs', 'test-creator-package.mjs', 'test-creator-replay.mjs', 'test-browser-process.mjs', 'test-verify-creator.mjs', 'test-local-server.mjs', 'test-xlayer-binding.mjs', 'test-rpc-host.mjs', 'test-archive-host.mjs'];
+if (args[0] === '--browser') tests.push('test-manage-browser.mjs', 'test-work-browser.mjs', 'test-validation-browser.mjs', 'test-chain-browser.mjs', 'browser-check.mjs', 'browser-check.mjs --studio', 'test-durable-browser.mjs');
 // Keep publishing guards in the same fail-fast gate, including Python -O.
 const publishingTest = fileURLToPath(new URL('../../../scripts/test-sync-tapeweave-github.py', import.meta.url));
 for (const flags of [[], ['-O']]) {

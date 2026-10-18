@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {openLibrary,verifyAcceptance} from './work-library.mjs';
+import {createWork,presetArtifact,connectWork,makeAcceptance} from './work.mjs';
+let raw=null;const storage={getItem:()=>raw,setItem:(_,v)=>{raw=v;}};
+const lib=openLibrary(storage),work=await createWork({title:'test',description:'test',scene:'lamp',artifact:await presetArtifact('pulse')});
+const input=JSON.stringify(work);
+assert.equal((await lib.save('one',input)).version,1);
+await assert.rejects(()=>lib.save('one',input),/内容未变/);
+assert.equal((await lib.save('one',JSON.stringify({...work,title:'second'}))).version,2);
+assert.equal(lib.list()[0].versions[0].work.title,'test');
+const copy=lib.list();copy[0].versions[0].work.title='bad';assert.equal(lib.list()[0].versions[0].work.title,'test');
+const p=await connectWork(input);p.step(0,{trigger:0,recharge:1});p.step(1,{trigger:1,recharge:0});
+const r=await makeAcceptance(input,'byte',p.snapshot().trace,{result:'fail',note:'author fixture'});
+assert.equal((await verifyAcceptance(JSON.stringify(r))).result,'fail');
+r.trace[1].request=0;await assert.rejects(()=>verifyAcceptance(JSON.stringify(r)),/不一致/);
+const old=raw;await assert.rejects(()=>lib.save('one','{}'));assert.equal(raw,old);
+raw='{';await assert.rejects(()=>lib.save('one',input));assert.equal(raw,'{');
+console.log('PASS local library versions, isolation, invalid input preserves data, acceptance recomputation; not authentication');
