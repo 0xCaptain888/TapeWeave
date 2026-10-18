@@ -2,7 +2,13 @@
 
 执行／访问日期：2026-10-18。本轮没有签名、广播、授权或资金支出；累计历史实付仍0.01052 OKB，累计0.05 OKB暂停复核线保持，不增加高风险授权。
 
-## 明确部署阻塞
+## 当前结论（以此为准）
+
+本页按核验顺序保留历史失败；**最新已读到X Layer Hardhat／Foundry部署正文及Agentic Wallet快速开始／技能正文**，不再以官网全部不可读或Hardhat超时作为当前阻塞。两份部署教程使用私钥签名方式，仍没有取得适用于当前OnchainOS账户的合约创建载荷、调用入口及模拟依据。普通链部署教程不能解除本任务的账户路径限制。
+
+研究报告、两枚真实电路制造、单RPC求值、本地双宿主、未部署合约与本地测试均已有交付；**真实宿主部署／消费、手机与独立体验、视频及最终投稿仍未完成**。“继续直至完成”不改变无依据停止部署、不得导出私钥及0.05 OKB暂停线。后续解除部署阻塞需要官方提供当前账户可用且可预检／模拟的具体创建路径；若官方说明不支持，则按不支持处理，不再重试普通私钥教程冒充解决方案。
+
+## 明确部署阻塞（首次核验记录）
 
 当前安装的OnchainOS CLI `wallet contract-call --help`明确写EVM需要`--to`，没有创建参数。这只能证明当前命令未公开暴露创建接口，**不能证明当前AA账户底层绝对不支持CREATE**。
 
@@ -62,6 +68,21 @@ GitHub API失败不代表仓库文件不可读。本次改用`raw.githubusercont
 **新事实与仍缺证据：**X Layer官网确有合约部署指南，不能再笼统说“没有官方部署文档”；但部署指南索引没有说明如何让当前OnchainOS账户发起CREATE。沿索引访问[Hardhat指南](https://web3.okx.com/onchainos/dev-docs/xlayer/developer/deploy-a-smart-contract/deploy-with-hardhat)20秒超时，未读到正文，不能推断其具体签名方式。钱包介绍的“可签名／提交交易”及“执行前模拟”也不等于公开了当前账户合约创建载荷与模拟接口。**一般X Layer部署能力与当前账户可用创建通道仍须分开核验。**
 
 Agentic Wallet页面还宣称“Zero Gas on X Layer”。这属于官网产品口径，本轮未核其适用条件；不能覆盖本项目已记录的0.01052 OKB累计实付、承诺未来零费用或解释已有收费构成。页面安全宣传不是本项目或账户的安全审计。此次成功正文含导航／产品说明，但没有取得满足现有部署门槛的账户创建依据，故继续不部署、不导出私钥、不换未知factory。仅更新文档，未修改应用或重跑此前完整测试。
+
+## 部署正文核验完成：当前账户路径仍未知（同日最新）
+
+本次沿已确认的官网导航重试，四页均HTTP 200，访问日期2026-10-18：
+
+| 一手来源 | 正文内容与适用性 | 原始HTML SHA-256 |
+|---|---|---|
+| [Hardhat部署](https://web3.okx.com/onchainos/dev-docs/xlayer/developer/deploy-a-smart-contract/deploy-with-hardhat) | 自述为X Layer测试网教程；网络配置`accounts: [privateKey1, privateKey2, ...]`，使用`getContractFactory`／`deploy` | `1b414e4c4023f9b967f208dacc71304e9d0a025fb527198f88dcb748b90567cc` |
+| [Foundry部署](https://web3.okx.com/onchainos/dev-docs/xlayer/developer/deploy-a-smart-contract/deploy-with-foundry) | 自述为测试网教程；明确要求`forge create --rpc-url HTTP_URL --private-key PRIVATE_KEY`，示例交互同样使用私钥 | `6ddf66610a2e49da9064a8685a0f7142dfa3f26e1abed030cf4457446e94d2ab` |
+| [Agentic Wallet快速开始](https://web3.okx.com/onchainos/dev-docs/wallet/agentic-quickstart) | 介绍持有资产、签名与提交交易，链接安装和首个Agent指南；没有在此页给出合约创建参数 | `3e207a789866669df8819cabb1c8b200b501f4eaeea6710f9be497d58c60b7f6` |
+| [Agentic Wallet技能](https://web3.okx.com/onchainos/dev-docs/wallet/agentic-wallet-skills) | 展示登录、子钱包、余额、安全检测、转账、历史及“检查Gas→模拟→扫描→执行→跟踪”；没有在此页给出当前账户CREATE调用 | `ac4323fd2aa85c64125d7cb99cf11178d332f47fa70ae1a7521225d3c8ecbb0c` |
+
+这是对上节Hardhat超时的后续替代，不是新的部署成功。未执行网页安装、测试网示例、私钥配置或任何交易。教程的测试网地址、示例锁款及旧工具版本不移植到本项目主网配置；Hardhat配置名`xlayer`与示例命令`--network XLayer`大小写还存在文本不一致，不原样运行。两份教程证明官方有普通私钥方式的部署指导，**不证明当前TEE／AA账户支持同样流程，也不证明其绝不支持CREATE**。
+
+截至本轮，针对这些官网正文的阅读已完成，仍缺的是账户专用接口依据，而不是重复运行本地测试。本文仅文档更新，`git diff --check`通过；不宣称新增应用回归、模拟、手机结果或独立采用。没有钱包调用及新增支出。
 
 ## 待用户参与的最短步骤
 
