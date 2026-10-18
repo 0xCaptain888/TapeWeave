@@ -45,6 +45,16 @@ try {
  const baseline=$('visual').textContent;
  const waitFor=async(test)=>{for(let i=0;i<200&&!test();i++)await new Promise(r=>setTimeout(r,10));expect(test(),'async UI timeout')};
  $('export-replay').click();await waitFor(()=>!!$('replay-output').value);
+ expect(!$('copy-artifact').disabled && !$('copy-replay').disabled,'copy outputs enabled');
+ let copied='';
+ Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text=>{copied=text;}}});
+ $('copy-artifact').click();await waitFor(()=>!!$('copy-artifact-status').textContent);
+ expect(copied===$('artifact').value,'copy artifact exact text');
+ $('copy-replay').click();await waitFor(()=>!!$('copy-replay-status').textContent);
+ expect(copied===$('replay-output').value,'copy replay exact text');
+ navigator.clipboard.writeText=async()=>{throw Error('denied')};
+ $('copy-replay-status').textContent='';$('copy-replay').click();await waitFor(()=>!!$('copy-replay-status').textContent);
+ expect($('copy-replay-status').textContent.includes('手动复制') && $('replay-output').selectionEnd===$('replay-output').value.length,'copy denied selects output');
  const replay=JSON.parse($('replay-output').value);
  expect(replay.results[0].score===2 && replay.results[1].score===1 && !replay.authenticated,'creator replay results');
  $('verify-text').value=JSON.stringify(replay);$('verify-replay').click();await waitFor(()=>!!$('verify-status').textContent);
@@ -61,6 +71,7 @@ try {
  cells[1].value='1';cells[1].dispatchEvent(new Event('change'));
  expect($('fire').disabled && !$('artifact').value,'edit invalidates artifact and actions');
  expect(!$('studio-trace').rows.length,'dirty trace cleared');
+ expect($('copy-artifact').disabled && $('copy-replay').disabled && !$('copy-replay-status').textContent,'dirty copy disabled');
  $('compile').click();await ready();
  expect(JSON.parse($('artifact').value).sha256!==artifact.sha256,'changed byte identity');
  expect($('visual').textContent.includes('回合0/4'),'compile reset');
@@ -123,7 +134,7 @@ try {
  preserved();
  frame.remove();
  ${layoutChecks}
- out.textContent=JSON.stringify({passed:true,layoutWidths,checks:['dual trace eight rows','door request without obstacle has no effect','ordinary trace parity','dirty trace cleared','recovered trace rebuilt','local identity','dual host effects','four turn lock','mode reset','ordinary parity','edit invalidation','changed byte identity','compile reset','edited request consumed','stale digest ignored','creator replay results','creator replay verify','creator replay rejection nonmutating','creator import reset and mode','creator failed import nonmutating','fresh document storage recovery','second document advances','stale document rejection nonmutating','stale document preserves shared save','stale compile refused','stale mode reset refused','stale import refused','stale edit then compile refused','explicit recovery control','external storage notification','recovery restores saved mode','recovery restores latest progress','recovery discards unsaved controls'],viewport:innerWidth});
+ out.textContent=JSON.stringify({passed:true,layoutWidths,checks:['copy outputs enabled','copy artifact exact text','copy replay exact text','copy denied selects output','dirty copy disabled','dual trace eight rows','door request without obstacle has no effect','ordinary trace parity','dirty trace cleared','recovered trace rebuilt','local identity','dual host effects','four turn lock','mode reset','ordinary parity','edit invalidation','changed byte identity','compile reset','edited request consumed','stale digest ignored','creator replay results','creator replay verify','creator replay rejection nonmutating','creator import reset and mode','creator failed import nonmutating','fresh document storage recovery','second document advances','stale document rejection nonmutating','stale document preserves shared save','stale compile refused','stale mode reset refused','stale import refused','stale edit then compile refused','explicit recovery control','external storage notification','recovery restores saved mode','recovery restores latest progress','recovery discards unsaved controls'],viewport:innerWidth});
 }catch(e){out.textContent=JSON.stringify({passed:false,error:e.message})}
 </script>`;
 const checks = `

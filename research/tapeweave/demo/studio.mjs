@@ -8,6 +8,20 @@ function invalidateSave(){
   try{local?.assertCurrent();clearLocal(localStorage);local=null;}
   catch(e){el('error').textContent=e.message;}
 }
+for(const [button,source,status] of [['copy-artifact','artifact','copy-artifact-status'],['copy-replay','replay-output','copy-replay-status']]){
+ el(button).onclick=async()=>{
+  const text=el(source).value,ticket=generation;
+  if(!text)return;
+  try{
+   await navigator.clipboard.writeText(text);
+   if(ticket===generation && el(source).value===text)el(status).textContent='已复制。仅本地未认证JSON，不含链身份。';
+  }catch{
+   if(ticket!==generation || el(source).value!==text)return;
+   el(source).focus();el(source).select();
+   el(status).textContent='剪贴板不可用，已选中文本，请手动复制。';
+  }
+ };
+}
 const selects=[];
 for(let i=0;i<8;i++){
   const tr=document.createElement('tr');
@@ -33,6 +47,9 @@ function render(){
     }
   });
   el('replay-output').value='';
+  el('copy-artifact').disabled=dirty||!el('artifact').value;
+  el('copy-replay').disabled=true;
+  el('copy-artifact-status').textContent='';el('copy-replay-status').textContent='';
   el('export-replay').disabled=dirty||!hosts.length||hosts[0].snapshot().version!==4;
   for(const id of ['wait','fire'])el(id).disabled=dirty||!hosts.length||hosts[0].snapshot().version>=4;
   el('visual').textContent=dirty?'行为已修改，请编译开启新局。':hosts.map((h,i)=>{
@@ -69,7 +86,7 @@ el('export-replay').onclick=async()=>{
   if(dirty||!hosts.length||hosts[0].snapshot().version!==4)throw Error('请先完成四回合');
   const actions=hosts[0].snapshot().trace.map(r=>r.trigger);
   const r=await createCreatorReplay(JSON.parse(el('artifact').value),actions,el('mode').value==='plain');
-  if(ticket===generation)el('replay-output').value=JSON.stringify(r,null,2);
+  if(ticket===generation){el('replay-output').value=JSON.stringify(r,null,2);el('copy-replay').disabled=false;el('copy-replay-status').textContent='';}
  }catch(e){el('error').textContent=e.message;}
 };
 let verifyRevision=0;
