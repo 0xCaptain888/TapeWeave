@@ -6,6 +6,8 @@
 
 用户最新要求以“OnchainOS Agentic Wallet的TEE／AA支持X Layer创建部署”为前提继续开发。按此继续，不将“未取得接口”判成能力不支持；但用户能力陈述不冒充官方接口核验或真实部署证据。新增[离线部署准备工具](../contracts/README.md)，生成两枚审查卡的构造参数／完整initcode／ABI／散列／编译输入，已通过确定性与ABI测试。工具无RPC／钱包／签名／广播，输出仍非可发送状态；具体官方账户创建／模拟适配器尚未接入。此前停止真实部署与禁止绕过仍有效，累计0.01052 OKB未变。
 
+最新补证：`contracts/test-prepared-initcode.mjs`直接使用离线准备工具的完整initcode进行本地EVM部署，核immutable getter及遮蔽immutable后的全部runtime，再执行两卡0011双宿主，通过。处理器是本地地址注入Mock，不是实际TapeOut、X Layer fork或官方AA模拟；未解除真实部署暂停。详见[合约README](../contracts/README.md)。
+
 ## 1. 明确外部阻塞及冻结范围
 
 用户已确认：**缺少官方 Account 2 CREATE 路径**。一手资料仅证实普通私钥方式的Hardhat／Foundry测试网部署，不覆盖当前账户的TEE／AA创建与模拟。立即停止真实宿主部署及其试探；不再尝试未知factory、伪造`to`、私钥导出或其他绕过。本包不提供可直接广播的创建命令，不自动等待官方回复后部署。累计历史实付0.01052 OKB，暂停复核线0.05 OKB保持。

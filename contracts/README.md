@@ -43,6 +43,16 @@ TAPEWEAVE_SOLIDITY_TOOLS=/absolute/external/tools/node_modules node contracts/pr
 
 作者本轮测试通过：两次生成确定一致，ABI构造参数顺序／两卡哈希正确，initcode拼接正确且保留所有未模拟／未发送标记。仅本地编译测试，不是官方钱包接入或真实部署。
 
+### 完整准备包的本地EVM接入验证
+
+```sh
+TAPEWEAVE_SOLIDITY_TOOLS=/absolute/external/tools/node_modules node contracts/test-prepared-initcode.mjs
+```
+
+本轮已运行通过：直接部署`prepareDeployment`生成的完整initcode；核processor及两卡immutable getter；仅遮蔽编译器声明的immutable位置后，对比全部运行时代码；两卡0011双宿主得分／资源一致。此测试不重新拼接另一份宿主测试字节码，补上此前实际准备包尚未跑EVM的缺口。
+
+**限制**：仅Ganache本地EVM，用`evm_setAccountCode`在本地处理器地址注入Mock（返回已保存网表，转换用普通公式）；不是实际TapeOut解释器、X Layer fork、TEE／AA账户模拟或主网部署。Mock注入不是可用于真实部署的方案。原准备包的`simulated=false`不被改写，因为官方账户模拟仍未完成；原32局／回滚测试为另一组测试，本轮新增仅两卡0011及代码配置核对。µWS仍回退JS。未连接任何钱包或实时RPC。
+
 ## 还不能称完成
 
 1. 当前钱包CLI `wallet contract-call --help`要求EVM必须提供to，没有公开合约创建参数；不能把创建字节码发给随意地址、零地址或未核验CREATE2工厂，亦不读取私钥绕过钱包。用户已明确停止真实部署；外部阻塞为“缺少官方 Account 2 CREATE 路径”。不因一般已验证工厂而自行解除限制，需官方账户创建／模拟依据及后续重新审核。
