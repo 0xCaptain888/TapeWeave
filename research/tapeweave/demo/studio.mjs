@@ -35,18 +35,21 @@ for(let i=0;i<8;i++){
   }
   selects.push(pair);el('rows').append(tr);
 }
-function render(){
-  el('probe-result').textContent='';
-  el('studio-trace').replaceChildren();
-  if(!dirty)hosts.forEach((host,i)=>{
-    for(const row of host.snapshot().trace){
+function showTrace(target,snapshots){
+  el(target).replaceChildren();
+  snapshots.forEach((snapshot,i)=>{
+    for(const row of snapshot.trace){
       const tr=document.createElement('tr');
       for(const value of [i?'钥匙门':'训练',row.turn+1,row.old,row.trigger,row.recharge,row.request,row.next,i?row.obstacle:'—',row.effect]){
         const td=document.createElement('td');td.textContent=String(value);tr.append(td);
       }
-      el('studio-trace').append(tr);
+      el(target).append(tr);
     }
   });
+}
+function render(){
+  el('probe-result').textContent='';
+  showTrace('studio-trace',dirty?[]:hosts.map(h=>h.snapshot()));
   el('replay-output').value='';
   el('copy-artifact').disabled=dirty||!el('artifact').value;
   el('copy-replay').disabled=true;
@@ -102,12 +105,16 @@ el('export-replay').onclick=async()=>{
  }catch(e){el('error').textContent=e.message;}
 };
 let verifyRevision=0;
-el('verify-text').addEventListener('input',()=>{verifyRevision++;el('verify-status').textContent='';});
+el('verify-text').addEventListener('input',()=>{verifyRevision++;el('verify-status').textContent='';showTrace('verified-trace',[]);});
 el('verify-replay').onclick=async()=>{
  const ticket=++verifyRevision;
+ showTrace('verified-trace',[]);el('verify-status').textContent='';
  try{
   const r=await verifyCreatorReplay(el('verify-text').value);
-  if(ticket===verifyRevision)el('verify-status').textContent=`计算一致：训练${r.results[0].score}，门${r.results[1].score}。未认证，仅本地重算，当前局未改变。`;
+  if(ticket===verifyRevision){
+   showTrace('verified-trace',r.results);
+   el('verify-status').textContent=`计算一致：训练${r.results[0].score}，门${r.results[1].score}。以下为粘贴回放的重算明细，不是当前局。未认证，仅本地重算，当前局未改变。`;
+  }
  }catch(e){if(ticket===verifyRevision)el('verify-status').textContent=`复核失败：${e.message}；当前局未改变。`;}
 };
 let importRevision=0;

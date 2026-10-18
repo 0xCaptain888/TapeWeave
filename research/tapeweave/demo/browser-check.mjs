@@ -66,9 +66,13 @@ try {
  expect(replay.results[0].score===2 && replay.results[1].score===1 && !replay.authenticated,'creator replay results');
  $('verify-text').value=JSON.stringify(replay);$('verify-replay').click();await waitFor(()=>!!$('verify-status').textContent);
  expect($('verify-status').textContent.includes('计算一致'),'creator replay verify');
+ expect($('verified-trace').rows.length===8 && $('verified-trace').textContent===firstTrace,'verified trace matches replay');
+ $('verify-text').dispatchEvent(new Event('input'));
+ expect(!$('verified-trace').rows.length && !$('verify-status').textContent,'verified trace cleared on input');
  replay.results[0].score++;
  $('verify-text').value=JSON.stringify(replay);$('verify-text').dispatchEvent(new Event('input'));$('verify-replay').click();await waitFor(()=>!!$('verify-status').textContent);
  expect($('verify-status').textContent.includes('复核失败') && $('visual').textContent===baseline,'creator replay rejection nonmutating');
+ expect(!$('verified-trace').rows.length,'failed verification has no trace');
  $('mode').value='plain';$('mode').dispatchEvent(new Event('change'));await ready();
  expect($('visual').textContent.includes('回合0/4'),'mode reset');
  for(const id of ['wait','wait','fire','fire'])$(id).click();
@@ -141,7 +145,7 @@ try {
  preserved();
  frame.remove();
  ${layoutChecks}
- out.textContent=JSON.stringify({passed:true,layoutWidths,checks:['probe old state timing','probe does not commit','probe input clears result','probe charged request','copy outputs enabled','copy artifact exact text','copy replay exact text','copy denied selects output','dirty copy disabled','dual trace eight rows','door request without obstacle has no effect','ordinary trace parity','dirty trace cleared','recovered trace rebuilt','local identity','dual host effects','four turn lock','mode reset','ordinary parity','edit invalidation','changed byte identity','compile reset','edited request consumed','stale digest ignored','creator replay results','creator replay verify','creator replay rejection nonmutating','creator import reset and mode','creator failed import nonmutating','fresh document storage recovery','second document advances','stale document rejection nonmutating','stale document preserves shared save','stale compile refused','stale mode reset refused','stale import refused','stale edit then compile refused','explicit recovery control','external storage notification','recovery restores saved mode','recovery restores latest progress','recovery discards unsaved controls'],viewport:innerWidth});
+ out.textContent=JSON.stringify({passed:true,layoutWidths,checks:['verified trace matches replay','verified trace cleared on input','failed verification has no trace','probe old state timing','probe does not commit','probe input clears result','probe charged request','copy outputs enabled','copy artifact exact text','copy replay exact text','copy denied selects output','dirty copy disabled','dual trace eight rows','door request without obstacle has no effect','ordinary trace parity','dirty trace cleared','recovered trace rebuilt','local identity','dual host effects','four turn lock','mode reset','ordinary parity','edit invalidation','changed byte identity','compile reset','edited request consumed','stale digest ignored','creator replay results','creator replay verify','creator replay rejection nonmutating','creator import reset and mode','creator failed import nonmutating','fresh document storage recovery','second document advances','stale document rejection nonmutating','stale document preserves shared save','stale compile refused','stale mode reset refused','stale import refused','stale edit then compile refused','explicit recovery control','external storage notification','recovery restores saved mode','recovery restores latest progress','recovery discards unsaved controls'],viewport:innerWidth});
 }catch(e){out.textContent=JSON.stringify({passed:false,error:e.message})}
 </script>`;
 const checks = `
