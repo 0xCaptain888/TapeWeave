@@ -1,0 +1,8 @@
+import assert from 'node:assert/strict';import {mkdtemp,rm} from 'node:fs/promises';import {join} from 'node:path';import {tmpdir} from 'node:os';
+import {openWorkStore} from './work-store.mjs';import {createWork,presetArtifact} from './work.mjs';
+const dir=await mkdtemp(join(tmpdir(),'tw-work-store-'));let a,b;
+try{const path=join(dir,'work.sqlite');a=openWorkStore(path);const w=JSON.stringify(await createWork({title:'test',description:'test',scene:'lamp',artifact:await presetArtifact('pulse')}));
+for(const mode of ['byte','plain']){await a.create(mode,w,mode);await a.act(mode,{id:'charge',version:0,input:{trigger:0,recharge:1}});const c={id:'use',version:1,input:{trigger:1,recharge:0}};const r=await a.act(mode,c);assert.equal(r.commands.at(-1).row.request,1);assert.deepEqual(await a.act(mode,c),r);await assert.rejects(()=>a.act(mode,{...c,input:{trigger:0,recharge:0}}),/冲突/);}
+a.close();a=openWorkStore(path);assert.equal((await a.snapshot('byte')).commands.length,2);
+b=openWorkStore(path);const c={id:'race-a',version:2,input:{trigger:0,recharge:1}},d={id:'race-b',version:2,input:{trigger:0,recharge:1}};const results=await Promise.allSettled([a.act('byte',c),b.act('byte',d)]);assert.equal(results.filter(r=>r.status==='fulfilled').length,1);assert.equal((await a.snapshot('byte')).commands.length,3);b.close();b=openWorkStore(path,{beforeCommit:()=>{throw Error('injected failure')}});await assert.rejects(()=>b.act('byte',{id:'rollback',version:3,input:{trigger:1,recharge:0}}),/injected/);assert.equal((await a.snapshot('byte')).commands.length,3);console.log('PASS durable work store: reopen, parity, retry, conflicting commands, two-connection race, rollback');
+}finally{a?.close();b?.close();await rm(dir,{recursive:true,force:true});}

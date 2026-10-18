@@ -14,7 +14,11 @@ TapeWeave希望创作者设计的“遇到什么条件、采取什么动作”�
 
 👉 **[制作并交付互动作品](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html)** · [高级规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html)
 
-### 新增：双应用展览实验与执行恢复
+### 新增：版本差异、追加回退与通用执行适配器
+
+作品管理可选择版本基准、逐项比较元数据与八行行为变化；回退追加新版本，不删除历史、不自动迁移接收方。可复制完整作品库归档，校验后仅恢复到空库。新增Node24通用作品SQLite适配器与CLI，支持64步、双输入、命令重试、并发冲突拒绝和事务回滚；它不是Pages后端，未接旧HTTP页面。操作及边界见[作品持久化指南](research/tapeweave/demo/WORK-PERSISTENCE.md)。
+
+### 双应用展览实验与执行恢复
 
 打开[互动展览实验](research/tapeweave/demo/exhibit.html)，用同一行为分别揭开展签故事、兑换一枚虚拟纪念印章。两个应用状态独立；印章库存由应用约束，行为请求不能绕过库存。可以切换普通真值表完成同任务，不预设电路方案更优。这是两个作者应用，不是独立团队采用；无真实兑换或链上动作。
 

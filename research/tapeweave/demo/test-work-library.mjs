@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {openLibrary,verifyAcceptance} from './work-library.mjs';
+import {openLibrary,verifyAcceptance,compareWorks} from './work-library.mjs';
 import {createWork,presetArtifact,connectWork,makeAcceptance} from './work.mjs';
 let raw=null;const storage={getItem:()=>raw,setItem:(_,v)=>{raw=v;}};
 const lib=openLibrary(storage),work=await createWork({title:'test',description:'test',scene:'lamp',artifact:await presetArtifact('pulse')});
@@ -13,6 +13,14 @@ const p=await connectWork(input);p.step(0,{trigger:0,recharge:1});p.step(1,{trig
 const r=await makeAcceptance(input,'byte',p.snapshot().trace,{result:'fail',note:'author fixture'});
 assert.equal((await verifyAcceptance(JSON.stringify(r))).result,'fail');
 r.trace[1].request=0;await assert.rejects(()=>verifyAcceptance(JSON.stringify(r)),/不一致/);
+assert.equal((await lib.rollback('one',1)).version,3);
+assert.equal(lib.list()[0].versions[2].work.title,'test');
+await assert.rejects(()=>lib.rollback('one',1),/内容未变/);
+const diff=await compareWorks(input,JSON.stringify({...work,title:'new'}));assert(diff.same_behavior);assert.deepEqual(diff.changes.map(c=>c.field),['title']);
+const other=await createWork({...work,artifact:await presetArtifact('alternating')});assert.equal((await compareWorks(input,JSON.stringify(other))).same_behavior,false);
+const archive=JSON.stringify(await lib.exportArchive());let restored=null;const target=openLibrary({getItem:()=>restored,setItem:(_,v)=>restored=v});assert.equal(await target.importArchive(archive),1);assert.deepEqual(target.list(),lib.list());
+await assert.rejects(()=>target.importArchive(archive),/空作品库/);
+let untouched=null;const empty=openLibrary({getItem:()=>untouched,setItem:(_,v)=>untouched=v});const bad=JSON.parse(archive);bad.items[0].versions[0].work.artifact.sha256='bad';await assert.rejects(()=>empty.importArchive(JSON.stringify(bad)));assert.equal(untouched,null);
 const old=raw;await assert.rejects(()=>lib.save('one','{}'));assert.equal(raw,old);
 raw='{';await assert.rejects(()=>lib.save('one',input));assert.equal(raw,'{');
 console.log('PASS local library versions, isolation, invalid input preserves data, acceptance recomputation; not authentication');
