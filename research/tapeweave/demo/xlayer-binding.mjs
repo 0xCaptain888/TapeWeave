@@ -18,6 +18,11 @@ function dynamic(raw,count){
  }
  if(cursor!==hex.length)throw Error('ABI尾部多余数据');return result;
 }
+export function decodeStep(raw){
+ const [state,output]=dynamic(raw,2);
+ if(!['00','01'].includes(state)||!['00','01'].includes(output))throw Error('转换必须返回单字节整数位');
+ return [parseInt(state,16),parseInt(output,16)];
+}
 const tail=hex=>word(hex.length/2)+hex.padEnd(Math.ceil(hex.length/64)*64,'0');
 export function encodeStep(id,state,input){return '0xe8281a1a'+word(id)+word(96)+word(160)+tail(state.toString(16).padStart(2,'0'))+tail(input.toString(16).padStart(2,'0'));}
 export async function publicRead(endpoint,method,params){
