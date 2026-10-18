@@ -13,6 +13,8 @@ const until=async f=>{for(let i=0;i<60;i++){if(f())return;await tick();}throw Er
 const set=(id,v)=>{$(id).value=v;$(id).dispatchEvent(new Event('input',{bubbles:true}))};
 Object.defineProperty(navigator,'clipboard',{value:{writeText:async()=>{throw Error('denied fixture')}}});
 expect($('trigger').disabled&&!$('result').value,'initial state');
+expect(!$('resume').disabled&&$('resume').textContent==='恢复本机执行存档','recovery enabled after handlers ready');
+expect([...document.querySelectorAll('.work-layout>section>h2')].map(x=>x.textContent.slice(0,2)).join(',')==='01,02,03,04','reading and focus section order');
 set('title','<img src=x onerror=alert(1)>');$('build').click();await until(()=>$('delivery').value);
 const delivered=$('delivery').value;expect($('work-title').textContent.includes('<img')&&!document.querySelector('img'),'text only');
 $('recharge').click();await tick();$('trigger').click();await tick();expect($('visual-effect').classList.contains('active'),'lamp effect');
