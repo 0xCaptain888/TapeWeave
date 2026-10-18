@@ -18,7 +18,7 @@
 
 ## 4. Node24通用SQLite执行适配器
 
-不同于旧四回合训练／门宿主，新 `work-store.mjs`直接消费完整作品包，支持trigger和recharge两输入、byte／plain、64步、命令ID和预期版本。它是本地开发者适配器，**没有接到Pages或旧HTTP服务**，也不自动执行实际奖励。
+不同于旧四回合训练／门宿主，新 `work-store.mjs`直接消费完整作品包，支持trigger和recharge两输入、byte／plain、64步、命令ID和预期版本。它是本地开发者适配器，现在已接入同一本机HTTP服务的独立页面 `local-work.html`，不接Pages，也不自动执行实际奖励。
 
 先把作品包保存为仓库外 `/private/tmp/my-work.json`，数据库也放仓库外：
 
@@ -32,6 +32,16 @@ node research/tapeweave/demo/work-cli.mjs /private/tmp/my-work.sqlite show trial
 默认蓄能作品第二步应request=1；重复原命令ID和相同参数返回相同日志，不追加；同ID不同输入拒绝。关闭进程再show保留进度。并发调用先在事务外校验／重算，再在`BEGIN IMMEDIATE`内比较原始日志、提交；冲突者拒绝，可用原ID重试。WAL、FULL、busy_timeout=5000；提交异常回滚。不在等待异步重算时持有写事务。
 
 测试包含重开、两模式、重试、冲突、双连接竞争和提交前故障回滚；未新增进程断电／磁盘损坏测试，不把旧宿主的SIGKILL证据移植到这里。没有钱包认证、公网访问控制、云备份、链消费或效果事务。应用应把奖励与状态放在同一受控事务里，不能先发奖再调用本地适配器。没有迁移浏览器日志到SQLite的UI。
+
+### 本机网页执行（新增）
+
+```sh
+node research/tapeweave/demo/local-server.mjs /private/tmp/tapeweave-local.sqlite 8787
+```
+
+使用终端输出的“通用作品执行”完整URL（带本地凭据，勿分享），粘贴作品包、填写会话ID、创建。补能→触发应请求1；刷新会恢复该标签页选中的会话。不同会话独立；同名创建拒绝。也可列出前100项或按ID读取。旧四回合宿主页仍可用，不混用两类会话。
+
+页面在发送前保存命令ID和参数，超时或丢失回执保留待确认，禁止其他动作与切局；点击重试会使用原ID。明确旧版本拒绝后刷新快照并要求重新选动作。不要清除sessionStorage来解决不确定提交；清掉后只能读取当前日志核查，不能据此认为未提交。记录可生成文本手动复制，无自动上传。服务仍限127.0.0.1、Host／Origin／Bearer校验、严格静态白名单；DB和执行模块不公开。请求上限24 KiB，超过会拒绝（即使离线作品包上限32 KiB）。本机凭据不是用户账户认证。
 
 ## 5. 180秒演示拍摄提纲（尚未拍摄）
 

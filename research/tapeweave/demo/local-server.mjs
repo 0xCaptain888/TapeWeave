@@ -5,13 +5,14 @@ import {readFile,realpath,lstat} from 'node:fs/promises';
 import {resolve,dirname,relative,isAbsolute} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {openStore} from './durable-host.mjs';
+import {openWorkStore} from './work-store.mjs';
 import {parseArtifact,createArtifact} from './creator-package.mjs';
 import {createCreatorReplay} from './creator-replay.mjs';
 const root=fileURLToPath(new URL('.',import.meta.url));
 const assets=new Map([
  ['/', ['durable.html','text/html; charset=utf-8']],
  ['/logo.svg',['logo.svg','image/svg+xml; charset=utf-8']],
-  ...['durable.html','durable.mjs','style.css'].map(f=>['/'+f,[f,f.endsWith('.html')?'text/html; charset=utf-8':f.endsWith('.css')?'text/css; charset=utf-8':'text/javascript; charset=utf-8']])
+  ...['durable.html','durable.mjs','local-work.html','local-work.mjs','style.css'].map(f=>['/'+f,[f,f.endsWith('.html')?'text/html; charset=utf-8':f.endsWith('.css')?'text/css; charset=utf-8':'text/javascript; charset=utf-8']])
 ]);
 const exact=(v,keys)=>v && typeof v==='object' && !Array.isArray(v) && Object.keys(v).sort().join(',')===[...keys].sort().join(',');
 const inside=(parent,child)=>{const r=relative(parent,child);return r===''||(!r.startsWith('..')&&!isAbsolute(r));};
@@ -29,7 +30,7 @@ export async function startLocalServer({database,port=0}={}){
  try{if(!(await lstat(path)).isFile())throw Error('数据库必须是普通文件');}catch(e){if(e.code!=='ENOENT')throw e;}
  // Reject symlinked SQLite sidecars too.
  for(const suffix of ['-wal','-shm']){try{if(!(await lstat(path+suffix)).isFile())throw Error('非法数据库附属文件');}catch(e){if(e.code!=='ENOENT')throw e;}}
- const store=openStore(path),token=randomBytes(32).toString('hex');
+ const store=openStore(path),works=openWorkStore(path),token=randomBytes(32).toString('hex');
  let origin;
  const server=createServer(async(req,res)=>{
   const send=(status,data,type='application/json; charset=utf-8')=>{res.writeHead(status,{'Content-Type':type});res.end(type.startsWith('application/json')?JSON.stringify(data):data);};
@@ -48,7 +49,15 @@ export async function startLocalServer({database,port=0}={}){
    if(req.headers['content-type']!=='application/json')return send(415,{error:'仅接受application/json'});
    try{
     const b=await body(req);let result;
-    if(url.pathname==='/api/create'){
+    if(url.pathname==='/api/work-create'){
+     if(!exact(b,['session','work','mode']))throw Error('非法作品创建参数');result=await works.create(b.session,b.work,b.mode);
+    }else if(url.pathname==='/api/work-show'){
+     if(!exact(b,['session']))throw Error('非法作品读取参数');result=await works.snapshot(b.session);
+    }else if(url.pathname==='/api/work-act'){
+     if(!exact(b,['session','command']))throw Error('非法作品动作参数');result=await works.act(b.session,b.command);
+    }else if(url.pathname==='/api/work-list'){
+     if(!exact(b,[]))throw Error('非法作品列表参数');result=works.list();
+    }else if(url.pathname==='/api/create'){
      if(!exact(b,['session','artifact','plain'])||typeof b.plain!=='boolean')throw Error('非法创建参数');
      const artifact=await parseArtifact(b.artifact);
      result=store.create(b.session,{next:artifact.next,request:artifact.request,plain:b.plain});
@@ -74,16 +83,16 @@ export async function startLocalServer({database,port=0}={}){
  });
  server.requestTimeout=10000;server.headersTimeout=10000;
  try{await new Promise((ok,fail)=>{server.once('error',fail);server.listen(port,'127.0.0.1',ok);});}
- catch(e){store.close();throw e;}
+ catch(e){store.close();works.close();throw e;}
  origin=`http://127.0.0.1:${server.address().port}`;
- return {origin,token,url:`${origin}/#${token}`,close:()=>new Promise((ok,fail)=>{server.close(e=>{store.close();e?fail(e):ok();});server.closeIdleConnections();})};
+ return {origin,token,url:`${origin}/#${token}`,close:()=>new Promise((ok,fail)=>{server.close(e=>{store.close();works.close();e?fail(e):ok();});server.closeIdleConnections();})};
 }
 if(process.argv[1] && resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  const [database,port='8787',...extra]=process.argv.slice(2);
  try{
   if(extra.length||!/^\d+$/.test(port))throw Error('usage: node local-server.mjs DATABASE_OUTSIDE_REPO [PORT]');
   const app=await startLocalServer({database,port:Number(port)});
-  console.log(`仅本机访问（启动凭据勿分享）：${app.url}\nSQLite: ${resolve(database)}\n停止请按Ctrl+C。不是公开服务，无钱包或写链。`);
+  console.log(`仅本机访问（启动凭据勿分享）：${app.url}\n通用作品执行：${app.origin}/local-work.html#${app.token}\nSQLite: ${resolve(database)}\n停止请按Ctrl+C。不是公开服务，无钱包或写链。`);
   for(const signal of ['SIGINT','SIGTERM'])process.once(signal,()=>{app.close().then(()=>process.exit(0),()=>process.exit(1));});
  }catch(e){console.error('本地服务启动失败：'+e.message);process.exitCode=1;}
 }

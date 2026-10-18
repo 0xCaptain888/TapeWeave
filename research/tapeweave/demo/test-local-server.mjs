@@ -7,6 +7,7 @@ import {startLocalServer} from './local-server.mjs';
 import {createArtifact} from './creator-package.mjs';
 import {verifyCreatorReplay} from './creator-replay.mjs';
 import {presets} from './creator.mjs';
+import {createWork} from './work.mjs';
 const dir=await mkdtemp(join(tmpdir(),'tapeweave-http-'));let app;
 try{
  const database=join(dir,'state.sqlite');app=await startLocalServer({database});
@@ -30,6 +31,16 @@ try{
  assert.equal((await call('list',{after:'bad cursor'})).status,400);
  assert.equal((await call('list',{after:'',extra:1})).status,400);
  const artifact=await createArtifact(presets.pulse.next,presets.pulse.request);
+ const work=JSON.stringify(await createWork({title:'local work',description:'charge use',scene:'lamp',artifact}));
+ assert.equal((await fetch(app.origin+'/local-work.html')).status,200);
+ assert.equal((await fetch(app.origin+'/work-store.mjs')).status,404);
+ assert.equal((await call('work-show',{session:'w'},{Authorization:''})).status,403);
+ assert.equal((await call('work-create',{session:'w',work,mode:'byte',extra:1})).status,400);
+ assert.equal((await call('work-create',{session:'w',work,mode:'byte'})).status,200);
+ const wc={session:'w',command:{id:'wc',version:0,input:{trigger:0,recharge:1}}};
+ const wr=await call('work-act',wc);assert.equal(wr.status,200);assert.deepEqual((await call('work-act',wc)).data,wr.data);
+ assert.equal((await call('work-show',{session:'w'})).data.commands.length,1);
+ assert.deepEqual((await call('work-list',{})).data,['w']);
  for(const plain of [false,true]){
   const session=plain?'plain':'byte';
   assert.equal((await call('create',{session,artifact:JSON.stringify(artifact),plain})).status,200);
@@ -48,6 +59,7 @@ try{
  }
  await app.close();app=await startLocalServer({database});
  assert.equal((await call('show',{session:'byte'})).data.version,4);
+ assert.equal((await call('work-show',{session:'w'})).data.commands.length,1);
  const races=await call('create',{session:'race',artifact:JSON.stringify(artifact),plain:false});assert.equal(races.status,200);
  const concurrent=await Promise.all(['one','two'].map(id=>call('act',{session:'race',command:{id,version:0,trigger:0}})));
  assert.deepEqual(concurrent.map(x=>x.status).sort(),[200,400]);

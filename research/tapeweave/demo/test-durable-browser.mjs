@@ -7,6 +7,7 @@ import {join} from 'node:path';
 import {startLocalServer} from './local-server.mjs';
 import {createArtifact} from './creator-package.mjs';
 import {presets} from './creator.mjs';
+import {createWork} from './work.mjs';
 const dir=await mkdtemp(join(tmpdir(),'tw-browser-'));let app,chrome,socket;
 try{
  app=await startLocalServer({database:join(dir,'test.sqlite')});
@@ -55,6 +56,22 @@ try{
  await wait(()=>evaluate("document.getElementById('summary').textContent.includes('会话 byte · 版本 4/4') && !document.getElementById('load').disabled"));
  assert.equal(await evaluate("document.getElementById('session').value"),'byte');
  assert.equal(await evaluate("document.getElementById('trace').rows.length"),8);
+ // New generic work page uses the same guarded loopback service, separate UI key.
+ await cdp('Page.navigate',{url:app.origin+'/local-work.html#'+app.token});
+ await wait(()=>evaluate("!!document.getElementById('charge') && !document.getElementById('create').disabled"));
+ const work=JSON.stringify(await createWork({title:'persistent work',description:'charge then use',scene:'lamp',artifact}));
+ for(const mode of ['byte','plain']){
+ await evaluate(`document.getElementById('session').value='work-${mode}';document.getElementById('mode').value='${mode}';document.getElementById('work').value=${JSON.stringify(work)};document.getElementById('create').click()`);
+ await wait(()=>evaluate("!document.getElementById('charge').disabled"));
+ for(const [i,id] of ['charge','trigger'].entries()){await evaluate(`document.getElementById('${id}').click()`);await wait(()=>evaluate(`document.getElementById('summary').textContent.includes('第${i+1}步') && !document.getElementById('load').disabled`));}
+ assert.ok(await evaluate("document.getElementById('summary').textContent.includes('请求1')"));
+ await cdp('Page.reload');await wait(()=>evaluate("!!document.getElementById('summary') && document.getElementById('summary').textContent.includes('第2步')"));
+ }
+ await evaluate(`(async()=>{const r=JSON.parse(sessionStorage.getItem('tapeweave-local-work-ui-v1'));r.pending={session:r.session,command:{id:'lost-work',version:2,input:{trigger:0,recharge:1}}};sessionStorage.setItem('tapeweave-local-work-ui-v1',JSON.stringify(r));const response=await fetch('/api/work-act',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+r.token},body:JSON.stringify(r.pending)});if(!response.ok)throw Error('setup');})()`);
+ await cdp('Page.reload');await wait(()=>evaluate("!!document.getElementById('retry') && !document.getElementById('retry').disabled"));
+ assert.ok(await evaluate("document.getElementById('load').disabled && document.getElementById('charge').disabled"));
+ await evaluate("document.getElementById('retry').click()");await wait(()=>evaluate("document.getElementById('summary').textContent.includes('第3步') && !document.getElementById('load').disabled"));
+ await evaluate("document.getElementById('export').click()");assert.equal(await evaluate("JSON.parse(document.getElementById('output').value).commands.length"),3);
  // Small viewport, with real top-level navigation (framing deliberately denied).
  await cdp('Emulation.setDeviceMetricsOverride',{width:320,height:900,deviceScaleFactor:1,mobile:false});
  assert.ok(await evaluate('document.documentElement.scrollWidth<=320'));

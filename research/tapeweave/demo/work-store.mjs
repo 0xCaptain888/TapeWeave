@@ -10,7 +10,7 @@ export function openWorkStore(path,{beforeCommit=()=>{}}={}){
   async create(id,work,mode='byte'){if(!valid(id))throw Error('非法会话ID');const record=await createSession(work,mode);return tx(()=>{db.prepare('INSERT INTO work_sessions VALUES(?,?)').run(id,JSON.stringify(record));return structuredClone(record);});},
   async snapshot(id){return (await restoreSession(raw(id))).record;},
   async act(id,command){
-   if(!command||Object.keys(command).sort().join(',')!=='id,input,version'||!valid(command.id))throw Error('非法命令');
+   if(!command||Object.keys(command).sort().join(',')!=='id,input,version'||!valid(command.id)||!command.input||Object.keys(command.input).sort().join(',')!=='recharge,trigger')throw Error('非法命令');
    const before=raw(id),record=(await restoreSession(before)).record;
    const next=await advanceSession(record,command.id,command.version,command.input);
    return tx(()=>{if(raw(id)!==before)throw Error('会话已变化；以原命令ID重试');db.prepare('UPDATE work_sessions SET record=? WHERE id=?').run(JSON.stringify(next),id);return structuredClone(next);});

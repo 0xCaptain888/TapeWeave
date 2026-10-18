@@ -16,7 +16,7 @@ TapeWeave希望创作者设计的“遇到什么条件、采取什么动作”�
 
 ### 新增：版本差异、追加回退与通用执行适配器
 
-作品管理可选择版本基准、逐项比较元数据与八行行为变化；回退追加新版本，不删除历史、不自动迁移接收方。可复制完整作品库归档，校验后仅恢复到空库。新增Node24通用作品SQLite适配器与CLI，支持64步、双输入、命令重试、并发冲突拒绝和事务回滚；它不是Pages后端，未接旧HTTP页面。操作及边界见[作品持久化指南](research/tapeweave/demo/WORK-PERSISTENCE.md)。
+作品管理可选择版本基准、逐项比较元数据与八行行为变化；回退追加新版本，不删除历史、不自动迁移接收方。可复制完整作品库归档，校验后仅恢复到空库。新增Node24通用作品SQLite适配器与CLI，支持64步、双输入、命令重试、并发冲突拒绝和事务回滚；它不是Pages后端；现在可通过本机服务输出的 `local-work.html` 专用入口创建、续用、重试和查看作品日志，旧四回合页保持独立。操作及边界见[作品持久化指南](research/tapeweave/demo/WORK-PERSISTENCE.md)。
 
 ### 双应用展览实验与执行恢复
 
@@ -151,18 +151,6 @@ node research/tapeweave/demo/check.mjs --browser
 | [RPC宿主工具](research/tapeweave/demo/RPC-HOST.md) | 读取后本地提交，不发交易；历史双端绑定未通过 |
 | [合约源码、测试与离线准备](contracts/README.md) | 尚缺适用当前Account2的官方创建／模拟适配器，准备包不可直接广播 |
 | [真实制造记录](docs/tapeweave-manufacture-2026-10-18.md) | pulse ID1、alternating ID2；不是宿主部署记录 |
-
-### 项目判断与研究
-
-- [最新完成与剩余阻塞](docs/tapeweave-completion-status-2026-10-18.md)
-- [统一审核包与证据边界](docs/tapeweave-review-package-2026-10-18.md)
-- [商业价值复核](docs/tapeweave-commercial-validation-2026-10-18.md)／[未执行验证任务单](docs/tapeweave-commercial-pilot-2026-10-18.md)
-- [TapeOut官方规则研究及来源](docs/tapeout-research-2026-10-17.md)
-- [研究收敛结论](docs/tapeout-final-research-decision-2026-10-17.md)
-
-历史链上累计实付0.01052 OKB；用户指定TEE／AA支持部署作为开发前提，不等于已取得当前账户的具体官方接口。历史70分只是设计自评基线，不是官方评分或获奖概率。研究含被后续结论替代的方案，当前状态以上方最新报告为准。
-
-早期本地制品的`chain_identity=null`保留，不因后来制造成功而改写旧证据；散列与重算一致不认证来源。
 
 ## 发布与许可
 
