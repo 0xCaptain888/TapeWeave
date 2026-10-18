@@ -2,7 +2,13 @@
 
 日期：2026-10-18。本文汇总当前可离线完成的开发与验证，不宣称“全部项目完成”。统一入口：[审核包](tapeweave-review-package-2026-10-18.md)。研究与商业决策分别见[研究收敛](tapeout-final-research-decision-2026-10-17.md)、[商业价值复核](tapeweave-commercial-validation-2026-10-18.md)。
 
-## 最新增量：展览记录接收复核（2026-10-18）
+## 最新用户决策：冻结部署，准备独立接入与Android验收（2026-10-18）
+
+Account 2宿主部署暂不处理，广播继续暂停并保留外部阻塞；不换账户、未知factory或私钥绕过。用户负责邀请一位独立开发者，本轮提供[短任务单与五文件接入起点](../research/tapeweave/demo/pilot/TASK.md)、[计时／问题空模板](../research/tapeweave/demo/pilot/RECORD.md)及[Android Chrome真机执行单](../research/tapeweave/demo/ANDROID-CHROME.md)。反馈经原邀请渠道交还用户，再粘贴本任务，无需私人联系方式。没有自动收集数据。
+
+独立试点与真机均未执行。提供起点不算独立采用；自动化通过不填真人验收。审核门最短待办见[审核包顶部](tapeweave-review-package-2026-10-18.md)。
+
+## 此前增量：展览记录接收复核（2026-10-18）
 
 展览新增粘贴复核入口与独立 `exhibit-record.mjs`：重新计算两站行为、最终状态、故事与单枚库存，支持byte/plain及中途记录；篡改效果、轨迹或证据标记应拒绝，复核不改变当前任务。新增[交付说明](../research/tapeweave/demo/EXHIBIT-HANDOFF.md)，明确自定义规则、128 KiB限制及应用接入责任。耗时只核格式，没有来源认证或全局动作顺序证明。
 
