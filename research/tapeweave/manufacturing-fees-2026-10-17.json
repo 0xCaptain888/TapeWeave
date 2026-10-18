@@ -1,0 +1,100 @@
+{
+  "schema": "tapeweave-manufacturing-fees-v1",
+  "observed_at_utc": "2026-10-18T05:46:36.599Z",
+  "factory": "0x1f09daefa827f02cbb40967cc91b259763760761",
+  "block": "0x46207a4",
+  "records": [
+    {
+      "endpoint": "https://rpc.xlayer.tech",
+      "method": "eth_chainId",
+      "params": [],
+      "result": "0xc4"
+    },
+    {
+      "endpoint": "https://rpc.xlayer.tech",
+      "method": "eth_getCode",
+      "params": [
+        "0x1f09daefa827f02cbb40967cc91b259763760761",
+        "0x46207a4"
+      ],
+      "result": "0x60806040527f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc545f9081906001600160a01b0316368280378136915af43d5f803e156048573d5ff35b3d5ffdfea2646970667358221220207a46ade185aac774c9ce308293d536d71d612fbb50fdfab2a1215ff618c65664736f6c63430008180033"
+    },
+    {
+      "endpoint": "https://rpc.xlayer.tech",
+      "method": "eth_call",
+      "params": [
+        {
+          "to": "0x1f09daefa827f02cbb40967cc91b259763760761",
+          "data": "0xeb2a5d2c"
+        },
+        "0x46207a4"
+      ],
+      "result": "0x000000000000000000000000000000000000000000000000001772aa3f848000"
+    },
+    {
+      "endpoint": "https://rpc.xlayer.tech",
+      "method": "eth_call",
+      "params": [
+        {
+          "to": "0x1f09daefa827f02cbb40967cc91b259763760761",
+          "data": "0xa94da8a7"
+        },
+        "0x46207a4"
+      ],
+      "result": "0x000000000000000000000000000000000000000000000000000000000000016c"
+    },
+    {
+      "endpoint": "https://rpc.xlayer.tech",
+      "method": "eth_call",
+      "params": [
+        {
+          "to": "0x1f09daefa827f02cbb40967cc91b259763760761",
+          "data": "0x4bc7cbbd0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "0x46207a4"
+      ],
+      "result": "0x000000000000000000000000839bdd6fa7a66416a609a735e11de5411b98574e"
+    },
+    {
+      "endpoint": "https://rpc.xlayer.tech",
+      "method": "eth_call",
+      "params": [
+        {
+          "to": "0x839bdd6fa7a66416a609a735e11de5411b98574e",
+          "data": "0xadfb2b69"
+        },
+        "0x46207a4"
+      ],
+      "result": "0x00000000000000000000000000000000000000000000000000049e57d6354000"
+    },
+    {
+      "endpoint": "https://rpc.xlayer.tech",
+      "method": "eth_call",
+      "params": [
+        {
+          "to": "0x839bdd6fa7a66416a609a735e11de5411b98574e",
+          "data": "0x6fbd1719"
+        },
+        "0x46207a4"
+      ],
+      "result": "0x000000000000000000000000be0eee424c49d44592e4d498740f5b031ef8e26d"
+    },
+    {
+      "endpoint": "https://rpc.xlayer.tech",
+      "method": "eth_call",
+      "params": [
+        {
+          "to": "0xbe0eee424c49d44592e4d498740f5b031ef8e26d",
+          "data": "0x6817c76c"
+        },
+        "0x46207a4"
+      ],
+      "result": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "matched": false,
+  "zero_budget_permits_manufacturing": false,
+  "authenticated": false,
+  "transactions_sent": false,
+  "failure": "fetch failed"
+}
