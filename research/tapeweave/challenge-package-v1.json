@@ -1,0 +1,31 @@
+{
+  "schema": "tapeweave-challenge-v1",
+  "evidence": "local-synthetic-only",
+  "title": "同拍补能会立即输出吗？",
+  "description": "先预测，再尝试四回合。输出只是请求，得分由窗口与宿主规则决定。",
+  "card": {
+    "mode": "pulse",
+    "netlist_hex": "0100000a000000020000020000000400000500000006000006000000030000030000000700000700000008000009000000040000020000000b00000b",
+    "sha256": "9659c0385c7ce13d2898e491e1d9a8b123459dee2a240abacbfdb4f00a08476e",
+    "chain_identity": null
+  },
+  "rules": {
+    "profile": "four-turn-fixed-recharge-v1",
+    "world": "training",
+    "windows": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "initial_state": 0
+  },
+  "prediction": {
+    "question": "旧状态为0，同时触发并补能，本拍会输出吗？",
+    "old_state": 0,
+    "trigger": 1,
+    "recharge": 1,
+    "expected_request": 0,
+    "expected_next_state": 1
+  }
+}

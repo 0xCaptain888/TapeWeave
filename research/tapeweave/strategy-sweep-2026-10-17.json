@@ -1,0 +1,175 @@
+{
+  "evidence": "synthetic-exhaustive-four-turn-only",
+  "assumptions": "known windows; free binary trigger; recharge turns 0,2; no costs or rewards",
+  "bytecode_vs_ordinary_trace_comparisons": 1024,
+  "results": {
+    "training": {
+      "optimal_score_comparison": {
+        "pulse_wins": 1,
+        "alternating_wins": 4,
+        "tie": 11
+      },
+      "first_witnesses": {
+        "tie": {
+          "windows": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "best": {
+            "pulse": [
+              0,
+              0,
+              [
+                1,
+                0,
+                0,
+                0
+              ]
+            ],
+            "alternating": [
+              0,
+              0,
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ]
+          }
+        },
+        "pulse_wins": {
+          "windows": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "best": {
+            "pulse": [
+              2,
+              0,
+              [
+                1,
+                0,
+                1,
+                1
+              ]
+            ],
+            "alternating": [
+              1,
+              0,
+              [
+                0,
+                0,
+                1,
+                1
+              ]
+            ]
+          }
+        },
+        "alternating_wins": {
+          "windows": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "best": {
+            "pulse": [
+              0,
+              0,
+              [
+                1,
+                0,
+                0,
+                0
+              ]
+            ],
+            "alternating": [
+              1,
+              0,
+              [
+                1,
+                1,
+                0,
+                0
+              ]
+            ]
+          }
+        }
+      }
+    },
+    "garden": {
+      "optimal_score_comparison": {
+        "pulse_wins": 0,
+        "alternating_wins": 6,
+        "tie": 10
+      },
+      "first_witnesses": {
+        "tie": {
+          "windows": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "best": {
+            "pulse": [
+              0,
+              0,
+              [
+                1,
+                0,
+                0,
+                1
+              ]
+            ],
+            "alternating": [
+              0,
+              0,
+              [
+                0,
+                0,
+                0,
+                1
+              ]
+            ]
+          }
+        },
+        "alternating_wins": {
+          "windows": [
+            0,
+            1,
+            0,
+            0
+          ],
+          "best": {
+            "pulse": [
+              0,
+              0,
+              [
+                1,
+                0,
+                0,
+                1
+              ]
+            ],
+            "alternating": [
+              1,
+              0,
+              [
+                1,
+                1,
+                0,
+                1
+              ]
+            ]
+          }
+        }
+      }
+    }
+  }
+}

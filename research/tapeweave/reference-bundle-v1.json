@@ -1,0 +1,4365 @@
+{
+  "schema": "tapeweave-local-reference-v1",
+  "evidence": "local-synthetic-only",
+  "limitations": [
+    "not deployed",
+    "not independent adoption",
+    "not a security certificate",
+    "no ownership or authentication",
+    "not the original Host progress model"
+  ],
+  "profile": {
+    "inputs": [
+      "trigger(bit0)",
+      "recharge(bit1)"
+    ],
+    "outputs": [
+      "request"
+    ],
+    "state_bits": 1,
+    "initial_state": 0,
+    "ref_allowed": false,
+    "allowed_modes": [
+      "pulse",
+      "alternating"
+    ]
+  },
+  "challenge_rules": {
+    "turns": 4,
+    "recharge_turns": [
+      0,
+      2
+    ],
+    "known_windows": true,
+    "trigger_cost": 0,
+    "garden_effect": "previous turn request",
+    "tie_break": "max score, min wasted, lexicographically largest actions",
+    "trace_kind": "system optimal reference, not player result"
+  },
+  "cards": [
+    {
+      "mode": "pulse",
+      "netlist_hex": "0100000a000000020000020000000400000500000006000006000000030000030000000700000700000008000009000000040000020000000b00000b",
+      "byte_length": 60,
+      "sha256": "9659c0385c7ce13d2898e491e1d9a8b123459dee2a240abacbfdb4f00a08476e",
+      "transitions": [
+        {
+          "old_state": 0,
+          "trigger": 0,
+          "recharge": 0,
+          "next_state": 0,
+          "request": 0
+        },
+        {
+          "old_state": 0,
+          "trigger": 1,
+          "recharge": 0,
+          "next_state": 0,
+          "request": 0
+        },
+        {
+          "old_state": 0,
+          "trigger": 0,
+          "recharge": 1,
+          "next_state": 1,
+          "request": 0
+        },
+        {
+          "old_state": 0,
+          "trigger": 1,
+          "recharge": 1,
+          "next_state": 1,
+          "request": 0
+        },
+        {
+          "old_state": 1,
+          "trigger": 0,
+          "recharge": 0,
+          "next_state": 1,
+          "request": 0
+        },
+        {
+          "old_state": 1,
+          "trigger": 1,
+          "recharge": 0,
+          "next_state": 0,
+          "request": 1
+        },
+        {
+          "old_state": 1,
+          "trigger": 0,
+          "recharge": 1,
+          "next_state": 1,
+          "request": 0
+        },
+        {
+          "old_state": 1,
+          "trigger": 1,
+          "recharge": 1,
+          "next_state": 1,
+          "request": 1
+        }
+      ],
+      "chain_identity": null
+    },
+    {
+      "mode": "alternating",
+      "netlist_hex": "010000080000000400000200000004000005000000020000050000000600000700000004000004000000090000020000000a00000a",
+      "byte_length": 53,
+      "sha256": "2b418144487d9aa4c70118a4819a03e12be6aa0153dafd5a12697277ddb1f556",
+      "transitions": [
+        {
+          "old_state": 0,
+          "trigger": 0,
+          "recharge": 0,
+          "next_state": 0,
+          "request": 0
+        },
+        {
+          "old_state": 0,
+          "trigger": 1,
+          "recharge": 0,
+          "next_state": 1,
+          "request": 1
+        },
+        {
+          "old_state": 0,
+          "trigger": 0,
+          "recharge": 1,
+          "next_state": 0,
+          "request": 0
+        },
+        {
+          "old_state": 0,
+          "trigger": 1,
+          "recharge": 1,
+          "next_state": 1,
+          "request": 1
+        },
+        {
+          "old_state": 1,
+          "trigger": 0,
+          "recharge": 0,
+          "next_state": 1,
+          "request": 0
+        },
+        {
+          "old_state": 1,
+          "trigger": 1,
+          "recharge": 0,
+          "next_state": 0,
+          "request": 0
+        },
+        {
+          "old_state": 1,
+          "trigger": 0,
+          "recharge": 1,
+          "next_state": 1,
+          "request": 0
+        },
+        {
+          "old_state": 1,
+          "trigger": 1,
+          "recharge": 1,
+          "next_state": 0,
+          "request": 0
+        }
+      ],
+      "chain_identity": null
+    }
+  ],
+  "challenges": [
+    {
+      "world": "training",
+      "windows": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "score": 0,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "score": 0,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            1,
+            1,
+            0
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "score": 0,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            1,
+            0
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "training",
+      "windows": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "score": 0,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "score": 0,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "score": 0,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "score": 0,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "score": 0,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            0,
+            1,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            0,
+            1
+          ],
+          "score": 0,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            0,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 0,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            0,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 0,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 0,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "world": "garden",
+      "windows": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "optimal_reference": {
+        "pulse": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 1,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 0,
+              "next_state": 1,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 1,
+              "next_state": 0,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            }
+          ]
+        },
+        "alternating": {
+          "actions": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "score": 2,
+          "wasted": 0,
+          "trace": [
+            {
+              "turn": 0,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 0
+            },
+            {
+              "turn": 1,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 2,
+              "old_state": 0,
+              "trigger": 1,
+              "recharge": 1,
+              "request": 1,
+              "next_state": 1,
+              "effect_due": 0,
+              "window": 1,
+              "gained": 0,
+              "cumulative_score": 1
+            },
+            {
+              "turn": 3,
+              "old_state": 1,
+              "trigger": 1,
+              "recharge": 0,
+              "request": 0,
+              "next_state": 0,
+              "effect_due": 1,
+              "window": 1,
+              "gained": 1,
+              "cumulative_score": 2
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
