@@ -39,6 +39,9 @@ try {
  for(const id of ['wait','wait','fire','fire'])$(id).click();
  expect($('visual').textContent.includes('效果累计2') && $('visual').textContent.includes('效果累计1') && $('visual').textContent.includes('剩余钥匙1'),'dual host effects');
  expect($('fire').disabled,'four turn lock');
+ expect($('studio-trace').rows.length===8,'dual trace eight rows');
+ const firstTrace=$('studio-trace').textContent;
+ expect($('studio-trace').rows[6].cells[8].textContent==='0','door request without obstacle has no effect');
  const baseline=$('visual').textContent;
  const waitFor=async(test)=>{for(let i=0;i<200&&!test();i++)await new Promise(r=>setTimeout(r,10));expect(test(),'async UI timeout')};
  $('export-replay').click();await waitFor(()=>!!$('replay-output').value);
@@ -53,9 +56,11 @@ try {
  expect($('visual').textContent.includes('回合0/4'),'mode reset');
  for(const id of ['wait','wait','fire','fire'])$(id).click();
  expect($('visual').textContent===baseline,'ordinary parity');
+ expect($('studio-trace').textContent===firstTrace,'ordinary trace parity');
  const cells=$('rows').querySelectorAll('select');
  cells[1].value='1';cells[1].dispatchEvent(new Event('change'));
  expect($('fire').disabled && !$('artifact').value,'edit invalidates artifact and actions');
+ expect(!$('studio-trace').rows.length,'dirty trace cleared');
  $('compile').click();await ready();
  expect(JSON.parse($('artifact').value).sha256!==artifact.sha256,'changed byte identity');
  expect($('visual').textContent.includes('回合0/4'),'compile reset');
@@ -81,6 +86,7 @@ try {
  const frame=document.createElement('iframe');frame.src='studio.html?restore=1';document.body.append(frame);
  await waitFor(()=>!!frame.contentDocument?.getElementById('artifact')?.value);
  expect(frame.contentDocument.getElementById('visual').textContent===beforeImport,'fresh document storage recovery');
+ expect(frame.contentDocument.getElementById('studio-trace').rows.length===4,'recovered trace rebuilt');
  // A second document advances the shared save; the old document must not overwrite it.
  frame.contentDocument.getElementById('fire').click();
  const newer=frame.contentDocument.getElementById('visual').textContent;
@@ -117,7 +123,7 @@ try {
  preserved();
  frame.remove();
  ${layoutChecks}
- out.textContent=JSON.stringify({passed:true,layoutWidths,checks:['local identity','dual host effects','four turn lock','mode reset','ordinary parity','edit invalidation','changed byte identity','compile reset','edited request consumed','stale digest ignored','creator replay results','creator replay verify','creator replay rejection nonmutating','creator import reset and mode','creator failed import nonmutating','fresh document storage recovery','second document advances','stale document rejection nonmutating','stale document preserves shared save','stale compile refused','stale mode reset refused','stale import refused','stale edit then compile refused','explicit recovery control','external storage notification','recovery restores saved mode','recovery restores latest progress','recovery discards unsaved controls'],viewport:innerWidth});
+ out.textContent=JSON.stringify({passed:true,layoutWidths,checks:['dual trace eight rows','door request without obstacle has no effect','ordinary trace parity','dirty trace cleared','recovered trace rebuilt','local identity','dual host effects','four turn lock','mode reset','ordinary parity','edit invalidation','changed byte identity','compile reset','edited request consumed','stale digest ignored','creator replay results','creator replay verify','creator replay rejection nonmutating','creator import reset and mode','creator failed import nonmutating','fresh document storage recovery','second document advances','stale document rejection nonmutating','stale document preserves shared save','stale compile refused','stale mode reset refused','stale import refused','stale edit then compile refused','explicit recovery control','external storage notification','recovery restores saved mode','recovery restores latest progress','recovery discards unsaved controls'],viewport:innerWidth});
 }catch(e){out.textContent=JSON.stringify({passed:false,error:e.message})}
 </script>`;
 const checks = `

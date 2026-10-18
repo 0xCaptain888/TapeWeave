@@ -22,6 +22,16 @@ for(let i=0;i<8;i++){
   selects.push(pair);el('rows').append(tr);
 }
 function render(){
+  el('studio-trace').replaceChildren();
+  if(!dirty)hosts.forEach((host,i)=>{
+    for(const row of host.snapshot().trace){
+      const tr=document.createElement('tr');
+      for(const value of [i?'钥匙门':'训练',row.turn+1,row.old,row.trigger,row.recharge,row.request,row.next,i?row.obstacle:'—',row.effect]){
+        const td=document.createElement('td');td.textContent=String(value);tr.append(td);
+      }
+      el('studio-trace').append(tr);
+    }
+  });
   el('replay-output').value='';
   el('export-replay').disabled=dirty||!hosts.length||hosts[0].snapshot().version!==4;
   for(const id of ['wait','fire'])el(id).disabled=dirty||!hosts.length||hosts[0].snapshot().version>=4;
