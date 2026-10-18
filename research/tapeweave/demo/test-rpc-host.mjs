@@ -3,6 +3,9 @@ import {openStore} from './durable-host.mjs';
 import {connectRpcHost} from './rpc-host.mjs';
 import {createArtifact} from './creator-package.mjs';
 import {presets} from './creator.mjs';
+import {verifyRpcHost} from './verify-rpc-host.mjs';
+import {prepareDelivery} from './prepare-delivery.mjs';
+import {createCreatorReplay} from './creator-replay.mjs';
 const artifact=await createArtifact(presets.pulse.next,presets.pulse.request);
 const word=n=>BigInt(n).toString(16).padStart(64,'0');
 const tail=hex=>word(hex.length/2)+hex.padEnd(Math.ceil(hex.length/64)*64,'0');
@@ -19,7 +22,21 @@ const store=openStore(':memory:');
 const config={...presets.pulse,plain:false};
 try{
  store.create('ok',config);const host=await connectRpcHost(store,'ok',binding,fake);
- for(let i=0;i<4;i++){const r=await host.act({id:'a'+i,version:i,trigger:Number('0011'[i])});assert.equal(r.records.length,4);assert.equal(r.host_transactions,false);}
+ const observations=[];
+ for(let i=0;i<4;i++){const r=await host.act({id:'a'+i,version:i,trigger:Number('0011'[i])});observations.push(r);assert.equal(r.records.length,4);assert.equal(r.host_transactions,false);}
+ const transcript={binding:host.report,observations,snapshot:store.snapshot('ok'),authenticated:false,host_transactions:false};
+ const verify=t=>verifyRpcHost(JSON.stringify(artifact),JSON.stringify(t));
+ assert.equal((await verify(transcript)).complete_rpc_coverage,true);
+ const replay=await createCreatorReplay(artifact,[0,0,1,1],false);
+ const delivery=await prepareDelivery(JSON.stringify(artifact),JSON.stringify(replay),JSON.stringify(host.report),JSON.stringify(transcript));
+ assert.equal(delivery.rpc_host.complete_rpc_coverage,true);assert.equal(delivery.competition_ready,false);assert.equal(delivery.files.rpc_host_utf8_sha256.length,64);
+ const wrongReplay=await createCreatorReplay(artifact,[1,1,1,1],false);
+ await assert.rejects(prepareDelivery(JSON.stringify(artifact),JSON.stringify(wrongReplay),undefined,JSON.stringify(transcript)),/回放不一致/);
+ const resumed=structuredClone(transcript);resumed.observations=resumed.observations.slice(2);
+ assert.equal((await verify(resumed)).unobserved_prefix_turns,2);assert.equal((await verify(resumed)).complete_rpc_coverage,false);
+ const empty=structuredClone(transcript);empty.observations=[];assert.equal((await verify(empty)).observed_turns,0);
+ for(const mutate of [t=>t.snapshot.hosts[1].score++,t=>t.observations[0].records.reverse(),t=>t.observations[0].receipt.version++,t=>t.observations[0].records[0].result='0x00',t=>t.host_transactions=true,t=>t.observations[1].receipt.command_id='a0',t=>t.observations[0].extra=true,t=>t.snapshot.config.plain=true]){const bad=structuredClone(transcript);mutate(bad);await assert.rejects(verify(bad));}
+ await assert.rejects(verifyRpcHost(JSON.stringify(artifact),' '.repeat(524289)),/512/);
  assert.deepEqual(store.snapshot('ok').hosts.map(h=>h.score),[2,1]);
  store.create('failure',config);let broken=false;
  const failed=await connectRpcHost(store,'failure',binding,(...a)=>{if(broken)throw Error('synthetic timeout');return fake(...a);});broken=true;

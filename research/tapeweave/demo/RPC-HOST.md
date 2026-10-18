@@ -29,6 +29,19 @@ node research/tapeweave/demo/play-rpc-host.mjs \
 
 本轮测试：14组Node＋3组Chrome统一17组通过，RPC部分仅注入合成响应，覆盖四拍训练2／门1、传输或ABI失败不提交、等待期间竞争写者保留、普通会话拒绝。未指定实际项目处理器，**未跑真实RPC宿主局**，不代表真实制造、链上交易、独立采用、实际手机或系统剪贴板通过。
 
+## 离线复核与交付汇总（后续补齐）
+
+```sh
+node research/tapeweave/demo/verify-rpc-host.mjs ARTIFACT_FILE /tmp/tapeweave-rpc-observation.json
+node research/tapeweave/demo/prepare-delivery.mjs ARTIFACT_FILE REPLAY_FILE BINDING_REPORT_FILE /tmp/tapeweave-rpc-observation.json
+```
+
+复核器不联网、不读写数据库，输入上限512 KiB；检查完整绑定记录、逐拍请求顺序／ABI转换、命令ID、回执与双宿主最终状态。JSON重复键仍采用原生解析的最后值，不认证原始文本语义。报告明确区分`observed_turns`与`unobserved_prefix_turns`：续跑时先前拍数仅重算，不补造RPC观察；四拍全有记录才`complete_rpc_coverage:true`。即使true也只是文本覆盖，**不等于链来源认证或真实消费**。空观察也可自洽通过，但覆盖为false。
+
+交付工具可接收第四份RPC宿主记录，核对字节模式、完整四拍快照与交付回放，以及两份绑定的对象一致；保存输入文本SHA。部分续跑记录允许交付，但保持覆盖缺口和`competition_ready:false`，不将其当完整RPC证据。投稿已获得开发推进授权，缺项调整为“真实投稿资料及最终内容确认”，不再重复声称完全未授权。
+
+本轮14组Node通过，新增篡改得分、请求顺序、回执版本、非法ABI、命令重复、额外字段、模式变更、超限、续跑／空观察及交付回放不一致测试。统一Chrome检查在应用加载前启动预检10秒超时，后续浏览器组未运行；不能沿用上一轮17组称本轮全部通过。没有新增UI，不据超时推断页面故障或宣称解决Chrome根因。无新增真实RPC／交易结果。
+
 ## 零费用制造检查的外部观察
 
 用户已选择现有身份新增专用开发账户，已完成账户创建；上限为零，不充值。此信息不将钱包身份或凭据发布到仓库。
