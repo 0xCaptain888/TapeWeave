@@ -113,7 +113,7 @@ el('verify-replay').onclick=async()=>{
   const r=await verifyCreatorReplay(el('verify-text').value);
   if(ticket===verifyRevision){
    showTrace('verified-trace',r.results);
-   el('verify-status').textContent=`计算一致：训练${r.results[0].score}，门${r.results[1].score}。以下为粘贴回放的重算明细，不是当前局。未认证，仅本地重算，当前局未改变。`;
+   el('verify-status').textContent=`计算一致：训练${r.results[0].score}，门${r.results[1].score}。制品SHA-256：${r.artifact.sha256}；执行模式：${r.plain?'普通共享真值表':'字节求值'}；四拍动作：${r.actions.join('')}（0等待、1触发）。以下为粘贴回放的重算明细，不是当前局。摘要仅识别字节，不认证作者；无链身份。未认证，仅本地重算，当前局未改变。`;
   }
  }catch(e){if(ticket===verifyRevision)el('verify-status').textContent=`复核失败：${e.message}；当前局未改变。`;}
 };
