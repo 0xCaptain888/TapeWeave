@@ -25,6 +25,20 @@
 
 随后实际运行`node research/tapeweave/demo/check.mjs --browser`：**20组Node／Chrome测试＋两次Python发布保护运行（普通／-O）全部通过**，包括新增接入页的替身RPC Chrome探针、固定挑战、工作室和SQLite页面。该完整运行替代上文“本次仅单独运行新增探针”的阶段状态，但不改变测试的作者控制性质，不证明真实RPC／CORS、手机、独立参与或安全审计；合约EVM测试仍是前轮单独通过，不计入这20组。
 
+## 原始文件通道补证（同日后续）
+
+GitHub API失败不代表仓库文件不可读。本次改用`raw.githubusercontent.com`成功取得下列`main`分支文本（访问日期2026-10-18）：
+
+| 一手文本路径 | 读取结果与SHA-256 |
+|---|---|
+| [OKX命名空间下的技能README](https://raw.githubusercontent.com/okx/onchainos-skills/main/README.md) | 列出钱包技能、合约调用及交易网关；`24d7071f5d2b3855c83d669dc193c61ff1768d49051ba5ff8b25c4308de79d51` |
+| [wallet参考](https://raw.githubusercontent.com/okx/onchainos-skills/main/skills/okx-agentic-wallet/references/wallet.md) | 描述contract-call与TEE签名；`3f0d2b6e3fc7732dfe3aeb37bcb1e2ff762d4b905217f2f6aa56c844338519ef` |
+| [wallet CLI参考](https://raw.githubusercontent.com/okx/onchainos-skills/main/skills/okx-agentic-wallet/references/wallet-cli-reference.md) | contract-call参数表将`--to`列为EVM／Solana必需；`98e1a5016eb7e04e309885f036c09b00681268e6812ae2e77f7300710e86337f` |
+
+这是对“尚未取得候选仓库正文”的后续更新，不抹去之前的API失败。分支URL可变，散列仅标识本次读取文本，不是固定提交、安装版本或安全认证。README提供的范围描述不能替代账户兼容性证明；本次定向检查wallet参考和CLI参考的创建／部署／模拟相关内容，**没有找到当前AA账户可用的合约创建方法、创建载荷格式及其模拟流程**。CLI命令总览将`--to`写成方括号，但参数表明确EVM／Solana必需，不能将总览的可选语法误当EVM创建支持。
+
+因此部署门槛仍未通过，但阻塞描述已收窄为“已取得钱包参考，仍缺AA创建的一手支持”，而非“所有官方候选文件均不可读”。没有调用钱包、安装SDK、签名或广播，累计实付不变。本轮仅文档补证，未修改应用，也未重新运行上节已通过的完整测试。
+
 ## 待用户参与的最短步骤
 
 1. **真机（约5分钟）**：用实际手机打开静态试玩的工作室，记录型号、系统、浏览器；默认蓄能执行等待等待触发触发，观察训练2／门1；刷新恢复，试复制并实际粘贴。记录布局、触摸和剪贴板是否成功，不用桌面窄屏替代。
