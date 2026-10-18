@@ -1,4 +1,4 @@
-import {makeHost,presets} from './creator.mjs';
+import {compile,evaluate,makeHost,presets} from './creator.mjs';
 import {openLocalSession,readLocal,clearLocal,localText} from './studio-storage.mjs';
 import {createArtifact,parseArtifact} from './creator-package.mjs';
 import {createCreatorReplay,verifyCreatorReplay} from './creator-replay.mjs';
@@ -36,6 +36,7 @@ for(let i=0;i<8;i++){
   selects.push(pair);el('rows').append(tr);
 }
 function render(){
+  el('probe-result').textContent='';
   el('studio-trace').replaceChildren();
   if(!dirty)hosts.forEach((host,i)=>{
     for(const row of host.snapshot().trace){
@@ -57,6 +58,17 @@ function render(){
     return `${i?'钥匙门':'训练'}：回合${s.version}/4 · 状态${s.latch} · 效果累计${s.score}${i?` · 剩余钥匙${s.resource}`:''}\n${r?`旧态${r.old} + 触发${r.trigger} + 补能${r.recharge} → 请求${r.request} / 新态${r.next} → 宿主效果${r.effect}`:'等待输入'}`;
   }).join('\n\n');
 }
+for(const id of ['probe-old','probe-trigger','probe-recharge'])el(id).onchange=()=>{el('probe-result').textContent='';};
+el('probe').onclick=()=>{
+ try{
+  const next=selects.map(x=>Number(x[0].value)),request=selects.map(x=>Number(x[1].value));
+  const [old,trigger,recharge]=['probe-old','probe-trigger','probe-recharge'].map(id=>Number(el(id).value));
+  const index=old*4+trigger*2+recharge;
+  const result=evaluate(compile(next,request),old,trigger,recharge);
+  if(result[0]!==next[index] || result[1]!==request[index])throw Error('字节与行为表不一致');
+  el('probe-result').textContent=`第${index+1}行：旧态${old} + 触发${trigger} + 补能${recharge} → 下一状态${result[0]} / 请求${result[1]}。字节与普通表一致；仅预览，当前局未改变，未计算宿主奖励。`;
+ }catch(e){el('probe-result').textContent=`预览失败：${e.message}`;}
+};
 async function build(actions=[]){
   const ticket=++generation;dirty=true;el('artifact').value='';render();
   try{

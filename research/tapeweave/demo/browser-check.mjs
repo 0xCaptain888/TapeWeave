@@ -35,6 +35,13 @@ try {
  await ready();
  $('preset').value='pulse';$('preset').dispatchEvent(new Event('change'));await ready();
  const artifact=JSON.parse($('artifact').value);
+ const savedBeforeProbe=localStorage.getItem('tapeweave-studio-local-v1'),visualBeforeProbe=$('visual').textContent;
+ $('probe-old').value='0';$('probe-trigger').value='1';$('probe-recharge').value='1';$('probe').click();
+ expect($('probe-result').textContent.includes('下一状态1 / 请求0'),'probe old state timing');
+ expect(localStorage.getItem('tapeweave-studio-local-v1')===savedBeforeProbe && $('visual').textContent===visualBeforeProbe,'probe does not commit');
+ $('probe-old').value='1';$('probe-old').dispatchEvent(new Event('change'));
+ expect(!$('probe-result').textContent,'probe input clears result');
+ $('probe').click();expect($('probe-result').textContent.includes('下一状态1 / 请求1'),'probe charged request');
  expect(artifact.chain_identity===null && artifact.sha256.length===64,'local identity');
  for(const id of ['wait','wait','fire','fire'])$(id).click();
  expect($('visual').textContent.includes('效果累计2') && $('visual').textContent.includes('效果累计1') && $('visual').textContent.includes('剩余钥匙1'),'dual host effects');
@@ -134,7 +141,7 @@ try {
  preserved();
  frame.remove();
  ${layoutChecks}
- out.textContent=JSON.stringify({passed:true,layoutWidths,checks:['copy outputs enabled','copy artifact exact text','copy replay exact text','copy denied selects output','dirty copy disabled','dual trace eight rows','door request without obstacle has no effect','ordinary trace parity','dirty trace cleared','recovered trace rebuilt','local identity','dual host effects','four turn lock','mode reset','ordinary parity','edit invalidation','changed byte identity','compile reset','edited request consumed','stale digest ignored','creator replay results','creator replay verify','creator replay rejection nonmutating','creator import reset and mode','creator failed import nonmutating','fresh document storage recovery','second document advances','stale document rejection nonmutating','stale document preserves shared save','stale compile refused','stale mode reset refused','stale import refused','stale edit then compile refused','explicit recovery control','external storage notification','recovery restores saved mode','recovery restores latest progress','recovery discards unsaved controls'],viewport:innerWidth});
+ out.textContent=JSON.stringify({passed:true,layoutWidths,checks:['probe old state timing','probe does not commit','probe input clears result','probe charged request','copy outputs enabled','copy artifact exact text','copy replay exact text','copy denied selects output','dirty copy disabled','dual trace eight rows','door request without obstacle has no effect','ordinary trace parity','dirty trace cleared','recovered trace rebuilt','local identity','dual host effects','four turn lock','mode reset','ordinary parity','edit invalidation','changed byte identity','compile reset','edited request consumed','stale digest ignored','creator replay results','creator replay verify','creator replay rejection nonmutating','creator import reset and mode','creator failed import nonmutating','fresh document storage recovery','second document advances','stale document rejection nonmutating','stale document preserves shared save','stale compile refused','stale mode reset refused','stale import refused','stale edit then compile refused','explicit recovery control','external storage notification','recovery restores saved mode','recovery restores latest progress','recovery discards unsaved controls'],viewport:innerWidth});
 }catch(e){out.textContent=JSON.stringify({passed:false,error:e.message})}
 </script>`;
 const checks = `
