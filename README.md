@@ -12,7 +12,13 @@ TapeWeave希望创作者设计的“遇到什么条件、采取什么动作”�
 
 **不用连接钱包，不用买币，也不用先懂区块链。**
 
-👉 **[制作并交付互动作品](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html)** · **[真实主网运行与实时读取](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)** · [高级规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html)
+👉 **[制作并交付互动作品](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html)** · **[钱包试玩与真实主网记录](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)** · [高级规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html)
+
+### 新增：浏览器钱包完整试玩
+
+主网页首屏可选择检测到的 OKX／MetaMask 等插件钱包，在自己的会话运行两张卡。每笔先模拟并显示费用，点击确认后才打开钱包；核验回执后继续下一步。固定宿主完整代码校验、账户／网络／版本保护、拒签处理、待处理交易持久化和未知哈希恢复均已接入；不会自动签名或重发。
+
+此入口当前支持普通 EOA，AA／委托账户继续使用现有官方钱包工具。钱包模块与浏览器替身测试不等于实际插件签名验收，本轮没有新增主网交易；历史11笔真实AA交易保持独立记录。[操作、恢复与费用边界](research/tapeweave/demo/WALLET-PLAY.md)。
 
 ### 新增：版本差异、追加回退与通用执行适配器
 
@@ -113,7 +119,7 @@ TapeWeave尝试把这套规则整理成一份可以交付和检查的“行为�
 
 - [固定行为挑战](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/index.html)：先预测再完成四回合；与工作室使用不同格式的分享包，不要混用。
 - [人工体验记录](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/validation.html)：记录实际观察、帮助和失败；不是自动测试，也不自动上传或保存。
-- [真实主网运行页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)：查看两局真实结果、11 笔交易链接，点击读取实时会话；开发者草案默认折叠。页面只读，无需连接钱包。
+- [钱包试玩与主网运行页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)：插件钱包开启自己的局、逐笔预览／确认与恢复；也可不连接钱包查看两局真实结果、11 笔交易链接并读取实时会话。
 
 ## 最新真人测试反馈与修复
 
@@ -138,7 +144,7 @@ TapeWeave尝试把这套规则整理成一份可以交付和检查的“行为�
 
 ### 使用前请知道
 
-在线页面是静态网页，不运行本地数据库或部署合约。工作室进度只保存在当前浏览器，不会自动同步到别的设备，清除浏览器数据可能丢失进度。请勿多标签同时操作同一份进度，也不要填入钱包秘密或个人敏感信息。
+在线页面是静态网页，不运行本地数据库或部署合约。主网页的钱包试玩可经用户确认调用已部署宿主；作品页和工作室保持本地操作。工作室进度只保存在当前浏览器，不会自动同步到别的设备，清除浏览器数据可能丢失进度。请勿多标签同时操作同一份进度，也不要填入钱包秘密或个人敏感信息。
 
 回放可以由任何人制作；“计算一致”不等于真实玩家成绩或身份认证。已有用户确认的真人桌面测试，其中记录了桌面复制粘贴成功；Android触摸、手机系统剪贴板与权限拒绝路径及独立开发者接入仍未完成，不能由已有桌面结果推定通过。
 
@@ -185,6 +191,6 @@ node research/tapeweave/demo/check.mjs --browser
 
 ## 发布与许可
 
-公开仓库：[0xCaptain888/TapeWeave](https://github.com/0xCaptain888/TapeWeave)。GitHub Pages从`main`根目录提供静态页面；不会运行SQLite服务或发送链上交易。发布不包含数据库、凭据、Python缓存和node_modules。
+公开仓库：[0xCaptain888/TapeWeave](https://github.com/0xCaptain888/TapeWeave)。GitHub Pages从`main`根目录提供静态页面，不运行SQLite服务；主网页可在用户明确确认后请求插件钱包发送宿主交互。发布不包含数据库、凭据、Python缓存和node_modules。
 
 第三方片段的原有许可文件保留；本仓库未额外授予统一开源许可证。

@@ -1,7 +1,27 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TapeWeave 主网运行与实时读取</title><link rel="stylesheet" href="style.css"><style>.chain-proof{margin:1.5rem 0;padding:1.2rem;border:1px solid #456b64;border-radius:16px}.chain-proof code,.chain-proof a,td{overflow-wrap:anywhere}table{width:100%;border-collapse:collapse}th,td{padding:.6rem;text-align:left;border-bottom:1px solid #456b64}#evidence-state{white-space:pre-wrap}#snapshot{overflow:auto}#evidence-list a{display:inline-block;margin:.3rem 1rem .3rem 0}input{max-width:100%;box-sizing:border-box}</style></head><body><main><nav class="brand-bar" aria-label="主导航"><a class="brand-home" href="work.html"><span class="brand-symbol" aria-hidden="true"></span><span class="brand-label">TapeWeave<small>INTERACTION, WOVEN.</small></span></a><div class="brand-nav"><a href="work.html">作品交付</a><a href="manage.html">作品管理</a><a href="studio.html">规则工作室</a></div></nav><p class="eyebrow">X LAYER MAINNET / REAL EXECUTION</p>
 <h1>两张卡，真实主网运行</h1>
-<p>AA 钱包通过 CreateX 部署 TapeWeaveHost，再分别开局并执行四步“等待 → 等待 → 触发 → 触发”。部署及两局合计 11 笔真实交易。下方先展示已发布的历史记录，点击实时读取才会请求公共 RPC。</p>
+<p>已完成 AA 钱包部署与两局主网交互。你可以用自己的插件钱包开启独立会话，也可以不连接钱包，只读取下方的历史记录。</p>
+<section aria-labelledby="wallet-title"><h2 id="wallet-title">用自己的钱包玩一局</h2>
+<p>普通插件账户 · X Layer 主网（196）。每笔先模拟、预览费用，再由你在钱包确认。建议顺序：等待 → 等待 → 触发 → 触发。AA／委托账户请使用<a href="../../../docs/tapeweave-host-run-2026-10-26.md">官方钱包工具</a>。</p>
+<label>钱包 <select id="wallet-provider" aria-label="选择插件钱包"></select></label>
+<button id="wallet-connect">检测并连接钱包</button><button id="wallet-switch">切换至 X Layer</button>
+<p id="wallet-account">未连接钱包</p>
+<label>行为卡 <select id="wallet-circuit"><option value="1">蓄能卡</option><option value="2">交替卡</option></select></label>
+<button id="wallet-open" disabled>预览新局</button>
+<label>我的会话 ID <input id="wallet-session" inputmode="numeric" maxlength="78" placeholder="开局后自动填入，或填入已有会话"></label>
+<button id="wallet-read" disabled>读取我的会话</button>
+<pre id="wallet-state">开局后读取链上状态；每局四步。</pre>
+<button id="wallet-wait" disabled>预览等待</button><button id="wallet-trigger" disabled>预览触发</button>
+<pre id="wallet-preview" aria-label="签名前费用与操作预览"></pre>
+<button id="wallet-confirm" disabled>确认并打开钱包</button>
+<p id="wallet-status" role="status">连接钱包后开始；不会自动签名或发送。</p>
+<div id="wallet-pending" hidden><h3>待处理交易</h3><p id="wallet-pending-text"></p>
+<label>从钱包历史复制交易哈希 <input id="wallet-hash" maxlength="66" placeholder="0x…"></label>
+<button id="wallet-recover" disabled>绑定恢复哈希</button><button id="wallet-verify" disabled>核验交易回执</button>
+<p>待处理记录保存在本机。结果不明时不能重发；请保留站点数据。浏览器关闭后可回到本页继续核验。</p></div>
+<p id="wallet-receipt"></p>
+<p><a href="WALLET-PLAY.md">操作、恢复与验证边界</a> · 主网操作可能需要 gas；历史 AA 交易的 0 费用不代表普通插件账户免费。</p></section>
 <section class="chain-proof" aria-labelledby="proof-title"><h2 id="proof-title">主网交易记录 · 2026-10-26</h2>
 <p id="evidence-status" role="status">正在载入公开运行记录…</p><p id="evidence-host"></p>
 <table><thead><tr><th>行为卡／会话</th><th>训练分数</th><th>开门次数／余钥匙</th></tr></thead><tbody id="evidence-sessions"></tbody></table>
@@ -16,7 +36,7 @@
 <button id="read">从公共 RPC 读取固定块会话</button>
 <p id="status" role="status"></p><pre id="snapshot"></pre>
 <details><summary>开发者：生成调用草案（不发送）</summary>
-<p>本页不签名、不广播，也不把历史成功视作新交易授权。</p>
+<p>此工具只生成草案，不签名、不广播；上方钱包试玩需要单独确认。</p>
 <label>操作 <select id="operation"><option value="open">开局</option><option value="act">动作</option></select></label>
 <label>审查卡 <select id="circuit"><option value="1">蓄能 ID1</option><option value="2">交替 ID2</option></select></label>
 <label>预期版本 <select id="version"><option>0</option><option>1</option><option>2</option><option>3</option></select></label>
@@ -25,4 +45,4 @@
 <textarea id="draft" rows="10" readonly aria-label="未发送调用草案"></textarea>
 <p>草案不代表模拟通过。真实发送前核对钱包、最新版本、模拟和费用；过期版本必须失败，不能自动改版本重发。只读是单 RPC 观察，不是独立提供商共识。</p>
 <p><a href="../../../docs/tapeweave-host-run-2026-10-26.md">部署后操作与完整回执核验工具</a> · <a href="studio.html">本地行为工作室</a></p></details>
-<script type="module" src="chain-page.mjs"></script></main></body></html>
+<script type="module" src="chain-page.mjs"></script><script type="module" src="chain-wallet-page.mjs"></script></main></body></html>

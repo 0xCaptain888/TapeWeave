@@ -56,7 +56,7 @@ try{
  out.textContent='PASS chain browser fixture';
 }catch(e){out.textContent='FAIL '+e.message;}
 </script>`;
-const files=new Set(['chain.html','chain-page.mjs','chain-host.mjs','style.css']);
+const files=new Set(['chain.html','chain-page.mjs','chain-host.mjs','chain-wallet.mjs','chain-wallet-page.mjs','style.css']);
 const server=createServer(async(req,res)=>{try{
  const file=new URL(req.url,'http://localhost').pathname.slice(1);if(!files.has(file)){res.writeHead(404);return res.end();}
  let text=await readFile(new URL(file,root),'utf8');if(file==='chain.html')text=text.replace('<script type="module" src="chain-page.mjs"></script>',fixture+'<script type="module" src="chain-page.mjs"></script>'+checks);
