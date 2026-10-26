@@ -25,7 +25,7 @@ const run=new WalletRun({rpc,storage:{
 function clearPreview(){run.preview=null;$('wallet-preview').textContent='';$('wallet-confirm').disabled=true;}
 function render(){
  $('wallet-account').textContent=run.account?'已连接 '+run.account:'未连接钱包';
- for(const id of ['wallet-connect','wallet-read','wallet-open','wallet-wait','wallet-trigger','wallet-verify','wallet-recover'])$(id).disabled=busy;
+ for(const id of ['wallet-provider','wallet-switch','wallet-circuit','wallet-session','wallet-connect','wallet-read','wallet-open','wallet-wait','wallet-trigger','wallet-verify','wallet-recover'])$(id).disabled=busy;
  const connected=Boolean(run.account);let pending=null,broken=false;
  try{pending=run.pending();}catch(e){broken=true;message(e.message);}
  const blocked=busy||Boolean(pending)||broken||!connected;

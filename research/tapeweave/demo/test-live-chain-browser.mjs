@@ -60,6 +60,8 @@ try{
  await wait(()=>evaluate("!!document.querySelector('a[href=\"chain.html\"]')"));
  await cdp('Page.navigate',{url:origin+'/TapeWeave/research/tapeweave/demo/chain.html'});
  await wait(()=>evaluate("!!document.getElementById('card1') && !document.getElementById('card1').disabled"));
+ await wait(()=>evaluate("!!document.getElementById('wallet-connect') && !document.getElementById('wallet-connect').disabled"));
+ assert.equal(await evaluate("document.getElementById('wallet-account').textContent"),'未连接钱包');
  assert.equal(await evaluate("document.querySelectorAll('#evidence-list a').length"),11);
  const snapshots=[];
  for(const [id,circuit]of [['card1',1],['card2',2]]){
@@ -83,7 +85,7 @@ try{
  assert.ok(methods.every(m=>allowed.has(m)),'read-only RPC methods only');
  console.log(JSON.stringify({status:'LIVE_PUBLIC_DEMO_BROWSER_PASSED',
   page:origin+'/TapeWeave/research/tapeweave/demo/chain.html',
-  real_https:true,real_rpc:true,fetch_substituted:false,wallet_used:false,
+  real_https:true,real_rpc:true,fetch_substituted:false,wallet_used:false,wallet_ui_loaded:true,
   rpc_methods:[...new Set(methods)],snapshots},null,2));
 }finally{
  for(const p of pending.values()){clearTimeout(p.timer);p.reject(Error('Browser closing'));}

@@ -5,7 +5,7 @@
 <section aria-labelledby="wallet-title"><h2 id="wallet-title">用自己的钱包玩一局</h2>
 <p>普通插件账户 · X Layer 主网（196）。每笔先模拟、预览费用，再由你在钱包确认。建议顺序：等待 → 等待 → 触发 → 触发。AA／委托账户请使用<a href="../../../docs/tapeweave-host-run-2026-10-26.md">官方钱包工具</a>。</p>
 <label>钱包 <select id="wallet-provider" aria-label="选择插件钱包"></select></label>
-<button id="wallet-connect">检测并连接钱包</button><button id="wallet-switch">切换至 X Layer</button>
+<button id="wallet-connect" disabled>检测并连接钱包</button><button id="wallet-switch" disabled>切换至 X Layer</button>
 <p id="wallet-account">未连接钱包</p>
 <label>行为卡 <select id="wallet-circuit"><option value="1">蓄能卡</option><option value="2">交替卡</option></select></label>
 <button id="wallet-open" disabled>预览新局</button>
@@ -33,7 +33,7 @@
 <button id="card1" disabled>读取蓄能卡会话</button> <button id="card2" disabled>读取交替卡会话</button>
 <label>宿主地址 <input id="host" maxlength="42" placeholder="等待公开记录载入"></label>
 <label>会话ID <input id="session" inputmode="numeric" value="1"></label>
-<button id="read">从公共 RPC 读取固定块会话</button>
+<button id="read" disabled>从公共 RPC 读取固定块会话</button>
 <p id="status" role="status"></p><pre id="snapshot"></pre>
 <details><summary>开发者：生成调用草案（不发送）</summary>
 <p>此工具只生成草案，不签名、不广播；上方钱包试玩需要单独确认。</p>
@@ -41,7 +41,7 @@
 <label>审查卡 <select id="circuit"><option value="1">蓄能 ID1</option><option value="2">交替 ID2</option></select></label>
 <label>预期版本 <select id="version"><option>0</option><option>1</option><option>2</option><option>3</option></select></label>
 <label>动作 <select id="trigger"><option value="0">等待</option><option value="1">触发</option></select></label>
-<button id="plan">生成未验证草案</button>
+<button id="plan" disabled>生成未验证草案</button>
 <textarea id="draft" rows="10" readonly aria-label="未发送调用草案"></textarea>
 <p>草案不代表模拟通过。真实发送前核对钱包、最新版本、模拟和费用；过期版本必须失败，不能自动改版本重发。只读是单 RPC 观察，不是独立提供商共识。</p>
 <p><a href="../../../docs/tapeweave-host-run-2026-10-26.md">部署后操作与完整回执核验工具</a> · <a href="studio.html">本地行为工作室</a></p></details>

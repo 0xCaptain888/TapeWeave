@@ -73,4 +73,5 @@ for(const [id,index]of [['card1',0],['card2',1]])$(id).onclick=()=>{
  clear();$('host').value=evidence.host;$('session').value=evidence.proof.sessions[index].session_id;
  $('read').click();
 };
+for(const id of ['read','plan'])$(id).disabled=false;
 await loadEvidence();
