@@ -63,6 +63,8 @@ node contracts/verify-public-run.mjs research/tapeweave/demo/mainnet-evidence.js
 
 本轮合约回归包括准备、initcode、32 局128拍与回滚、24 组 CreateX／部署后操作测试；其中本地处理器是 fixture。真实主网运行另有上面的 11 笔公开记录。
 
-macOS Chrome 启动异常；备用 Chromium headless 也遭 MachPort 系统权限拒绝，未得到本机浏览器通过结果。新增 GitHub Actions Linux Chrome 验收，用生产页面／模块与明确的替身 RPC，覆盖证据载入、两会话选择、runtime 不符拒绝、重组拒绝、无效草案、读取失败与过期异步响应。工作流记录提供具体结果，不将替身测试称为真实钱包端到端验收。
+macOS Chrome 启动异常；备用 Chromium headless 也遭 MachPort 系统权限拒绝，未得到本机浏览器通过结果。改用 GitHub Actions Linux Chrome，**31 组 Node／Chrome 与两次 Python 发布保护全部通过**：[运行 40277443814](https://github.com/0xCaptain888/TapeWeave/actions/runs/40277443814)，代码快照 `6638845e4d710d774dc8c81946331eece32c2c39`。生产页面／模块配明确的替身 RPC，覆盖证据载入、两会话选择、runtime 不符拒绝、重组拒绝、无效草案、读取失败与过期异步响应；不将替身测试称为真实钱包端到端验收。
+
+[Pages 运行 40277441779](https://github.com/0xCaptain888/TapeWeave/actions/runs/40277441779)成功。已从公开 HTTPS 获取 README、chain.html、chain-page.mjs、mainnet-evidence.json 与 work.html，全部 HTTP 200 且逐字等于发布源文件。公共 RPC 实测允许浏览器跨域（`Access-Control-Allow-Origin: *`）；不据此保证未来可用性。
 
 链上核验当前只有 `https://rpc.xlayer.tech` 一个来源。没有双提供商一致结论，也没有完整 UOP 独立模拟、重新验签、Android 真机、独立团队采用、安全审计、视频成片或投稿完成声明。两场景仍在作者同一宿主里，不能称两家独立应用采用。

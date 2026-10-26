@@ -153,4 +153,4 @@ node contracts/check.mjs
 - 链上页面的 Chrome 测试首次因本地监听受限未运行；允许回环网络后 Chrome 启动即 `SIGABRT` 退出，没有页面验收结果。本轮不记为浏览器通过，不推定页面故障根因。
 - 新文件语法、已跟踪与新增文件空白检查通过。后续本轮用户要求同步 GitHub 与公开 Demo，发布完成状态以仓库最新提交、Actions 和线上实际文件为准。
 
-后续真实主网运行已完成，证据与模拟／费用范围见[真实记录](tapeweave-mainnet-run-2026-10-26.md)。macOS 备用 Chromium 同样因系统 MachPort 权限拒绝启动，新增 Linux Actions 验收覆盖真实页面的历史快照、两会话读取、代码不符、重组、错误及异步过期保护；RPC 为替身，不能替代真实链上证明。Android 真机、独立开发者、完整 UOP 独立模拟、双 RPC、视频及投稿仍须分别完成。
+后续真实主网运行已完成，证据与模拟／费用范围见[真实记录](tapeweave-mainnet-run-2026-10-26.md)。macOS 备用 Chromium 同样因系统 MachPort 权限拒绝启动，改用 Linux Actions；[31 组 Node／Chrome + 两次 Python 全部通过](https://github.com/0xCaptain888/TapeWeave/actions/runs/40277443814)，覆盖真实页面的历史快照、两会话读取、代码不符、重组、错误及异步过期保护。RPC 为替身，不能替代真实链上证明。Pages 已成功部署并比对线上文件。Android 真机、独立开发者、完整 UOP 独立模拟、双 RPC、视频及投稿仍须分别完成。

@@ -166,7 +166,7 @@ node research/tapeweave/demo/check.mjs --browser
 
 2026-10-26 部署工具更新后重新执行：新增14组CreateX测试、原有三组合约脚本、22组Node及两次Python发布保护全部通过；未重跑Chrome／手机验收。实际合约的公网单RPC工厂执行预检通过，第二端点连接失败，不能称双端一致或钱包UOP模拟通过。[完整结果与限制](docs/tapeweave-createx-deployment-2026-10-26.md#本轮执行记录)。
 
-同日继续开发部署后流程：CreateX／操作工具扩展到24组测试通过，四份合约脚本及22组Node／两次Python回归通过；新增显式版本保护、单步回执恢复、两卡完整运行及费用核验。macOS Chrome／备用 Chromium 受系统进程权限限制无法启动，新增 GitHub Actions Linux 浏览器回归作为替代；其状态见仓库 Actions，真实钱包交易与替身浏览器测试分开记载。[部署后工具与执行记录](docs/tapeweave-host-run-2026-10-26.md)。
+同日继续开发部署后流程：CreateX／操作工具扩展到24组测试通过，四份合约脚本通过；新增显式版本保护、单步回执恢复、两卡完整运行及费用核验。macOS Chrome／备用 Chromium 受系统进程权限限制无法启动，改用 GitHub Actions Linux：**31 组 Node／Chrome + 两次 Python 发布保护全部通过**，含主网证据展示、两会话读取、runtime／重组拒绝及异步保护。[浏览器验收记录](https://github.com/0xCaptain888/TapeWeave/actions/runs/40277443814)。Pages 部署成功，线上 README、主网页、脚本、运行 JSON 与作品入口已逐字对比发布内容一致。真实钱包交易与替身浏览器测试分开记载。[部署后工具与执行记录](docs/tapeweave-host-run-2026-10-26.md)。
 
 | 资料 | 内容与限制 |
 |---|---|
