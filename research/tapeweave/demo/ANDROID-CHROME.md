@@ -1,6 +1,6 @@
 # Android + Chrome 人工验收
 
-2026-10-18；**待用户在真机执行，未通过**。桌面Chrome自动化不代替这里的结果。约15—25分钟；不需要钱包、登录或电脑本机SQLite服务。保留同一Chrome普通标签页与同一HTTPS站点；无痕／清数据会丢存档。
+2026-10-26状态：**按用户要求标记完成并关闭待办；实际通过未独立核验**。未收到设备版本与九项观察，不生成逐项通过证据。下列步骤保留供后续复测。桌面Chrome自动化不代替真机结果。约15—25分钟；不需要钱包、登录或电脑本机SQLite服务。保留同一Chrome普通标签页与同一HTTPS站点；无痕／清数据会丢存档。
 
 入口：https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html
 
