@@ -43,7 +43,7 @@ try{
  verdict.textContent='PASS validation browser fixture';
 }catch(e){verdict.textContent='FAIL '+e.message;}
 </script>`;
-const files=new Set(['validation.html','validation-page.mjs','validation-record.mjs','style.css']);
+const files=new Set(['i18n.mjs','i18n-catalog.mjs','i18n.css','validation.html','validation-page.mjs','validation-record.mjs','style.css']);
 const server=createServer(async(req,res)=>{try{
  const url=new URL(req.url,'http://localhost'),file=url.pathname.slice(1);
  if(!files.has(file)){res.writeHead(404);return res.end();}

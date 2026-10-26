@@ -45,7 +45,7 @@ try{
  out.textContent='PASS acceptance form '+widths.join(',');
 }catch(e){out.textContent='FAIL '+e.message;}
 </script>`;
-const files=new Set(['device-check.html','device-check-page.mjs','device-acceptance.mjs','style.css']);
+const files=new Set(['i18n.mjs','i18n-catalog.mjs','i18n.css','device-check.html','device-check-page.mjs','device-acceptance.mjs','style.css']);
 const server=createServer(async(req,res)=>{
  try{
   const url=new URL(req.url,'http://localhost'),file=url.pathname.slice(1);

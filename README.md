@@ -12,7 +12,15 @@ TapeWeave希望创作者设计的“遇到什么条件、采取什么动作”�
 
 **不用连接钱包，不用买币，也不用先懂区块链。**
 
-👉 **[制作并交付互动作品](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html)** · **[钱包试玩与真实主网记录](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)** · [高级规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html)
+👉 **[中文 Demo](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=zh)** · **[English Demo](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=en)** · **[钱包试玩与真实主网记录](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)** · [高级规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html)
+
+**演示与投稿材料：**[2 分 57 秒 Demo 视频](deliverables/tapeweave-final-2026-10-26/TapeWeave-Final-Demo.mp4) · [完整投稿包](deliverables/tapeweave-final-2026-10-26/TapeWeave-Submission-Pack.zip) · [英文项目介绍](deliverables/tapeweave-final-2026-10-26/SUBMISSION-EN.md) · [评委快速体验](deliverables/tapeweave-final-2026-10-26/JUDGE-QUICKSTART.md)。视频使用英文男声合成配音与英文字幕，录制于双语界面更新之前，产品画面仍为中文；不会把该文件称为全英文界面录像。未代替参赛者上传 YouTube 或提交报名表。
+
+### 新增：中文 / English 演示界面
+
+演示页面顶部提供中文 / English 切换，使用 `?lang=zh` 或 `?lang=en` 可直接指定语言；选择仅保存在当前浏览器，站内页面链接继承选择。涵盖作品交付、管理、工作室、行为挑战、双应用展览、主网与钱包页面、人工验收及本机持久化页面的界面文案和常见动态反馈。
+
+英文入口首次载入提供英文示例名称和说明；用户填写或导入的标题、说明、JSON、交易哈希和链上证据不会随语言切换翻译或重新序列化。语言切换不重置执行进度、不发送交易。Markdown 开发文档和用户内容不属于界面翻译范围。实现与测试见[双语说明](docs/tapeweave-bilingual-demo-2026-10-26.md)。本地实现完成不等于线上已发布；线上状态须在推送及 Pages 部署后另行确认。
 
 ### 新增：AA 网页入口与实际设备验收
 

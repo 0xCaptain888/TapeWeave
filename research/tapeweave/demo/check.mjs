@@ -8,6 +8,8 @@ if (args.length > 1 || (args.length === 1 && args[0] !== '--browser')) {
 }
 const tests = ['test-exhibit-record.mjs', 'test-work-store.mjs', 'test-work-session.mjs', 'test-work-library.mjs', 'test-work.mjs', 'test-validation-record.mjs', 'test-chain-host.mjs', 'test-chain-wallet.mjs', 'test-chain-history.mjs', 'test-chain-crosscheck.mjs', 'test-native-wallet.mjs', 'test-device-acceptance.mjs', 'test-engine.mjs', 'test-host-boundaries.mjs', 'test-package.mjs', 'test-replay.mjs', 'test-creator.mjs', 'test-durable-host.mjs', 'test-studio-storage.mjs', 'test-creator-package.mjs', 'test-creator-replay.mjs', 'test-browser-process.mjs', 'test-verify-creator.mjs', 'test-local-server.mjs', 'test-xlayer-binding.mjs', 'test-rpc-host.mjs', 'test-archive-host.mjs'];
 tests.push('test-native-diagnostics.mjs');
+tests.push('test-i18n.mjs');
+if(args[0]==='--browser')tests.push('test-i18n-browser.mjs');
 if (args[0] === '--browser') tests.push('test-pilot-browser.mjs', 'test-exhibit-browser.mjs', 'test-manage-browser.mjs', 'test-work-browser.mjs', 'test-validation-browser.mjs', 'test-chain-browser.mjs', 'test-wallet-browser.mjs', 'test-native-browser.mjs', 'test-device-browser.mjs', 'browser-check.mjs', 'browser-check.mjs --studio', 'test-durable-browser.mjs');
 // Keep publishing guards in the same fail-fast gate, including Python -O.
 const publishingTest = fileURLToPath(new URL('../../../scripts/test-sync-tapeweave-github.py', import.meta.url));

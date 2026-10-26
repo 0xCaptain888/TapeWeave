@@ -1,0 +1,7 @@
+# Local media-production intermediates; final submission assets remain tracked.
+deliverables/**/raw/
+deliverables/**/__pycache__/
+deliverables/**/*.pyc
+deliverables/**/*.mp3
+deliverables/**/*.webm
+deliverables/**/[0-9][0-9]-*.png

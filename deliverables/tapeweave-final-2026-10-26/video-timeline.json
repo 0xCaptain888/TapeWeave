@@ -1,0 +1,60 @@
+{
+  "speed": 1.08,
+  "duration": 177.2205,
+  "scenes": [
+    {
+      "scene": "01-introduction",
+      "start": 0,
+      "duration": 15.466667,
+      "file": "/Users/lyh/Documents/Codex/2026-08-23/hi/TapeWeave/deliverables/tapeweave-final-2026-10-26/raw/01-introduction-final.mp4"
+    },
+    {
+      "scene": "02-create",
+      "start": 15.466667,
+      "duration": 19.244458,
+      "file": "/Users/lyh/Documents/Codex/2026-08-23/hi/TapeWeave/deliverables/tapeweave-final-2026-10-26/raw/02-create-final.mp4"
+    },
+    {
+      "scene": "03-deliver",
+      "start": 34.711125,
+      "duration": 19.244458,
+      "file": "/Users/lyh/Documents/Codex/2026-08-23/hi/TapeWeave/deliverables/tapeweave-final-2026-10-26/raw/03-deliver-final.mp4"
+    },
+    {
+      "scene": "04-protect",
+      "start": 53.955583000000004,
+      "duration": 19.1,
+      "file": "/Users/lyh/Documents/Codex/2026-08-23/hi/TapeWeave/deliverables/tapeweave-final-2026-10-26/raw/04-protect-final.mp4"
+    },
+    {
+      "scene": "05-applications",
+      "start": 73.05558300000001,
+      "duration": 20.566667,
+      "file": "/Users/lyh/Documents/Codex/2026-08-23/hi/TapeWeave/deliverables/tapeweave-final-2026-10-26/raw/05-applications-final.mp4"
+    },
+    {
+      "scene": "06-mainnet",
+      "start": 93.62225000000001,
+      "duration": 19.066667,
+      "file": "/Users/lyh/Documents/Codex/2026-08-23/hi/TapeWeave/deliverables/tapeweave-final-2026-10-26/raw/06-mainnet-final.mp4"
+    },
+    {
+      "scene": "07-read",
+      "start": 112.688917,
+      "duration": 20.0,
+      "file": "/Users/lyh/Documents/Codex/2026-08-23/hi/TapeWeave/deliverables/tapeweave-final-2026-10-26/raw/07-read-final.mp4"
+    },
+    {
+      "scene": "08-wallet",
+      "start": 132.688917,
+      "duration": 22.444458,
+      "file": "/Users/lyh/Documents/Codex/2026-08-23/hi/TapeWeave/deliverables/tapeweave-final-2026-10-26/raw/08-wallet-final.mp4"
+    },
+    {
+      "scene": "09-close",
+      "start": 155.133375,
+      "duration": 22.044458,
+      "file": "/Users/lyh/Documents/Codex/2026-08-23/hi/TapeWeave/deliverables/tapeweave-final-2026-10-26/raw/09-close-final.mp4"
+    }
+  ]
+}

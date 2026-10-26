@@ -140,7 +140,7 @@ try{
  out.textContent='PASS native refresh';
 }catch(e){out.textContent='FAIL '+e.message;}
 </script>`;
-const files=new Set(['native.html','native-page.mjs','native-wallet.mjs','native-diagnostics.mjs','chain-host.mjs','chain-wallet.mjs','style.css']);
+const files=new Set(['i18n.mjs','i18n-catalog.mjs','i18n.css','native.html','native-page.mjs','native-wallet.mjs','native-diagnostics.mjs','chain-host.mjs','chain-wallet.mjs','style.css']);
 const server=createServer(async(req,res)=>{
  try{
   const url=new URL(req.url,'http://localhost'),file=url.pathname.slice(1);
