@@ -168,6 +168,8 @@ node research/tapeweave/demo/check.mjs --browser
 
 同日继续开发部署后流程：CreateX／操作工具扩展到24组测试通过，四份合约脚本通过；新增显式版本保护、单步回执恢复、两卡完整运行及费用核验。macOS Chrome／备用 Chromium 受系统进程权限限制无法启动，改用 GitHub Actions Linux：**31 组 Node／Chrome + 两次 Python 发布保护全部通过**，含主网证据展示、两会话读取、runtime／重组拒绝及异步保护。[浏览器验收记录](https://github.com/0xCaptain888/TapeWeave/actions/runs/40277443814)。Pages 部署成功，线上 README、主网页、脚本、运行 JSON 与作品入口已逐字对比发布内容一致。真实钱包交易与替身浏览器测试分开记载。[部署后工具与执行记录](docs/tapeweave-host-run-2026-10-26.md)。
 
+另以全新 Linux Chrome 打开真实公网 Demo，直接点击两卡读取按钮，**真实 HTTPS + 真实 RPC 验收通过**；无 fetch 替身、无钱包连接、无新交易。[公网浏览器记录](https://github.com/0xCaptain888/TapeWeave/actions/runs/40278163174)。CI 曾出现一次持久化测试刷新超时，已将刷新测试改为先等待新文档再读取恢复结果，避免把旧文档当成已恢复页面。
+
 | 资料 | 内容与限制 |
 |---|---|
 | [互动作品交付与独立页面接入](research/tapeweave/demo/WORK-INTEGRATION.md) | 新作品包、通用本地执行接口、普通对照与责任边界；尚无独立采用 |

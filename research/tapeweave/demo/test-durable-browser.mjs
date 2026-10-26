@@ -23,6 +23,13 @@ try{
  socket.onmessage=e=>{const m=JSON.parse(e.data);if(m.id){const p=pending.get(m.id);pending.delete(m.id);m.error?p.reject(Error(m.error.message)):p.resolve(m.result);}};
  const cdp=(method,params={})=>new Promise((resolve,reject)=>{const id=++serial;pending.set(id,{resolve,reject});socket.send(JSON.stringify({id,method,params}));});
  const evaluate=async(expression)=>{const r=await cdp('Runtime.evaluate',{expression,awaitPromise:true,returnByValue:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value;};
+ // Page.reload acknowledges navigation before the old document disappears.
+ // Wait for a new document before accepting its restored summary or controls.
+ const reload=async()=>{
+  const previous=await evaluate('performance.timeOrigin');
+  await cdp('Page.reload');
+  await wait(async()=>await evaluate('performance.timeOrigin')!==previous);
+ };
  await cdp('Page.navigate',{url:app.url});await wait(()=>evaluate("!!document.getElementById('create') && !document.getElementById('create').disabled"));
  const artifact=await createArtifact(presets.pulse.next,presets.pulse.request);
  for(const plain of [false,true]){
@@ -36,14 +43,14 @@ try{
   assert.ok(await evaluate("document.getElementById('summary').textContent.includes('训练: 得分 2') && document.getElementById('summary').textContent.includes('门: 得分 1 · 资源 1')"));
   await evaluate("document.getElementById('export').click()");await wait(()=>evaluate("!!document.getElementById('replay').value"));
   assert.equal(await evaluate("JSON.parse(document.getElementById('replay').value).plain"),plain);
-  await cdp('Page.reload');await wait(()=>evaluate("!!document.getElementById('summary') && document.getElementById('summary').textContent.includes('版本 4/4')"));
+  await reload();await wait(()=>evaluate("!!document.getElementById('summary') && document.getElementById('summary').textContent.includes('版本 4/4')"));
   assert.equal(await evaluate("document.getElementById('trace').rows.length"),8);
  }
  // Simulate a committed request whose receipt was lost before the UI acknowledged it.
  await evaluate(`document.getElementById('session').value='retrycase';document.getElementById('artifact').value=${JSON.stringify(JSON.stringify(artifact))};document.getElementById('create').click()`);
  await wait(()=>evaluate("!document.getElementById('wait').disabled"));
  await evaluate(`(async()=>{const key='tapeweave-durable-ui-v1',r=JSON.parse(sessionStorage.getItem(key));r.pending={session:'retrycase',command:{id:'lost_receipt',version:0,trigger:0}};sessionStorage.setItem(key,JSON.stringify(r));const response=await fetch('/api/act',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+r.token},body:JSON.stringify(r.pending)});if(!response.ok)throw Error('setup failed');})()`);
- await cdp('Page.reload');await wait(()=>evaluate("!!document.getElementById('retry') && !document.getElementById('retry').disabled"));
+ await reload();await wait(()=>evaluate("!!document.getElementById('retry') && !document.getElementById('retry').disabled"));
  assert.ok(await evaluate("document.getElementById('wait').disabled"));
  await evaluate("document.getElementById('retry').click()");
  await wait(()=>evaluate("!document.getElementById('wait').disabled"));
@@ -65,10 +72,10 @@ try{
  await wait(()=>evaluate("!document.getElementById('charge').disabled"));
  for(const [i,id] of ['charge','trigger'].entries()){await evaluate(`document.getElementById('${id}').click()`);await wait(()=>evaluate(`document.getElementById('summary').textContent.includes('第${i+1}步') && !document.getElementById('load').disabled`));}
  assert.ok(await evaluate("document.getElementById('summary').textContent.includes('请求1')"));
- await cdp('Page.reload');await wait(()=>evaluate("!!document.getElementById('summary') && document.getElementById('summary').textContent.includes('第2步')"));
+ await reload();await wait(()=>evaluate("!!document.getElementById('summary') && document.getElementById('summary').textContent.includes('第2步')"));
  }
  await evaluate(`(async()=>{const r=JSON.parse(sessionStorage.getItem('tapeweave-local-work-ui-v1'));r.pending={session:r.session,command:{id:'lost-work',version:2,input:{trigger:0,recharge:1}}};sessionStorage.setItem('tapeweave-local-work-ui-v1',JSON.stringify(r));const response=await fetch('/api/work-act',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+r.token},body:JSON.stringify(r.pending)});if(!response.ok)throw Error('setup');})()`);
- await cdp('Page.reload');await wait(()=>evaluate("!!document.getElementById('retry') && !document.getElementById('retry').disabled"));
+ await reload();await wait(()=>evaluate("!!document.getElementById('retry') && !document.getElementById('retry').disabled"));
  assert.ok(await evaluate("document.getElementById('load').disabled && document.getElementById('charge').disabled"));
  await evaluate("document.getElementById('retry').click()");await wait(()=>evaluate("document.getElementById('summary').textContent.includes('第3步') && !document.getElementById('load').disabled"));
  await evaluate("document.getElementById('export').click()");assert.equal(await evaluate("JSON.parse(document.getElementById('output').value).commands.length"),3);

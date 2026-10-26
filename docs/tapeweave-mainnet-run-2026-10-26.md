@@ -67,4 +67,8 @@ macOS Chrome 启动异常；备用 Chromium headless 也遭 MachPort 系统权�
 
 [Pages 运行 40277441779](https://github.com/0xCaptain888/TapeWeave/actions/runs/40277441779)成功。已从公开 HTTPS 获取 README、chain.html、chain-page.mjs、mainnet-evidence.json 与 work.html，全部 HTTP 200 且逐字等于发布源文件。公共 RPC 实测允许浏览器跨域（`Access-Control-Allow-Origin: *`）；不据此保证未来可用性。
 
+另执行[真实公网 Chrome 运行 40278163174](https://github.com/0xCaptain888/TapeWeave/actions/runs/40278163174)，代码 `b3a120bcb347dbb114d2b3e08302a26f6d7550ea`：直接打开线上作品入口和主网页，确认 11 个交易链接，点击两卡按钮访问真实公共 RPC。两会话均代码匹配、版本 4、最终状态匹配，结果 `LIVE_PUBLIC_DEMO_BROWSER_PASSED`。没有替换 fetch、没有钱包或新交易；记录所观察的 RPC 均为读取。可用手动工作流 `Live public demo smoke` 或 `TAPEWEAVE_LIVE_SMOKE=1 CHROME=/path/to/chrome node research/tapeweave/demo/test-live-chain-browser.mjs` 重跑。
+
+CI 中间运行 `40277880818` 曾在持久化测试新建会话后超时，后续运行 `40278052065` 通过。检查发现刷新测试仅等待“版本4”的摘要，可能从尚未销毁的旧文档读到它，随后操作撞上真正刷新。现已让四处刷新先等待 `performance.timeOrigin` 改变再检查恢复内容；这是测试导航同步修正，不宣称修复了用户历史反馈中所有刷新问题。
+
 链上核验当前只有 `https://rpc.xlayer.tech` 一个来源。没有双提供商一致结论，也没有完整 UOP 独立模拟、重新验签、Android 真机、独立团队采用、安全审计、视频成片或投稿完成声明。两场景仍在作者同一宿主里，不能称两家独立应用采用。
