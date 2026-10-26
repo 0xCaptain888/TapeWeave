@@ -21,19 +21,33 @@ export async function prepareDeployment(tools) {
   });
   const processor = ethers.getAddress(evidence.processor);
   if (processor.toLowerCase() !== '0xdfc1abf794ef40b9eeeba1d875e7ab2b21a0a146') throw Error('Unexpected processor');
-  const input = {language:'Solidity',sources:{'TapeWeaveHost.sol':{content:source}},settings:{optimizer:{enabled:true,runs:200},evmVersion:'shanghai',outputSelection:{'*':{'*':['abi','evm.bytecode.object','evm.deployedBytecode.object','evm.deployedBytecode.immutableReferences']}}}};
+  const input = {language:'Solidity',sources:{'TapeWeaveHost.sol':{content:source}},settings:{optimizer:{enabled:true,runs:200},evmVersion:'shanghai',outputSelection:{'*':{'':['ast'],'*':['abi','evm.bytecode.object','evm.deployedBytecode.object','evm.deployedBytecode.immutableReferences']}}}};
   const output = JSON.parse(solc.compile(JSON.stringify(input)));
   const errors = (output.errors ?? []).filter(error => error.severity === 'error');
   if (errors.length) throw Error(errors.map(error => error.formattedMessage).join('\n'));
   const artifact = output.contracts['TapeWeaveHost.sol'].TapeWeaveHost;
   const constructorArgs = ethers.AbiCoder.defaultAbiCoder().encode(['address','bytes32','bytes32'],[processor,...hashes]);
   const initcode = '0x'+artifact.evm.bytecode.object+constructorArgs.slice(2);
+  const values = {processor:ethers.zeroPadValue(processor,32),pulseHash:hashes[0],alternatingHash:hashes[1]};
+  const declarations = output.sources['TapeWeaveHost.sol'].ast.nodes
+    .filter(node=>node.nodeType==='ContractDefinition'&&node.name==='TapeWeaveHost')
+    .flatMap(node=>node.nodes.filter(item=>item.nodeType==='VariableDeclaration'&&item.mutability==='immutable'));
+  const runtime = Buffer.from(artifact.evm.deployedBytecode.object,'hex');
+  for(const declaration of declarations){
+    const value=values[declaration.name],refs=artifact.evm.deployedBytecode.immutableReferences[declaration.id];
+    if(!value||!refs?.length)throw Error('Unknown immutable configuration');
+    for(const {start,length} of refs){
+      if(length!==32||start<0||start+length>runtime.length)throw Error('Invalid immutable range');
+      Buffer.from(value.slice(2),'hex').copy(runtime,start);
+    }
+  }
+  if(declarations.length!==3)throw Error('Expected three reviewed immutables');
   return {
     format:'tapeweave-offline-deployment-preparation-v1', chain_id:196,
-    account_address:'0xc055d5c6d6d02d797074829120c85e7843f8cb3f',
-    capability_basis:'user-directed-assumption-not-interface-verification',
+    account_address:null,
+    capability_basis:'direct-CREATE-preparation; explicit CreateX adapter available separately',
     broadcast:false, simulated:false, deployment_address:null, wallet_creation_adapter:null,
-    ready_to_send:false, blockers:['official Account 2 creation and simulation interface not integrated','real processor current state and upgrade risks require review','fee quote and explicit broadcast review required'],
+    ready_to_send:false, blockers:['use prepare-createx.mjs for reviewed factory calldata','real processor current state and upgrade risks require review','wallet simulation, fee quote and explicit broadcast review required'],
     compiler:solc.version(), compiler_input:input, source_sha256:sha(source),
     abi:artifact.abi, processor, pulse_hash:hashes[0], alternating_hash:hashes[1],
     evidence_block:evidence.block, evidence_scope:'historical-single-rpc-not-current-or-dual-verification',
@@ -41,6 +55,7 @@ export async function prepareDeployment(tools) {
     initcode, initcode_sha256:sha(Buffer.from(initcode.slice(2),'hex')),
     runtime_template:'0x'+artifact.evm.deployedBytecode.object,
     immutable_references:artifact.evm.deployedBytecode.immutableReferences,
+    expected_runtime:'0x'+runtime.toString('hex'),
     runtime_note:'template contains unpatched immutables; not a deployed-code identity',
   };
 }

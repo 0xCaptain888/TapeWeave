@@ -12,11 +12,19 @@ TapeWeave希望创作者设计的“遇到什么条件、采取什么动作”�
 
 **不用连接钱包，不用买币，也不用先懂区块链。**
 
-👉 **[制作并交付互动作品](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html)** · [高级规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html)
+👉 **[制作并交付互动作品](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html)** · **[真实主网运行与实时读取](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)** · [高级规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html)
 
 ### 新增：版本差异、追加回退与通用执行适配器
 
 作品管理可选择版本基准、逐项比较元数据与八行行为变化；回退追加新版本，不删除历史、不自动迁移接收方。可复制完整作品库归档，校验后仅恢复到空库。新增Node24通用作品SQLite适配器与CLI，支持64步、双输入、命令重试、并发冲突拒绝和事务回滚；它不是Pages后端；现在可通过本机服务输出的 `local-work.html` 专用入口创建、续用、重试和查看作品日志，旧四回合页保持独立。操作及边界见[作品持久化指南](research/tapeweave/demo/WORK-PERSISTENCE.md)。
+
+### 新增：真实 AA 主网部署与两卡完整交互（2026-10-26）
+
+已通过当前官方 AA 钱包完成 `AA → CreateX → CREATE2` 主网部署，宿主为 `0x440c3CC7DdD50566126754199Df7336499eE1E20`。随后两张卡各自开局并运行 `0011`，**共 11 笔真实交易，全部成功 UserOperation 日志绑定及历史状态重算通过**。蓄能卡：训练 2、开门 1、余钥匙 1；交替卡：训练 1、开门 0、余钥匙 2。
+
+每步先做 AA 地址的 RPC 模拟、官方风险扫描、网关模拟及费用审核，再由钱包签名发送；实际回执与 UOP 费用合计均为 **0 OKB**。历史累计实付仍为 0.01052 OKB。官方钱包后端完成 UOP 构造与签名；没有另外取得完整 UOP 的独立签名前模拟报告，也没有重新验证签名。单 RPC 核验，不宣称双提供商一致。[完整真实记录、费用与复核方法](docs/tapeweave-mainnet-run-2026-10-26.md)。
+
+Demo 默认显示公开宿主与两局记录，点击按钮可重新读取当前代码和会话；历史快照与实时读取分开显示。开发者可重建源码并运行 `verify-public-run.mjs`，重新核 11 笔交易及费用；版本冲突停止，不自动改版本重发。[部署工具](docs/tapeweave-createx-deployment-2026-10-26.md) · [操作与恢复指南](docs/tapeweave-host-run-2026-10-26.md)。
 
 ### 接收方手动升级
 
@@ -105,7 +113,7 @@ TapeWeave尝试把这套规则整理成一份可以交付和检查的“行为�
 
 - [固定行为挑战](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/index.html)：先预测再完成四回合；与工作室使用不同格式的分享包，不要混用。
 - [人工体验记录](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/validation.html)：记录实际观察、帮助和失败；不是自动测试，也不自动上传或保存。
-- [链上接入准备页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)：供开发者生成调用草案、读取候选地址。不建议初次体验者填写；它不是钱包或交易入口。
+- [真实主网运行页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)：查看两局真实结果、11 笔交易链接，点击读取实时会话；开发者草案默认折叠。页面只读，无需连接钱包。
 
 ## 最新真人测试反馈与修复
 
@@ -119,12 +127,12 @@ TapeWeave尝试把这套规则整理成一份可以交付和检查的“行为�
 
 ## 现在已经做到哪里？
 
-截至2026-10-18：
+截至2026-10-26（试玩与真人反馈记录沿用原日期）：
 
 - **可以体验**：命名互动作品、模板／自定义规则、可见效果、交付与导入、普通方式对照、自报验收记录；高级工作室保留规则编辑、回放及浏览器内恢复。新版作品页支持本机执行存档与显式恢复。
-- **开发者可以本地运行**：用SQLite数据库保存进度、备份恢复，以及运行合约测试和离线部署准备工具。
-- **已有链上实验**：在X Layer制造了两枚电路，保存了一个RPC服务返回的只读计算结果。[制造与验证详情](docs/tapeweave-manufactured-validation-2026-10-18.md)
-- **还没做到**：让真实链上应用消费这些卡、真实钱包交互、独立团队接入，以及证明有人需要、愿意付费、愿意持续回来。真实链上宿主尚未部署，广播仍暂停；没有视频成片或投稿完成声明。
+- **开发者可以本地运行**：用SQLite数据库保存进度、备份恢复，运行合约测试，以及生成 CreateX／AA 部署包、只读预检和核验已有部署回执。
+- **已有链上实验**：X Layer 两枚真实电路由主网 TapeWeaveHost 消费，AA 钱包完成两局真实交互；11 笔交易已重查事件、代码和最终状态。[主网记录](docs/tapeweave-mainnet-run-2026-10-26.md)
+- **还没做到**：独立团队接入，以及证明有人需要、愿意付费、愿意持续回来。Android 真机、完整 UOP 独立模拟、双 RPC、视频成片和投稿没有完成声明。
 
 所以，**现在你能体验的是“规则如何被两个场景使用”，不是一个已经形成商业价值的跨游戏平台。**
 
@@ -154,7 +162,11 @@ node research/tapeweave/demo/check.mjs
 node research/tapeweave/demo/check.mjs --browser
 ```
 
-最新反馈修复后的完整回归（2026-10-18）：**31组Node／Chrome及两次Python发布保护（普通、-O）通过**，含中文导入提示、原局保护、默认说明同步、自定义说明保留、就近恢复提示、章节顺序与恢复就绪状态断言。这些是作者自动测试，与上述真人反馈分开；RPC和剪贴板部分使用替身，不是独立采用或手机验收。另三组合约测试此前通过：离线准备、完整initcode本地部署／runtime核对、32局128拍及五种失败回滚；处理器使用Mock，不是审计或官方AA模拟，本轮文档同步未重跑合约。Account 2部署及广播继续暂停，无新增链上支出。
+历史反馈回归（2026-10-18）：**31组Node／Chrome及两次Python发布保护（普通、-O）通过**，含中文导入提示、原局保护、默认说明同步、自定义说明保留、就近恢复提示、章节顺序与恢复就绪状态断言。这些是作者自动测试，与真人反馈分开；RPC和剪贴板部分使用替身，不是独立采用或手机验收。该日期的暂停部署记录已由 2026-10-26 用户授权的真实部署替代。
+
+2026-10-26 部署工具更新后重新执行：新增14组CreateX测试、原有三组合约脚本、22组Node及两次Python发布保护全部通过；未重跑Chrome／手机验收。实际合约的公网单RPC工厂执行预检通过，第二端点连接失败，不能称双端一致或钱包UOP模拟通过。[完整结果与限制](docs/tapeweave-createx-deployment-2026-10-26.md#本轮执行记录)。
+
+同日继续开发部署后流程：CreateX／操作工具扩展到24组测试通过，四份合约脚本及22组Node／两次Python回归通过；新增显式版本保护、单步回执恢复、两卡完整运行及费用核验。macOS Chrome／备用 Chromium 受系统进程权限限制无法启动，新增 GitHub Actions Linux 浏览器回归作为替代；其状态见仓库 Actions，真实钱包交易与替身浏览器测试分开记载。[部署后工具与执行记录](docs/tapeweave-host-run-2026-10-26.md)。
 
 | 资料 | 内容与限制 |
 |---|---|
@@ -163,7 +175,10 @@ node research/tapeweave/demo/check.mjs --browser
 | [本地数据库、归档与恢复](research/tapeweave/demo/PERSISTENCE.md) | 本机事务与重试，不是公开多用户后端 |
 | [开发者接入指南](research/tapeweave/INTEGRATION.md) | 时序、责任与失败边界；不代表已有独立采用 |
 | [RPC宿主工具](research/tapeweave/demo/RPC-HOST.md) | 读取后本地提交，不发交易；历史双端绑定未通过 |
-| [合约源码、测试与离线准备](contracts/README.md) | 尚缺适用当前Account2的官方创建／模拟适配器，准备包不可直接广播 |
+| [合约源码、测试与部署准备](contracts/README.md) | CreateX／AA 真实部署与两卡交互、只读源码和回执核验；独立完整 UOP 模拟仍有限制 |
+| [真实主网运行与费用记录](docs/tapeweave-mainnet-run-2026-10-26.md) | 11 笔真实交易、成功 UOP、逐笔费用与公开复核入口 |
+| [CreateX／AA 操作与核验](docs/tapeweave-createx-deployment-2026-10-26.md) | 明确区分工厂 RPC 模拟、钱包 UOP 与真实链上证明 |
+| [部署后动作、恢复与完整运行核验](docs/tapeweave-host-run-2026-10-26.md) | 核源码身份、当前版本、单步回执和两卡四拍事件／最终状态；不签名或发送 |
 | [真实制造记录](docs/tapeweave-manufacture-2026-10-18.md) | pulse ID1、alternating ID2；不是宿主部署记录 |
 
 ## 发布与许可
