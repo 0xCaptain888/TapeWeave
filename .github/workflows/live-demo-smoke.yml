@@ -1,0 +1,19 @@
+name: Live public demo smoke
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  live-readonly:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.22.0'
+      - name: Production HTTPS and both actual RPC sessions in Chrome
+        env:
+          CHROME: /usr/bin/google-chrome
+          TAPEWEAVE_LIVE_SMOKE: '1'
+        run: node research/tapeweave/demo/test-live-chain-browser.mjs
