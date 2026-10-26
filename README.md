@@ -14,6 +14,10 @@ TapeWeave希望创作者设计的“遇到什么条件、采取什么动作”�
 
 👉 **[制作并交付互动作品](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html)** · **[钱包试玩与真实主网记录](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)** · [高级规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html)
 
+### 新增：两个公开 RPC 端点交叉核验
+
+主网页可直接点击“用两个端点交叉核验”，无需钱包。在较低链头减两块的同一固定区块比较两端的区块哈希、固定宿主完整代码与会话状态，并重读区块检测期间变化；端点不可用或不一致就明确失败。两个URL可能共享基础设施，不代表独立提供商共识或最终性证明。钱包发送／回执与历史事件查询仍保持原单RPC路径。[操作与边界](research/tapeweave/demo/WALLET-PLAY.md)。
+
 ### 新增：我的会话、回执历史与备份
 
 钱包页按当前账户显示本机会话与已核验回执；刷新后连接原账户，选择会话即可重新读取链上状态并续用。支持历史 JSON 导出／校验合并，以及按固定宿主和当前账户分段扫描开局事件。公共 RPC 每段最多100块，明确显示扫描范围，不声称已自动索引完整历史。

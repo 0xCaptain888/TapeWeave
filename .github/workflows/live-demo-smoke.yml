@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24.22.0'
-      - name: Production HTTPS, both actual RPC sessions and bounded log discovery in Chrome
+      - name: Production HTTPS, two-endpoint session checks and bounded log discovery in Chrome
         env:
           CHROME: /usr/bin/google-chrome
           TAPEWEAVE_LIVE_SMOKE: '1'

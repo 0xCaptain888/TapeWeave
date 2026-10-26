@@ -7,7 +7,7 @@ import {join} from 'node:path';
 const origin='https://0xcaptain888.github.io';
 if(process.env.TAPEWEAVE_LIVE_SMOKE!=='1')throw Error('Opt in with TAPEWEAVE_LIVE_SMOKE=1; this test reads public HTTPS and RPC');
 const dir=await mkdtemp(join(tmpdir(),'tw-live-browser-'));
-let chrome,socket;const pending=new Map(),methods=[];
+let chrome,socket;const pending=new Map(),methods=[],rpcEndpoints=new Set();
 try{
  chrome=spawn(process.env.CHROME??'/usr/bin/google-chrome',[
   '--headless=new','--no-first-run','--no-default-browser-check',
@@ -40,8 +40,9 @@ try{
    message.error?p.reject(Error(message.error.message)):p.resolve(message.result);
   }else if(message.method==='Network.requestWillBeSent'){
    const request=message.params.request;
-   if(request.url==='https://rpc.xlayer.tech/'&&request.method==='POST'&&request.postData){
+   if(['https://rpc.xlayer.tech/','https://xlayerrpc.okx.com/'].includes(request.url)&&request.method==='POST'&&request.postData){
     methods.push(JSON.parse(request.postData).method);
+    rpcEndpoints.add(new URL(request.url).origin);
    }
   }
  };
@@ -80,6 +81,27 @@ try{
   assert.equal(snapshot.snapshot.version,4);
   snapshots.push(snapshot);
  }
+ const crosschecks=[];
+ for(const [id,circuit]of [['1',1],['2',2]]){
+  let checked;
+  await evaluate(`document.getElementById('session').value='${id}';document.getElementById('session').dispatchEvent(new Event('input'))`);
+  for(let attempt=0;attempt<3;attempt++){
+   await evaluate("document.getElementById('cross-read').click()");
+   await wait(()=>evaluate("!document.getElementById('cross-read').disabled"));
+   const result=await evaluate("({status:document.getElementById('status').textContent,snapshot:document.getElementById('snapshot').textContent})");
+   if(result.snapshot){checked=JSON.parse(result.snapshot);break;}
+   if(attempt===2)throw Error('Public crosscheck failed: '+result.status);
+   await pause(2000*(attempt+1)); // Explicit readonly retries, no transaction APIs.
+  }
+  assert.equal(checked.provider_agreement,true);
+  assert.equal(checked.independent_providers,false);
+  assert.equal(checked.finality_proven,false);
+  assert.equal(checked.matches_recorded_final_state,true);
+  assert.equal(checked.snapshot.circuit,circuit);
+  assert.equal(checked.observations.length,2);
+  assert.equal(checked.observations[0].block_hash,checked.observations[1].block_hash);
+  crosschecks.push(checked);
+ }
  const discovery=await evaluate(`(async()=>{
   try{
    const {WalletRun}=await import('./chain-wallet.mjs?v=history-20261026-1');
@@ -113,11 +135,12 @@ try{
  const allowed=new Set(['eth_chainId','eth_blockNumber','eth_getBlockByNumber','eth_getCode','eth_call','eth_getLogs']);
  assert.ok(methods.length>=12,'observed real RPC requests');
  assert.ok(methods.includes('eth_getLogs'),'real account-filtered log discovery observed');
+ assert.equal(rpcEndpoints.size,2,'both production endpoint URLs actually queried');
  assert.ok(methods.every(m=>allowed.has(m)),'read-only RPC methods only');
  console.log(JSON.stringify({status:'LIVE_PUBLIC_DEMO_BROWSER_PASSED',
   page:origin+'/TapeWeave/research/tapeweave/demo/chain.html',
   real_https:true,real_rpc:true,fetch_substituted:false,wallet_used:false,wallet_ui_loaded:true,
-  rpc_methods:[...new Set(methods)],snapshots,discovery},null,2));
+  rpc_methods:[...new Set(methods)],rpc_endpoints:[...rpcEndpoints],snapshots,crosschecks,discovery},null,2));
 }finally{
  for(const p of pending.values()){clearTimeout(p.timer);p.reject(Error('Browser closing'));}
  socket?.close();

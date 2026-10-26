@@ -49,6 +49,8 @@
 <label>宿主地址 <input id="host" maxlength="42" placeholder="等待公开记录载入"></label>
 <label>会话ID <input id="session" inputmode="numeric" value="1"></label>
 <button id="read" disabled>从公共 RPC 读取固定块会话</button>
+<button id="cross-read" disabled>用两个端点交叉核验（只读）</button>
+<p>交叉核验仅支持已发布宿主，不需要连接钱包。比较两个公开端点在同一固定块的哈希、完整宿主代码与会话状态；失败不会降级成“两端一致”。两端可能共享基础设施，不代表独立信任或最终性证明。</p>
 <p id="status" role="status"></p><pre id="snapshot"></pre>
 <details><summary>开发者：生成调用草案（不发送）</summary>
 <p>此工具只生成草案，不签名、不广播；上方钱包试玩需要单独确认。</p>
@@ -60,4 +62,4 @@
 <textarea id="draft" rows="10" readonly aria-label="未发送调用草案"></textarea>
 <p>草案不代表模拟通过。真实发送前核对钱包、最新版本、模拟和费用；过期版本必须失败，不能自动改版本重发。只读是单 RPC 观察，不是独立提供商共识。</p>
 <p><a href="../../../docs/tapeweave-host-run-2026-10-26.md">部署后操作与完整回执核验工具</a> · <a href="studio.html">本地行为工作室</a></p></details>
-<script type="module" src="chain-page.mjs?v=wallet-20261026-1"></script><script type="module" src="chain-wallet-page.mjs?v=history-20261026-1"></script></main></body></html>
+<script type="module" src="chain-page.mjs?v=crosscheck-20261026-1"></script><script type="module" src="chain-wallet-page.mjs?v=history-20261026-1"></script></main></body></html>
