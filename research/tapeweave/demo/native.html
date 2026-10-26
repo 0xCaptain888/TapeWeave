@@ -10,6 +10,10 @@
 <label>检测到的钱包<select id="native-provider" disabled></select></label>
 <button id="native-connect" disabled>Connect Wallet · 检测 AA 能力</button><button id="native-switch" disabled>切换至 X Layer</button>
 <p id="native-account">未连接钱包</p><p id="native-status" role="status">正在初始化。连接不发送交易。</p>
+<p id="native-guidance">正在检查浏览器入口…</p>
+<button id="native-diagnose" disabled>只读检测连接问题</button><button id="native-diagnostic-copy" disabled>复制诊断报告</button>
+<details><summary>查看公开连接诊断（不含签名）</summary><textarea id="native-diagnostic" readonly rows="10" aria-label="公开钱包诊断"></textarea></details>
+<p>诊断只读取钱包已授权账户、网络、账户代码及能力，不申请签名、不发送交易、不上传报告。若返回普通／未部署账户，使用<a href="chain.html">普通钱包入口</a>；若 AA 能力不支持，使用对应官方 AA 工具，不要反复重发。</p>
 <p>钱包必须已支持本链的原子调用能力。返回“需要升级”、不支持方法、未部署或普通账户时停止；不自动改用 eth_sendTransaction 或请求账户升级。</p></section>
 <section aria-labelledby="play-title"><h2 id="play-title">一局四步，每笔单独确认</h2>
 <label>行为卡<select id="native-circuit" disabled><option value="1">蓄能卡</option><option value="2">交替卡</option></select></label>
@@ -33,5 +37,5 @@
 <textarea id="native-archive" readonly rows="6" aria-label="AA 回执导出"></textarea>
 <p>已核验结果先写本机历史，再清除意图。历史与导出只含公开操作信息，未签名且不是插件／真人身份认证。不要清站点数据来解决未知交易。</p></section>
 <p><a href="AA-WALLET.md">兼容性、恢复和实际验收说明</a> · <a href="device-check.html">填写实际插件／Android 验收</a></p>
-<script type="module" src="native-page.mjs?v=native-20261026-1"></script>
+<script type="module" src="native-page.mjs?v=diagnostics-20261026-1"></script>
 </main></body></html>

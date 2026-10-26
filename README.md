@@ -16,6 +16,8 @@ TapeWeave希望创作者设计的“遇到什么条件、采取什么动作”�
 
 ### 新增：AA 网页入口与实际设备验收
 
+AA页新增“只读检测连接问题”和报告复制：区分未授权、网络、普通／未部署账户及AA能力限制，不请求签名或发送交易。账户或网络切换会清除旧诊断。普通插件签名已有用户成功反馈，完整回执与各项验收进度见[当前状态](docs/tapeweave-current-status-2026-10-26.md)。
+
 [AA 钱包页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/native.html)支持能力检测、内部调用预览、费用边界确认、逐笔 `wallet_sendCalls`、请求 ID 恢复及公共 UOP 事件核验。仅支持明确声明 EIP-5792 2.0.0 原子调用的已部署合约账户和固定 EntryPoint v0.7；不自动升级账户、改用普通转账或重发。钱包决定完整 UOP、签名和最终费用，内部模拟不等于完整 UOP 模拟。
 
 [插件／Android 验收页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/device-check.html)提供三套逐项记录、草稿保存和 JSON 导出，默认全部未完成。实际插件兼容／签名及 Android 真机仍须实测；本机目前没有接入 Android，自动化替身与窄屏布局不算真机通过。[完整操作、兼容性与恢复](research/tapeweave/demo/AA-WALLET.md)。

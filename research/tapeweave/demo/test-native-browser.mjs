@@ -78,6 +78,11 @@ try{
  await wait(()=>$('provider').options.length===1);
  expect(!document.querySelector('#native-provider img'),'provider metadata as text');
  expect(f.sends===0&&$('open').disabled&&$('confirm').disabled,'no implicit authority');
+ $('diagnose').click();await idle();
+ expect(JSON.parse($('diagnostic').value).status==='unsupported'&&f.sends===0,'read-only unsupported diagnosis');
+ let copiedDiagnostic='';Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text=>{copiedDiagnostic=text;}}});
+ $('diagnostic-copy').click();await idle();
+ expect(copiedDiagnostic===$('diagnostic').value&&JSON.parse(copiedDiagnostic).signatureRequested===false,'diagnostic copy stays read-only');
  $('connect').click();await idle();
  expect($('status').textContent.includes('未声明')&&$('open').disabled,'unsupported stops and disconnects');
  f.atomic='ready';$('connect').click();await idle();
@@ -86,6 +91,8 @@ try{
  expect($('status').textContent.includes('X Layer')&&$('open').disabled,'wrong chain stopped');
  $('switch').click();await idle();$('connect').click();await idle();
  expect($('account').textContent.includes(f.account)&&f.sends===0,'explicit capable connection');
+ $('diagnose').click();await idle();
+ expect(JSON.parse($('diagnostic').value).status==='ready'&&JSON.parse($('diagnostic').value).acceptancePassed===false,'compatible diagnosis is not acceptance');
  localStorage.setItem('tapeweave-wallet-pending-v1','{}');window.dispatchEvent(new StorageEvent('storage',{key:'tapeweave-wallet-pending-v1'}));
  expect($('open').disabled,'EOA pending blocks AA');
  localStorage.removeItem('tapeweave-wallet-pending-v1');window.dispatchEvent(new StorageEvent('storage',{key:'tapeweave-wallet-pending-v1'}));
@@ -110,6 +117,7 @@ try{
  expect(JSON.parse($('archive').value).entries.length===2,'public AA journal export');
  $('wait').click();await idle();f.handlers.get('accountsChanged')?.(['0x'+'34'.repeat(20)]);
  expect($('confirm').disabled&&$('open').disabled&&!$('preview').textContent&&f.sends===3,'account change invalidates preview without send');
+ expect(!$('diagnostic').value&&$('diagnostic-copy').disabled,'account change clears diagnostic');
  const widths=[];
  for(const width of [320,390]){
   const frame=document.createElement('iframe');frame.style.cssText='border:0;width:'+width+'px;height:900px;max-width:none';frame.src='/native.html?layout=1';document.body.append(frame);
@@ -132,7 +140,7 @@ try{
  out.textContent='PASS native refresh';
 }catch(e){out.textContent='FAIL '+e.message;}
 </script>`;
-const files=new Set(['native.html','native-page.mjs','native-wallet.mjs','chain-host.mjs','chain-wallet.mjs','style.css']);
+const files=new Set(['native.html','native-page.mjs','native-wallet.mjs','native-diagnostics.mjs','chain-host.mjs','chain-wallet.mjs','style.css']);
 const server=createServer(async(req,res)=>{
  try{
   const url=new URL(req.url,'http://localhost'),file=url.pathname.slice(1);
