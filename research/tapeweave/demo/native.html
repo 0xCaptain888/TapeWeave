@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TapeWeave AA 钱包入口</title><link rel="stylesheet" href="style.css">
+<style>button{min-height:44px}pre{max-width:100%;overflow:auto}input{width:100%}label:has(input[type=checkbox]){display:block}input[type=checkbox]{display:inline-block;width:auto;vertical-align:middle;min-height:24px}main>section>label{display:block;max-width:100%}</style></head>
+<body><main>
+<nav class="brand-bar" aria-label="主导航"><a class="brand-home" href="work.html"><span class="brand-symbol" aria-hidden="true"></span><span class="brand-label">TapeWeave<small>INTERACTION, WOVEN.</small></span></a><div class="brand-nav"><a href="chain.html">普通钱包与主网记录</a><a href="device-check.html">插件／Android 验收</a></div></nav>
+<p class="eyebrow">ACCOUNT ABSTRACTION / EXPLICIT CONFIRMATION</p><h1>使用 AA 钱包运行行为卡</h1>
+<p>此入口适配支持 EIP-5792 2.0.0 的已部署合约账户，在 X Layer 主网（196）逐笔运行。钱包负责构造、签名和提交；网页不持有私钥，也不会自动升级账户。普通 EOA 使用<a href="chain.html">普通钱包入口</a>。官方 OnchainOS 工具账户不一定通过浏览器插件暴露相同地址或能力。</p>
+<section aria-labelledby="connect-title"><h2 id="connect-title">连接与能力检测</h2>
+<label>检测到的钱包<select id="native-provider" disabled></select></label>
+<button id="native-connect" disabled>Connect Wallet · 检测 AA 能力</button><button id="native-switch" disabled>切换至 X Layer</button>
+<p id="native-account">未连接钱包</p><p id="native-status" role="status">正在初始化。连接不发送交易。</p>
+<p>钱包必须已支持本链的原子调用能力。返回“需要升级”、不支持方法、未部署或普通账户时停止；不自动改用 eth_sendTransaction 或请求账户升级。</p></section>
+<section aria-labelledby="play-title"><h2 id="play-title">一局四步，每笔单独确认</h2>
+<label>行为卡<select id="native-circuit" disabled><option value="1">蓄能卡</option><option value="2">交替卡</option></select></label>
+<button id="native-open" disabled>模拟并预览新局</button>
+<label>我的会话 ID<input id="native-session" disabled inputmode="numeric" maxlength="78" placeholder="开局核验后自动填入"></label>
+<button id="native-read" disabled>读取会话</button><pre id="native-state">建议顺序：等待 → 等待 → 触发 → 触发。</pre>
+<button id="native-wait" disabled>预览等待</button><button id="native-trigger" disabled>预览触发</button>
+<pre id="native-preview" aria-label="AA 操作预览"></pre>
+<label><input type="checkbox" id="native-fee-ack" disabled>我会在钱包界面核对最终费用、账户和调用；本页只模拟内部宿主调用，未取得完整 UserOperation 签名前模拟及总费用。</label>
+<button id="native-confirm" disabled>确认并打开 AA 钱包</button>
+<p>只发一笔零价值宿主调用，没有代币授权。gas 及赞助资格由钱包决定，本页不承诺免费。不能把内部 eth_call 成功当作完整 AA 验证、费用通过或签名成功。</p></section>
+<section aria-labelledby="recovery-title"><h2 id="recovery-title">待处理请求与恢复</h2>
+<pre id="native-pending">没有待处理请求</pre>
+<button id="native-lookup" disabled>向原钱包查询请求状态</button>
+<label>手动恢复：真实链上交易哈希<input id="native-hash" disabled maxlength="66" placeholder="0x…"></label>
+<button id="native-recover" disabled>核对并绑定交易哈希</button><button id="native-verify" disabled>核验已绑定的 AA 回执</button>
+<p>先保存请求 ID 再打开钱包。刷新、拒绝以外的异常或不明结果都保留意图，不重复发送；钱包状态仅提供候选哈希，必须另外从公共 RPC 核验。钱包终止或链上回滚时保留记录供人工处理，不自动解锁发送。</p>
+<p>本页只接受固定 EntryPoint v0.7 的成功 UserOperation；宿主事件必须位于原 AA 的操作日志区间，并核对版本、完整宿主代码、规范块与至少两块深度。不会重新验证签名，也不支持任意批量调用、其他 EntryPoint 或钱包专有接口。</p>
+<pre id="native-result"></pre>
+<button id="native-export" disabled>导出本机 AA 回执记录</button>
+<textarea id="native-archive" readonly rows="6" aria-label="AA 回执导出"></textarea>
+<p>已核验结果先写本机历史，再清除意图。历史与导出只含公开操作信息，未签名且不是插件／真人身份认证。不要清站点数据来解决未知交易。</p></section>
+<p><a href="AA-WALLET.md">兼容性、恢复和实际验收说明</a> · <a href="device-check.html">填写实际插件／Android 验收</a></p>
+<script type="module" src="native-page.mjs?v=native-20261026-1"></script>
+</main></body></html>

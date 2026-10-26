@@ -1,4 +1,4 @@
-import {WalletRun,HOST,STORAGE_KEY,okb,quantity} from './chain-wallet.mjs?v=history-20261026-1';
+import {WalletRun,HOST,STORAGE_KEY,okb,quantity} from './chain-wallet.mjs?v=native-20261026-1';
 import {WalletHistory,HISTORY_KEY,DEPLOYMENT_BLOCK,discoverOpened,MAX_HISTORY_BYTES} from './chain-history.mjs';
 const $=id=>document.getElementById(id),providers=[];
 let busy=false,active=null,cleanup=()=>{};
@@ -34,6 +34,7 @@ function render(){
  for(const id of ['wallet-provider','wallet-switch','wallet-circuit','wallet-session','wallet-connect','wallet-read','wallet-open','wallet-wait','wallet-trigger','wallet-verify','wallet-recover'])$(id).disabled=busy;
  const connected=Boolean(run.account);let pending=null,broken=false;
  try{pending=run.pending();}catch(e){broken=true;message(e.message);}
+ try{if(storage.getItem('tapeweave-native-pending-v1')!==null){broken=true;message('AA 入口有待处理请求，请先在 AA 页面核验或恢复；不能重复发送');}}catch{broken=true;}
  const blocked=busy||Boolean(pending)||broken||!connected;
  $('wallet-open').disabled=blocked;
  for(const id of ['wallet-wait','wallet-trigger'])$(id).disabled=blocked||!active||active.version>=4;
@@ -186,7 +187,7 @@ $('history-scan').onclick=()=>task(async()=>{
  message(`已扫描区块 ${result.from}–${result.to}，发现 ${result.observations.length} 个开局。${result.next?'点击再次扫描可继续下一段。':'已到本次查询的链头。'} 只覆盖所选范围，单 RPC；发现记录不等于完整交易历史，续用前仍需读取会话。`);
 });
 window.addEventListener('storage',e=>{
- if(e.key===STORAGE_KEY){clearPreview();active=null;message('另一页面修改了待处理记录；请核验交易后继续');render();}
+ if([STORAGE_KEY,'tapeweave-native-pending-v1'].includes(e.key)){clearPreview();active=null;message('另一页面修改了待处理记录；请核验交易后继续');render();}
  if(e.key===HISTORY_KEY)renderHistory();
 });
 document.addEventListener('visibilitychange',()=>{if(document.hidden){clearPreview();render();}});

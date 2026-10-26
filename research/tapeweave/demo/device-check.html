@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TapeWeave 插件与 Android 验收</title><link rel="stylesheet" href="style.css">
+<style>input[type=checkbox]{display:inline-block;width:auto;min-height:24px}#accept-items label{display:block;max-width:100%}button{min-height:44px}</style></head><body><main>
+<nav class="brand-bar" aria-label="主导航"><a class="brand-home" href="work.html"><span class="brand-symbol" aria-hidden="true"></span><span class="brand-label">TapeWeave<small>INTERACTION, WOVEN.</small></span></a><div class="brand-nav"><a href="chain.html">普通钱包</a><a href="native.html">AA 钱包</a><a href="work.html" target="_blank" rel="noopener">打开作品页</a></div></nav>
+<p class="eyebrow">ACTUAL DEVICE / MANUAL OBSERVATIONS</p><h1>插件与 Android 实际验收</h1>
+<p>先实际执行，再填写观察。所有条目初始为“未完成”；本页不会操作钱包、自动判通过或上传。填写内容只在你点击保存草稿后保存在本机；换类型前先导出，清站点数据会丢失。不要填写个人身份、助记词、私钥或其他秘密。桌面模拟／移动视口不算 Android 真机。</p>
+<label>验收任务<select id="accept-kind" disabled><option value="android">Android 真机九项</option><option value="plugin">真实普通钱包插件</option><option value="native">真实 AA 钱包原生调用</option></select></label>
+<label>设备型号与实际系统<input id="accept-device" maxlength="240" disabled placeholder="例如 Pixel 8 / Android 16；桌面请如实填 macOS"></label>
+<label>浏览器与钱包版本<input id="accept-browser" maxlength="180" disabled placeholder="实际 Chrome / OKX / MetaMask 版本"></label>
+<label>被测提交 SHA<input id="accept-revision" maxlength="40" disabled placeholder="实际发布版本，7–40位提交SHA"></label>
+<p id="accept-environment"></p>
+<label><input id="accept-actual" type="checkbox" disabled>我确实使用了上述实际设备／插件执行所填项目，保留失败和未完成结果。</label>
+<div id="accept-items"></div>
+<button id="accept-save" disabled>保存本机草稿</button><button id="accept-restore" disabled>恢复本机草稿</button>
+<button id="accept-export" disabled>校验并生成验收 JSON</button><button id="accept-copy" disabled>复制验收记录</button>
+<p id="accept-status" role="status">正在初始化…</p><textarea id="accept-output" rows="14" readonly aria-label="实际验收记录"></textarea>
+<p>设备、插件和观察均为自报，不认证独立身份；填写哈希不会自动重验回执。链上通过仍须在钱包页点击核验或重跑公开工具。不能把未执行项改成通过来填满表格。</p>
+<p><a href="ANDROID-CHROME.md">Android 九项完整步骤</a> · <a href="AA-WALLET.md">AA 与真实插件验收说明</a></p>
+<script type="module" src="device-check-page.mjs?v=native-20261026-1"></script></main></body></html>

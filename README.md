@@ -14,6 +14,12 @@ TapeWeave希望创作者设计的“遇到什么条件、采取什么动作”�
 
 👉 **[制作并交付互动作品](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html)** · **[钱包试玩与真实主网记录](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)** · [高级规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html)
 
+### 新增：AA 网页入口与实际设备验收
+
+[AA 钱包页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/native.html)支持能力检测、内部调用预览、费用边界确认、逐笔 `wallet_sendCalls`、请求 ID 恢复及公共 UOP 事件核验。仅支持明确声明 EIP-5792 2.0.0 原子调用的已部署合约账户和固定 EntryPoint v0.7；不自动升级账户、改用普通转账或重发。钱包决定完整 UOP、签名和最终费用，内部模拟不等于完整 UOP 模拟。
+
+[插件／Android 验收页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/device-check.html)提供三套逐项记录、草稿保存和 JSON 导出，默认全部未完成。实际插件兼容／签名及 Android 真机仍须实测；本机目前没有接入 Android，自动化替身与窄屏布局不算真机通过。[完整操作、兼容性与恢复](research/tapeweave/demo/AA-WALLET.md)。
+
 ### 新增：两个公开 RPC 端点交叉核验
 
 主网页可直接点击“用两个端点交叉核验”，无需钱包。在较低链头减两块的同一固定区块比较两端的区块哈希、固定宿主完整代码与会话状态，并重读区块检测期间变化；端点不可用或不一致就明确失败。两个URL可能共享基础设施，不代表独立提供商共识或最终性证明。钱包发送／回执与历史事件查询仍保持原单RPC路径。[操作与边界](research/tapeweave/demo/WALLET-PLAY.md)。
@@ -28,7 +34,7 @@ TapeWeave希望创作者设计的“遇到什么条件、采取什么动作”�
 
 主网页首屏可选择检测到的 OKX／MetaMask 等插件钱包，在自己的会话运行两张卡。每笔先模拟并显示费用，点击确认后才打开钱包；核验回执后继续下一步。固定宿主完整代码校验、账户／网络／版本保护、拒签处理、待处理交易持久化和未知哈希恢复均已接入；不会自动签名或重发。
 
-此入口当前支持普通 EOA，AA／委托账户继续使用现有官方钱包工具。钱包模块与浏览器替身测试不等于实际插件签名验收，本轮没有新增主网交易；历史11笔真实AA交易保持独立记录。[操作、恢复与费用边界](research/tapeweave/demo/WALLET-PLAY.md)。
+此入口当前支持普通 EOA；符合能力门槛的已部署 AA 使用单独 AA 页面，其他 AA／委托账户继续使用对应官方工具。钱包模块与浏览器替身测试不等于实际插件签名验收，本轮没有新增主网交易；历史11笔真实AA交易保持独立记录。[操作、恢复与费用边界](research/tapeweave/demo/WALLET-PLAY.md)。
 
 完整回归还暴露了本机 SQLite 两个页面的初始化空档：脚本绑定前创建／读取／列表按钮就已可点击，现改为初始化后启用，并用延迟真实模块加载的 Chrome 场景验证。它与下文真人反馈中的首次刷新现象分开，不宣称已定位所有历史刷新问题。
 

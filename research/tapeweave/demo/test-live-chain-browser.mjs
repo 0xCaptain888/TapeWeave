@@ -63,6 +63,28 @@ try{
  await wait(()=>evaluate("!!document.getElementById('card1') && !document.getElementById('card1').disabled"));
  await wait(()=>evaluate("!!document.getElementById('wallet-connect') && !document.getElementById('wallet-connect').disabled"));
  assert.equal(await evaluate("document.getElementById('wallet-account').textContent"),'未连接钱包');
+ await cdp('Page.navigate',{url:origin+'/TapeWeave/research/tapeweave/demo/native.html'});
+ await wait(()=>evaluate("!!document.getElementById('native-connect')&&!document.getElementById('native-connect').disabled"));
+ assert.equal(await evaluate("document.getElementById('native-account').textContent"),'未连接钱包');
+ assert.equal(await evaluate("document.getElementById('native-open').disabled&&document.getElementById('native-confirm').disabled"),true);
+ assert.equal(await evaluate("localStorage.getItem('tapeweave-native-pending-v1')"),null);
+ await cdp('Page.navigate',{url:origin+'/TapeWeave/research/tapeweave/demo/device-check.html'});
+ await wait(()=>evaluate("!!document.getElementById('accept-export')&&!document.getElementById('accept-export').disabled"));
+ assert.equal(await evaluate("document.querySelectorAll('#accept-items select').length"),9);
+ assert.equal(await evaluate("[...document.querySelectorAll('#accept-items select')].every(s=>s.value==='incomplete')&&!document.getElementById('accept-actual').checked"),true);
+ const deviceReport=await evaluate(`(()=>{
+  document.getElementById('accept-device').value='Author Linux desktop smoke, not Android';
+  document.getElementById('accept-browser').value=navigator.userAgent;
+  document.getElementById('accept-revision').value='abcdef0';
+  document.getElementById('accept-export').click();
+  return JSON.parse(document.getElementById('accept-output').value);
+ })()`);
+ assert.equal(deviceReport.result,'incomplete');
+ assert.equal(deviceReport.hardwareAttested,false);
+ assert.equal(deviceReport.actualDeviceReported,false);
+ await cdp('Page.navigate',{url:origin+'/TapeWeave/research/tapeweave/demo/chain.html'});
+ await wait(()=>evaluate("!!document.getElementById('card1')&&!document.getElementById('card1').disabled"));
+ await wait(()=>evaluate("!!document.getElementById('wallet-connect')&&!document.getElementById('wallet-connect').disabled"));
  assert.equal(await evaluate("document.querySelectorAll('#evidence-list a').length"),11);
  const snapshots=[];
  for(const [id,circuit]of [['card1',1],['card2',2]]){
@@ -140,6 +162,8 @@ try{
  console.log(JSON.stringify({status:'LIVE_PUBLIC_DEMO_BROWSER_PASSED',
   page:origin+'/TapeWeave/research/tapeweave/demo/chain.html',
   real_https:true,real_rpc:true,fetch_substituted:false,wallet_used:false,wallet_ui_loaded:true,
+  native_entry_loaded:true,native_auto_connected:false,native_auto_sent:false,
+  device_form_loaded:true,device_default_result:deviceReport.result,android_acceptance_passed:false,
   rpc_methods:[...new Set(methods)],rpc_endpoints:[...rpcEndpoints],snapshots,crosschecks,discovery},null,2));
 }finally{
  for(const p of pending.values()){clearTimeout(p.timer);p.reject(Error('Browser closing'));}

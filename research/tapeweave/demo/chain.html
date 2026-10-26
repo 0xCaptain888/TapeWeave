@@ -2,6 +2,7 @@
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TapeWeave 主网运行与实时读取</title><link rel="stylesheet" href="style.css"><style>.chain-proof{margin:1.5rem 0;padding:1.2rem;border:1px solid #456b64;border-radius:16px}.chain-proof code,.chain-proof a,td{overflow-wrap:anywhere}table{width:100%;border-collapse:collapse}th,td{padding:.6rem;text-align:left;border-bottom:1px solid #456b64}#evidence-state{white-space:pre-wrap}#snapshot{overflow:auto}#evidence-list a{display:inline-block;margin:.3rem 1rem .3rem 0}input{max-width:100%;box-sizing:border-box}</style></head><body><main><nav class="brand-bar" aria-label="主导航"><a class="brand-home" href="work.html"><span class="brand-symbol" aria-hidden="true"></span><span class="brand-label">TapeWeave<small>INTERACTION, WOVEN.</small></span></a><div class="brand-nav"><a href="work.html">作品交付</a><a href="manage.html">作品管理</a><a href="studio.html">规则工作室</a></div></nav><p class="eyebrow">X LAYER MAINNET / REAL EXECUTION</p>
 <h1>两张卡，真实主网运行</h1>
 <p>已完成 AA 钱包部署与两局主网交互。你可以用自己的插件钱包开启独立会话，也可以不连接钱包，只读取下方的历史记录。</p>
+<p><a href="native.html">AA 钱包原生调用入口</a> · <a href="device-check.html">真实插件／Android 验收</a></p>
 <section aria-labelledby="wallet-title"><h2 id="wallet-title">用自己的钱包玩一局</h2>
 <p>普通插件账户 · X Layer 主网（196）。每笔先模拟、预览费用，再由你在钱包确认。建议顺序：等待 → 等待 → 触发 → 触发。AA／委托账户请使用<a href="../../../docs/tapeweave-host-run-2026-10-26.md">官方钱包工具</a>。</p>
 <label>钱包 <select id="wallet-provider" aria-label="选择插件钱包"></select></label>
@@ -62,4 +63,4 @@
 <textarea id="draft" rows="10" readonly aria-label="未发送调用草案"></textarea>
 <p>草案不代表模拟通过。真实发送前核对钱包、最新版本、模拟和费用；过期版本必须失败，不能自动改版本重发。只读是单 RPC 观察，不是独立提供商共识。</p>
 <p><a href="../../../docs/tapeweave-host-run-2026-10-26.md">部署后操作与完整回执核验工具</a> · <a href="studio.html">本地行为工作室</a></p></details>
-<script type="module" src="chain-page.mjs?v=crosscheck-20261026-1"></script><script type="module" src="chain-wallet-page.mjs?v=history-20261026-1"></script></main></body></html>
+<script type="module" src="chain-page.mjs?v=crosscheck-20261026-1"></script><script type="module" src="chain-wallet-page.mjs?v=native-20261026-1"></script></main></body></html>

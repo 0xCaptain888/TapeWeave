@@ -1,6 +1,6 @@
 // Bounded local cache and readonly discovery. Imported data never authorizes a send.
 import {address,sessionCall} from './chain-host.mjs';
-import {HOST,OPENED,quantity,validatePending} from './chain-wallet.mjs?v=history-20261026-1';
+import {HOST,OPENED,quantity,validatePending} from './chain-wallet.mjs?v=native-20261026-1';
 export const HISTORY_KEY='tapeweave-wallet-history-v1';
 export const DEPLOYMENT_BLOCK=74224206n;
 export const MAX_HISTORY_BYTES=1048576;

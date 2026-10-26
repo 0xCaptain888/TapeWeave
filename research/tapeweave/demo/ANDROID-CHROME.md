@@ -4,6 +4,8 @@
 
 入口：https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html
 
+2026-10-26新增[结构化验收页](device-check.html)：选择“Android真机九项”，填写实际设备与被测SHA，逐项执行下文步骤并记录，保存草稿或复制JSON。默认未完成，不自动上传。可用[只读ADB预检](AA-WALLET.md)检查连接条件；当前本机0台就绪设备，未上调真机结果。320／390像素桌面测试不替代真机。
+
 记录Android版本、Chrome版本、日期／时区和页面版本（用户提供发布SHA）；不记录手机号、设备ID或账号。先关闭可能泄露隐私的通知，截图脱敏。不点击钱包、不发送交易。
 
 ## 逐项执行（每项填pass／fail／incomplete）

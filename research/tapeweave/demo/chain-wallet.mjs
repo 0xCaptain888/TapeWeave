@@ -106,7 +106,7 @@ export class WalletRun{
  }
  async prepare({operation,circuit,session,version,trigger}){
   this.preview=null;
-  if(this.busy||this.pending())throw Error('先核验待处理交易；不能重复发送');
+  if(this.busy||this.pending()||this.storage.getItem('tapeweave-native-pending-v1')!==null)throw Error('先核验待处理交易；不能重复发送');
   const c=await this.context(),b=await this.head();
   // Injected smart accounts need a separate, explicit UserOperation flow.
   const accountCode=await this.rpc('eth_getCode',[c.account,b.number]);
@@ -143,14 +143,14 @@ export class WalletRun{
    p=this.preview;this.preview=null;
    if(!p||this.now()>p.expires)throw Error('预览已过期，请重新模拟');
    validatePending(p);
-   if(this.pending())throw Error('已有待处理交易，请先核验');
+   if(this.pending()||this.storage.getItem('tapeweave-native-pending-v1')!==null)throw Error('已有待处理交易，请先核验');
    const c=await this.context();
    if(c.account!==p.account)throw Error('账户已改变');
    const fresh=await this.prepareForSend(p);this.assertContext(c);
    if(!fresh)throw Error('预检失败');
    await this.context();this.assertContext(c);
    if(this.now()>p.expires)throw Error('预检期间预览已过期，请重新模拟');
-   if(this.pending())throw Error('另一页面已有待处理操作，请先核验');
+   if(this.pending()||this.storage.getItem('tapeweave-native-pending-v1')!==null)throw Error('另一页面已有待处理操作，请先核验');
    // Write before invoking the wallet, so closing the tab cannot enable a duplicate.
    this.store(p);
    let hash;
