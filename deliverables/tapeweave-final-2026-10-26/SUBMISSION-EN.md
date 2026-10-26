@@ -12,7 +12,7 @@ Create a behavior once. Deliver it as a package. Verify how each application use
 
 ## Short description
 
-TapeWeave is an open-source interaction delivery prototype for creators and developers. It packages finite behavior rules with a content digest, lets receiving applications run and replay them, and demonstrates a real X Layer host that consumes TapeOut computation. Creators can edit, share, version, restore and check interactive works without connecting a wallet. The onchain demo publishes deployment and two complete runs covering 11 real AA transactions. Applications retain their own permissions and resources; a rule output is a request, not an entitlement. Ordinary truth-table execution is included as a fair baseline.
+TapeWeave is a public-source interaction delivery prototype for creators and developers. It packages finite behavior rules with a content digest, lets receiving applications run and replay them, and demonstrates a real X Layer host that consumes TapeOut computation. Creators can edit, share, version, restore and check interactive works without connecting a wallet. The onchain demo publishes deployment and two complete runs covering 11 real AA transactions. Applications retain their own permissions and resources; a rule output is a request, not an entitlement. Ordinary truth-table execution is included as a fair baseline.
 
 ## Problem and solution
 
@@ -66,7 +66,7 @@ Have an independent developer integrate the same package into a real application
 - Mainnet evidence page: https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html
 - AA web entry: https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/native.html
 - Integration guide: https://github.com/0xCaptain888/TapeWeave/blob/main/research/tapeweave/demo/WORK-INTEGRATION.md
-- Demo video: upload `TapeWeave-Final-Demo.mp4` to YouTube, then enter the public or unlisted watch URL. Do not submit a local path.
+- Demo video: upload `english/TapeWeave-Final-Demo.mp4` to YouTube, then enter the public or unlisted watch URL. Do not submit a local path.
 
 ## Team / personal fields — confirm before submission
 

@@ -1,4 +1,5 @@
 # Local media-production intermediates; final submission assets remain tracked.
+.DS_Store
 deliverables/**/raw/
 deliverables/**/__pycache__/
 deliverables/**/*.pyc

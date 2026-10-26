@@ -1,226 +1,127 @@
 # TapeWeave
 
-![TapeWeave 标志：青绿与紫色交织带](research/tapeweave/demo/logo.svg)
+![TapeWeave — interwoven green and purple ribbons](research/tapeweave/demo/logo.svg)
 
-**探索让创作者做出的互动行为，被不同应用真正接入和使用。规则包是交付方式，不是价值本身。**
+**Portable interactive behavior. Verifiable execution. Application-owned outcomes.**
 
-TapeWeave希望创作者设计的“遇到什么条件、采取什么动作”，不只留在一个应用里，而能由其他应用主动接入，各自决定如何使用。这是正在探索的目标，尚未实现跨独立开发者的真实应用接入，也未证明相比普通共享代码的优势。
+TapeWeave lets creators package finite interaction rules, replay them across compatible applications, and inspect how each input becomes an application-controlled outcome. The prototype combines TapeOut circuit experiments with verifiable X Layer mainnet integration.
 
-当前可以在线体验的是简单互动规则实验工具：编辑规则，在两个自编演示场景中运行，再把规则和操作记录交给别人重新检查。文中把可分享、重复运行和检查的规则包比喻为“行为卡”。
+**[Try the English demo](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=en)** · **[中文 Demo](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=zh)** · **[English video · 2:57](deliverables/tapeweave-final-2026-10-26/english/TapeWeave-Final-Demo.mp4)** · **[Mainnet evidence](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html?lang=en)**
 
-**小游戏只是当前的演示例子，不是项目的全部定位。** 例如，把“先蓄能，再释放”做成一张行为卡，在训练场和钥匙门中观察不同效果。当前编辑器只支持有限的简单规则，并不是通用自动化工具。
+No wallet or tokens are needed for the local interaction demo or public chain reads. Optional wallet actions require explicit confirmation.
 
-**不用连接钱包，不用买币，也不用先懂区块链。**
+## Try it in two minutes
 
-👉 **[中文 Demo](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=zh)** · **[English Demo](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=en)** · **[钱包试玩与真实主网记录](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)** · [高级规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html)
+1. Open the [English workbench](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=en). Keep the **Charge & release** template and lamp scene; click **Generate & preview**.
+2. Click **Charge**, then **Trigger**. The lamp lights. Trigger again without recharging: the rule requests no new effect.
+3. Copy the generated work package into the receiving field and click **Validate & try from zero**. Import starts a fresh session rather than importing someone else's score.
+4. Charge and trigger again, refresh the page, then choose **Restore local execution**. Recovery recomputes saved actions.
+5. Open the [two-application exhibit](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/exhibit.html?lang=en) to see the same behavior reveal a story and request a local keepsake. Each application retains its own state and resources.
 
-**演示与投稿材料：**[2 分 57 秒 Demo 视频](deliverables/tapeweave-final-2026-10-26/TapeWeave-Final-Demo.mp4) · [完整投稿包](deliverables/tapeweave-final-2026-10-26/TapeWeave-Submission-Pack.zip) · [英文项目介绍](deliverables/tapeweave-final-2026-10-26/SUBMISSION-EN.md) · [评委快速体验](deliverables/tapeweave-final-2026-10-26/JUDGE-QUICKSTART.md)。视频使用英文男声合成配音与英文字幕，录制于双语界面更新之前，产品画面仍为中文；不会把该文件称为全英文界面录像。未代替参赛者上传 YouTube 或提交报名表。
+For a longer review, try a corrupted digest and inspect the [mainnet evidence page](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html?lang=en). [Reviewer quickstart](deliverables/tapeweave-final-2026-10-26/JUDGE-QUICKSTART.md).
 
-### 新增：中文 / English 演示界面
+## What works today
 
-演示页面顶部提供中文 / English 切换，使用 `?lang=zh` 或 `?lang=en` 可直接指定语言；选择仅保存在当前浏览器，站内页面链接继承选择。涵盖作品交付、管理、工作室、行为挑战、双应用展览、主网与钱包页面、人工验收及本机持久化页面的界面文案和常见动态反馈。
+- **Create and deliver:** named works, finite rule templates/custom rules, visible effects, portable packages and validation that preserves the current session on failure.
+- **Replay and recover:** inspect input/state/request traces, explicitly restore local execution, compare versions and perform append-only rollback.
+- **Keep application control:** the same behavior can request different outcomes; a request cannot bypass application inventory or permissions. Two author-built receiving applications demonstrate this separation.
+- **Compare with a baseline:** ordinary shared truth-table execution is available for comparison. Circuit representation is not assumed to be inherently better.
+- **Verify chain evidence:** inspect 11 historical X Layer transactions and perform fresh public RPC reads of the deployed host and recorded sessions.
+- **Choose a language:** Chinese/English interface with language-preserving navigation. Switching languages does not translate imported packages, change progress or send transactions.
 
-英文入口首次载入提供英文示例名称和说明；用户填写或导入的标题、说明、JSON、交易哈希和链上证据不会随语言切换翻译或重新序列化。语言切换不重置执行进度、不发送交易。Markdown 开发文档和用户内容不属于界面翻译范围。实现与测试见[双语说明](docs/tapeweave-bilingual-demo-2026-10-26.md)。本地实现完成不等于线上已发布；线上状态须在推送及 Pages 部署后另行确认。
+## Why TapeOut + X Layer?
 
-### 新增：AA 网页入口与实际设备验收
+The experiment is about delivering and inspecting behavior, not moving scores or assets between games. Applications must explicitly integrate the rules and decide what effects they permit.
 
-**开发状态：AA 网页签名流程开发完成。** 已实现连接与能力检测、调用预览、钱包确认请求、状态查询、异常恢复及UOP回执核验。此标记指工程实现完成；真实浏览器AA签名验收、钱包兼容性和Android真机验收分别记录，不因开发完成自动判为通过。
-
-AA页新增“只读检测连接问题”和报告复制：区分未授权、网络、普通／未部署账户及AA能力限制，不请求签名或发送交易。账户或网络切换会清除旧诊断。普通插件签名已有用户成功反馈，完整回执与各项验收进度见[当前状态](docs/tapeweave-current-status-2026-10-26.md)。
-
-[AA 钱包页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/native.html)支持能力检测、内部调用预览、费用边界确认、逐笔 `wallet_sendCalls`、请求 ID 恢复及公共 UOP 事件核验。仅支持明确声明 EIP-5792 2.0.0 原子调用的已部署合约账户和固定 EntryPoint v0.7；不自动升级账户、改用普通转账或重发。钱包决定完整 UOP、签名和最终费用，内部模拟不等于完整 UOP 模拟。
-
-[插件／Android 验收页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/device-check.html)提供三套逐项记录、草稿保存和 JSON 导出，表单默认未完成。**Android 真机九项：按用户要求标记完成并关闭该待办（2026-10-26）**；尚未提供设备信息及九项观察，实际通过未独立核验，不作为九项测试通过证据。实际AA插件兼容／签名另行记录。[完整操作、兼容性与恢复](research/tapeweave/demo/AA-WALLET.md)。
-
-### 新增：两个公开 RPC 端点交叉核验
-
-主网页可直接点击“用两个端点交叉核验”，无需钱包。在较低链头减两块的同一固定区块比较两端的区块哈希、固定宿主完整代码与会话状态，并重读区块检测期间变化；端点不可用或不一致就明确失败。两个URL可能共享基础设施，不代表独立提供商共识或最终性证明。钱包发送／回执与历史事件查询仍保持原单RPC路径。[操作与边界](research/tapeweave/demo/WALLET-PLAY.md)。
-
-### 新增：我的会话、回执历史与备份
-
-钱包页按当前账户显示本机会话与已核验回执；刷新后连接原账户，选择会话即可重新读取链上状态并续用。支持历史 JSON 导出／校验合并，以及按固定宿主和当前账户分段扫描开局事件。公共 RPC 每段最多100块，明确显示扫描范围，不声称已自动索引完整历史。
-
-备份只是未签名缓存，不能认证来源或授权交易。保存历史成功后才清除待处理意图，损坏／同哈希冲突／存储失败不会自动丢弃原记录。[使用及恢复边界](research/tapeweave/demo/WALLET-PLAY.md) · [当前完成与余项总表](docs/tapeweave-current-status-2026-10-26.md)。旧阶段文档顶部已标明历史适用范围。
-
-### 新增：浏览器钱包完整试玩
-
-主网页首屏可选择检测到的 OKX／MetaMask 等插件钱包，在自己的会话运行两张卡。每笔先模拟并显示费用，点击确认后才打开钱包；核验回执后继续下一步。固定宿主完整代码校验、账户／网络／版本保护、拒签处理、待处理交易持久化和未知哈希恢复均已接入；不会自动签名或重发。
-
-此入口当前支持普通 EOA；符合能力门槛的已部署 AA 使用单独 AA 页面，其他 AA／委托账户继续使用对应官方工具。钱包模块与浏览器替身测试不等于实际插件签名验收，本轮没有新增主网交易；历史11笔真实AA交易保持独立记录。[操作、恢复与费用边界](research/tapeweave/demo/WALLET-PLAY.md)。
-
-完整回归还暴露了本机 SQLite 两个页面的初始化空档：脚本绑定前创建／读取／列表按钮就已可点击，现改为初始化后启用，并用延迟真实模块加载的 Chrome 场景验证。它与下文真人反馈中的首次刷新现象分开，不宣称已定位所有历史刷新问题。
-
-### 新增：版本差异、追加回退与通用执行适配器
-
-作品管理可选择版本基准、逐项比较元数据与八行行为变化；回退追加新版本，不删除历史、不自动迁移接收方。可复制完整作品库归档，校验后仅恢复到空库。新增Node24通用作品SQLite适配器与CLI，支持64步、双输入、命令重试、并发冲突拒绝和事务回滚；它不是Pages后端；现在可通过本机服务输出的 `local-work.html` 专用入口创建、续用、重试和查看作品日志，旧四回合页保持独立。操作及边界见[作品持久化指南](research/tapeweave/demo/WORK-PERSISTENCE.md)。
-
-### 新增：真实 AA 主网部署与两卡完整交互（2026-10-26）
-
-已通过当前官方 AA 钱包完成 `AA → CreateX → CREATE2` 主网部署，宿主为 `0x440c3CC7DdD50566126754199Df7336499eE1E20`。随后两张卡各自开局并运行 `0011`，**共 11 笔真实交易，全部成功 UserOperation 日志绑定及历史状态重算通过**。蓄能卡：训练 2、开门 1、余钥匙 1；交替卡：训练 1、开门 0、余钥匙 2。
-
-每步先做 AA 地址的 RPC 模拟、官方风险扫描、网关模拟及费用审核，再由钱包签名发送；实际回执与 UOP 费用合计均为 **0 OKB**。历史累计实付仍为 0.01052 OKB。官方钱包后端完成 UOP 构造与签名；没有另外取得完整 UOP 的独立签名前模拟报告，也没有重新验证签名。单 RPC 核验，不宣称双提供商一致。[完整真实记录、费用与复核方法](docs/tapeweave-mainnet-run-2026-10-26.md)。
-
-Demo 默认显示公开宿主与两局记录，点击按钮可重新读取当前代码和会话；历史快照与实时读取分开显示。开发者可重建源码并运行 `verify-public-run.mjs`，重新核 11 笔交易及费用；版本冲突停止，不自动改版本重发。[部署工具](docs/tapeweave-createx-deployment-2026-10-26.md) · [操作与恢复指南](docs/tapeweave-host-run-2026-10-26.md)。
-
-### 接收方手动升级
-
-作品页可先比较粘贴的新包，再选择保留步骤或从零开始。只有规则散列和场景相同才允许保留，重算全部旧步骤；规则或场景改变必须显式重开。确认后提供升级前旧局文本供手动复制，失败不替换原局。不是远程自动更新、发布者认证或通用状态迁移，见[接收升级说明](research/tapeweave/demo/WORK-INTEGRATION.md)。
-
-### 双应用展览实验与执行恢复
-
-打开[《借光与回声》互动微展览](research/tapeweave/demo/exhibit.html)，按两站路线完成书屋借光、揭开故事和邮局留念。页面提供任务提示、进度、可见故事与印章，以及未补能时的失败反馈；用同一行为分别揭开展签故事、兑换一枚虚拟纪念印章。两个应用状态独立；印章库存由应用约束，行为请求不能绕过库存。可以切换普通真值表完成同任务，不预设电路方案更优。这是两个作者应用，不是独立团队采用；无真实兑换或链上动作。生成的记录可在同页粘贴重新计算两站轨迹与库存，复核不改变当前任务；计算一致不认证来源或实际用时。[交付与复核说明](research/tapeweave/demo/EXHIBIT-HANDOFF.md)。
-
-作品页现在成功操作后写入本机执行存档，刷新后点击“恢复本机执行存档”重算并续用；重新生成、装载或重置会开始新存档。检测到别页写入则停止旧局，存储失败不推进可见局。最多64步，清站点数据会丢失；不是SQLite、云备份、身份认证或跨标签页原子事务。
-
-### 保存、版本和返回记录复核
-
-打开[作品管理页](research/tapeweave/demo/manage.html)，用八行“当前状态＋触发／补能→下一状态＋效果请求”条件表创作，生成作品包后复制到作品页试用。按自己命名的库内标识保存，每次内容改变追加新版本；点击旧版本可取回原包。浏览器刷新后可重新打开作品库，**不恢复试用进度**。最多100件作品、每件20版，仅本机存储，清理站点数据会丢失，请复制包备份；版本不是签名或链上身份，跨标签页不提供原子事务。
-
-接收者返回验收JSON后，在管理页粘贴并复核：重算每一步并展示自报结果及观察；篡改计算会拒绝。计算一致不证明记录真实、独立采用或付费。三个能力均为本地工具，不连接钱包、不自动上传。
-
-### 新版：从制作到接收，一次走通
-
-1. 在作品页填写名称、使用说明，选择“蓄能释放”和“点亮灯泡”，生成作品。
-2. 点“补能 → 触发”，观察灯亮；再次触发不亮。也可选“揭开内容”，观察同一请求在另一场景里的不同效果。
-3. 复制作品包给接收者。接收者粘贴装载，在自己的浏览器试用，不需要先打开高级表格。
-4. 接收者填写符合／不符合／未完成及实际观察，复制验收记录返回。没有自动上传、认证或默认通过。
-5. 开发者可以按[公开接入说明](research/tapeweave/demo/WORK-INTEGRATION.md)，在自己的页面使用同一规则，不必使用训练场或钥匙门。
-
-这次升级交付的是工具流程，不是“接收方已愿意使用”的证据。两个展示场景仍由作者制作；独立接入、需求与普通方案相比的收益仍待验证。
-
-> 当前版本是规则编辑与演示原型，尚未证明真实应用采用或商业价值，不是完整游戏或成熟的自动化平台。
-
-## 它想解决什么问题？
-
-当同一条互动规则需要在不同场景里使用时，我们希望避免各写一套、更新不一致，也希望别人能检查运行结果是否符合约定。
-
-下面用小游戏举例：假设你做了两个小游戏，里面都有“蓄能后释放”的技能。你希望它们使用同一套规则，不要一个版本改对了、另一个忘记更新。
-
-TapeWeave尝试把这套规则整理成一份可以交付和检查的“行为卡”：
-
-- **规则共用**：两个场景读取同一份规则，不各写一套技能逻辑。
-- **进度分开**：训练场和钥匙门各记各的状态，不会把训练分数直接搬到另一个游戏。
-- **结果可检查**：每一步输入、规则输出和场景实际效果都能回看。
-
-“行为卡”只是帮助理解的比喻。在目前的工作室里，它是一份可复制的规则数据，**不是必须购买的NFT，也不是能放进任何游戏就自动生效的道具**。应用开发者仍需要主动接入，并决定允许哪些规则、如何发奖励。
-
-## 用一个例子理解
-
-同一张“蓄能卡”，在两个演示场景里使用：
-
-| 场景 | 如何使用这张卡 |
+| Component | Role in the current prototype |
 |---|---|
-| 训练场 | 技能成功释放时增加训练分数 |
-| 钥匙门 | 只有遇到门、还有钥匙、技能又成功释放时才开门 |
+| TapeOut | Circuit experiments and a finite interaction-rule representation; not a complete implementation of arbitrary netlists or the full TAP protocol |
+| TapeWeave | Package delivery, receiving application adapters, execution traces, validation and recovery |
+| X Layer | A deployed host consuming two fixed reviewed cards, with real transaction evidence and public verification |
 
-因此，**同一张卡不代表同样的奖励**。卡片决定技能是否发出请求；场景决定这个请求此时有没有用。
+Conceptually: **creator rule → portable package → compatible application → application-controlled effect → replayable evidence**.
 
-这也是当前演示的重点：共享的是规则，而不是跨游戏搬运分数、钥匙或玩家资产。
+Local edited rules are **not** automatically manufactured or deployed onchain. The mainnet host currently supports two fixed reviewed cards. Ordinary shared code can also solve many of these problems; comparative integration cost and developer demand remain to be measured.
 
-## 适合什么场景？价值在哪里？
+## Real X Layer evidence
 
-以下是**待验证的用途，不是已落地客户案例**：
+Network: **X Layer mainnet, chain ID 196**. Host: [`0x440c3CC7DdD50566126754199Df7336499eE1E20`](https://www.oklink.com/xlayer/address/0x440c3CC7DdD50566126754199Df7336499eE1E20).
 
-| 可能的使用者 | 可能的用途 | 希望带来的价值 |
-|---|---|---|
-| 小游戏开发者 | 在自己维护的多个玩法中复用简单技能规则 | 少做重复接入，便于检查更新是否一致 |
-| 玩法设计者 | 修改规则后，观察它在不同场景中的效果 | 更直观地发现规则和场景的差异 |
-| 接收规则的人 | 接收行为卡和操作回放，重新计算结果 | 更容易核对交付内容，而不只看一段演示视频 |
+The recorded AA wallet deployment used **ERC-4337 → CreateX → CREATE2**. Deployment, two session opens and eight steps account for **11 real transactions**.
 
-**为什么不直接用普通代码？** 普通共享代码也能做到很多同样的事，往往更简单。本项目保留了普通计算方式作为对照，尚未证明使用TapeOut比普通方案更省时、更便宜或更值得付费。跨应用接入并不是本项目独占的能力。
+| Recorded session | Steps | Training | Doors opened | Keys left |
+|---|---:|---:|---:|---:|
+| Charge card · session 1 | 4 | 2 | 1 | 1 |
+| Alternating card · session 2 | 4 | 1 | 0 | 2 |
 
-## 第一次怎么用？约两分钟
+[Public verifier UI](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html?lang=en) · [Transaction, fee and reproduction report](docs/tapeweave-mainnet-run-2026-10-26.md).
 
-1. 打开[工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html)，模板选择 **“蓄能”**。第一次不需要修改上方表格。
-2. 点击 **“编译并开启新局”**。这里的“编译”可以理解为：把表格里的规则整理成可以运行的行为卡；这不会发送链上交易。
-3. 依次点击 **等待 → 等待 → 触发 → 触发**，共四回合。文档里的`0011`就是这四次操作，0代表等待，1代表触发。
-4. 查看结果：默认规则下，训练应为 **2分**，钥匙门应为 **开门1次、剩1把钥匙**。展开下方逐步记录，能看到为什么第三回合触发没有开门。
-5. 想比较普通做法，在“执行”中选择 **“普通共享真值表”**，再做一次相同操作。**切换模式会重新开始**；相同规则与操作应得到相同结果。
+Published historical snapshots and new RPC reads are shown separately. A fresh read does not prove a new signature. Two matching endpoints do not establish independent providers or finality.
 
-还可以尝试：
+## Demo and submission materials
 
-- **改规则**：编辑表格中的“下一状态”和“请求”，再点“编译并开启新局”。它会清空当前进度；不是任意复杂技能都能在这里表达。
-- **分享规则**：点击“复制创作包”，把整段文本交给另一个人，在对方的工作室里粘贴并点击“校验并装载创作包”。装载成功会开启新局，不携带原来的成绩。
-- **检查过程**：完成四回合后生成“双宿主回放”，复制给对方，在“双宿主回放”区域粘贴，点击“仅复核，不装载”。它只检查计算是否一致，不证明是谁操作的。
+- **[English-interface demo video](deliverables/tapeweave-final-2026-10-26/english/TapeWeave-Final-Demo.mp4):** 177.2205 seconds, 1080p, English synthetic male narration, chapter titles and burned captions. [SRT](deliverables/tapeweave-final-2026-10-26/english/TapeWeave-English.srt) · [Thumbnail](deliverables/tapeweave-final-2026-10-26/english/TapeWeave-Thumbnail.jpg) · [Quality checks](deliverables/tapeweave-final-2026-10-26/english/QUALITY-CHECK.md).
+- [English project description](deliverables/tapeweave-final-2026-10-26/SUBMISSION-EN.md) · [Reviewer quickstart](deliverables/tapeweave-final-2026-10-26/JUDGE-QUICKSTART.md).
+- [Original materials bundle](deliverables/tapeweave-final-2026-10-26/TapeWeave-Submission-Pack.zip): earlier Chinese-interface video with English narration/subtitles. Use the separate English edition above for the latest video.
 
-这里的“双宿主”就是**使用同一规则的两个场景**，不是两台服务器。页面还有一些技术字段，第一次体验可以先忽略；开发者说明在下方。
+The English video is complete; YouTube upload and event submission are separate steps and are not claimed complete here. Filming used actual browser operations and a fresh read-only RPC check, without new signatures or transactions.
 
-### 其他入口
+## Current scope and limitations
 
-- [固定行为挑战](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/index.html)：先预测再完成四回合；与工作室使用不同格式的分享包，不要混用。
-- [人工体验记录](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/validation.html)：记录实际观察、帮助和失败；不是自动测试，也不自动上传或保存。
-- [钱包试玩与主网运行页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)：插件钱包开启自己的局、逐笔预览／确认与恢复；也可不连接钱包查看两局真实结果、11 笔交易链接并读取实时会话。
+Status date: **2026-10-26**. This is a **public-source interaction delivery prototype**, not a production marketplace, universal automation engine or proven cross-game economy.
 
-## 最新真人测试反馈与修复
+- **Adoption:** the two receiving applications are author-built. Independent developer adoption, revenue, recurring demand and an advantage over ordinary shared code are not established.
+- **Identity and permissions:** package digests check content consistency, not publisher identity. Recomputed traces do not authenticate players, observations or ownership. Effect requests are not asset entitlements.
+- **Wallets:** ordinary-plugin signing has user-reported success. The AA web signing flow is implemented; actual browser AA compatibility/acceptance is separate from the historical official-tool AA transactions. Independent full UserOperation simulation remains outstanding. No automatic signing, account upgrade or silent fallback is promised.
+- **Android:** the nine-item task was closed at the user's request; device details and item-by-item observations were not supplied. This is not independent evidence of nine passed checks.
+- **Persistence:** browser recovery and the Node 24/SQLite adapter are local features, not a publicly hosted multiuser backend. Browser storage is not an authenticated backup.
+- **Safety:** production security or audited suitability is not claimed. Unknown wallet requests must be reconciled, not blindly resent.
 
-已收到 **ANDROID-01、NOVICE-01、RECORD-01、TRUST-01** 及截图，登记为用户确认的真人桌面测试反馈。记录日期为2026-10-19（Asia/Shanghai），整理日期为2026-10-18（America/Los_Angeles）。
+Detailed engineering status and historical observations: [current status](docs/tapeweave-current-status-2026-10-26.md), [wallet compatibility/recovery](research/tapeweave/demo/AA-WALLET.md), and [archived development history](docs/tapeweave-readme-history-2026-10-26.md).
 
-- **已有观察**：桌面流程覆盖复制与导入、刷新恢复、标题更新保留步骤、规则变化拒绝保留、版本追加回退、错误摘要保护，以及双应用展览与记录复核。TRUST-01的12项样例覆盖认证标记、规则／轨迹篡改拒绝、本次HTML探针按文本显示及自报文字可改写的边界；不是全面安全审计。
-- **已修复**：空包／残缺JSON提供中文补救提示，失败不替换原局；切换预设同步默认说明、自定义说明保留；编辑制作字段后就近提示恢复原进度；章节阅读／键盘顺序为01→02→03→04；恢复按钮初始化时禁用、处理器就绪后开放。
-- **仍保留的问题与限制**：首次刷新恢复未生效、重试成功的现象根因未确认，首次访问连接关闭也未定位；不将初始化防护说成已彻底修复。Android真机九项待办已按用户要求关闭，逐项证据未核验；独立开发者接入仍为incomplete。修复后的作者自动回归不是原测试者复测。
+## 中文说明
 
-详见[真人测试反馈与修复记录](docs/tapeweave-feedback-triage-2026-10-18.md)。计算一致不认证身份、满意度、独立采用或付费；真人桌面测试也不等于已有客户或商业验证。
+TapeWeave 探索让创作者设计的有限互动规则，成为可以交付、接入和重新检查的“行为卡”。共享的是规则，不是其他应用的分数、钥匙或权限。应用开发者仍需主动接入，并自行决定允许哪些效果。
 
-## 现在已经做到哪里？
+先打开[中文作品页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=zh)，生成作品，点击“补能 → 触发”，再试用导入和刷新恢复。无需钱包或买币。进阶使用[规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html?lang=zh)；链上操作与本地试玩分开，任何签名都需用户确认。
 
-截至2026-10-26（试玩与真人反馈记录沿用原日期）：
+目前已完成双语界面、规则交付与恢复、两个自编应用示例，以及真实 X Layer 宿主部署和两卡交互。独立团队采用、商业价值、完整 UOP 独立模拟和 Android 逐项证据仍有待验证。英文 Demo 成片已完成，上传视频和提交报名不因此自动完成。
 
-- **可以体验**：命名互动作品、模板／自定义规则、可见效果、交付与导入、普通方式对照、自报验收记录；高级工作室保留规则编辑、回放及浏览器内恢复。新版作品页支持本机执行存档与显式恢复。
-- **开发者可以本地运行**：用SQLite数据库保存进度、备份恢复，运行合约测试，以及生成 CreateX／AA 部署包、只读预检和核验已有部署回执。
-- **已有链上实验**：X Layer 两枚真实电路由主网 TapeWeaveHost 消费，AA 钱包完成两局真实交互；11 笔交易已重查事件、代码和最终状态。[主网记录](docs/tapeweave-mainnet-run-2026-10-26.md)
-- **还没做到**：独立团队接入，以及证明有人需要、愿意付费、愿意持续回来。完整 UOP 独立模拟、独立提供商共识、视频成片和投稿没有完成声明。Android待办关闭不等于取得真机通过证据。
+## Run locally
 
-所以，**现在你能体验的是“规则如何被两个场景使用”，不是一个已经形成商业价值的跨游戏平台。**
-
-### 使用前请知道
-
-在线页面是静态网页，不运行本地数据库或部署合约。主网页的钱包试玩可经用户确认调用已部署宿主；作品页和工作室保持本地操作。工作室进度只保存在当前浏览器，不会自动同步到别的设备，清除浏览器数据可能丢失进度。请勿多标签同时操作同一份进度，也不要填入钱包秘密或个人敏感信息。
-
-回放可以由任何人制作；“计算一致”不等于真实玩家成绩或身份认证。已有用户确认的真人桌面测试，其中记录了桌面复制粘贴成功；Android触摸、手机系统剪贴板与权限拒绝路径未提供逐项记录，不能由待办关闭或桌面结果推定通过。独立开发者接入仍未完成。
-
-## 开发者资料
-
-普通体验者到这里即可；以下是源码、运行与证据入口。
-
-### 本地运行与测试
-
-在仓库根目录运行：
+Serve this repository as static files:
 
 ```sh
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-打开 `http://127.0.0.1:8000/research/tapeweave/demo/studio.html`。数据库、WAL、SHM及秘密文件必须放在仓库和静态服务目录之外。SQLite服务需单独启动，要求Node24，见下表。
+Open `http://127.0.0.1:8000/research/tapeweave/demo/work.html?lang=en`.
+
+Run checks:
 
 ```sh
 node research/tapeweave/demo/check.mjs
-# 本机安装Chrome时：
+# With a compatible local Chrome installation:
 node research/tapeweave/demo/check.mjs --browser
 ```
 
-历史反馈回归（2026-10-18）：**31组Node／Chrome及两次Python发布保护（普通、-O）通过**，含中文导入提示、原局保护、默认说明同步、自定义说明保留、就近恢复提示、章节顺序与恢复就绪状态断言。这些是作者自动测试，与真人反馈分开；RPC和剪贴板部分使用替身，不是独立采用或手机验收。该日期的暂停部署记录已由 2026-10-26 用户授权的真实部署替代。
+Node 24 is required for SQLite functionality. Keep databases, WAL/SHM files and credentials **outside the repository and static-serving directory**. GitHub Pages serves static content only; it does not run the SQLite service.
 
-2026-10-26 部署工具更新后重新执行：新增14组CreateX测试、原有三组合约脚本、22组Node及两次Python发布保护全部通过；未重跑Chrome／手机验收。实际合约的公网单RPC工厂执行预检通过，第二端点连接失败，不能称双端一致或钱包UOP模拟通过。[完整结果与限制](docs/tapeweave-createx-deployment-2026-10-26.md#本轮执行记录)。
+## Developer documentation
 
-同日继续开发部署后流程：CreateX／操作工具扩展到24组测试通过，四份合约脚本通过；新增显式版本保护、单步回执恢复、两卡完整运行及费用核验。macOS Chrome／备用 Chromium 受系统进程权限限制无法启动，改用 GitHub Actions Linux：**31 组 Node／Chrome + 两次 Python 发布保护全部通过**，含主网证据展示、两会话读取、runtime／重组拒绝及异步保护。[浏览器验收记录](https://github.com/0xCaptain888/TapeWeave/actions/runs/40277443814)。Pages 部署成功，线上 README、主网页、脚本、运行 JSON 与作品入口已逐字对比发布内容一致。真实钱包交易与替身浏览器测试分开记载。[部署后工具与执行记录](docs/tapeweave-host-run-2026-10-26.md)。
-
-另以全新 Linux Chrome 打开真实公网 Demo，直接点击两卡读取按钮，**真实 HTTPS + 真实 RPC 验收通过**；无 fetch 替身、无钱包连接、无新交易。[公网浏览器记录](https://github.com/0xCaptain888/TapeWeave/actions/runs/40278163174)。CI 曾出现一次持久化测试刷新超时，已将刷新测试改为先等待新文档再读取恢复结果，避免把旧文档当成已恢复页面。
-
-| 资料 | 内容与限制 |
+| Guide | Contents |
 |---|---|
-| [互动作品交付与独立页面接入](research/tapeweave/demo/WORK-INTEGRATION.md) | 新作品包、通用本地执行接口、普通对照与责任边界；尚无独立采用 |
-| [试玩技术指南](research/tapeweave/demo/README.md) | 有限NAND／LATCH实现，不支持任意网表或完整TAP协议 |
-| [本地数据库、归档与恢复](research/tapeweave/demo/PERSISTENCE.md) | 本机事务与重试，不是公开多用户后端 |
-| [开发者接入指南](research/tapeweave/INTEGRATION.md) | 时序、责任与失败边界；不代表已有独立采用 |
-| [RPC宿主工具](research/tapeweave/demo/RPC-HOST.md) | 读取后本地提交，不发交易；历史双端绑定未通过 |
-| [合约源码、测试与部署准备](contracts/README.md) | CreateX／AA 真实部署与两卡交互、只读源码和回执核验；独立完整 UOP 模拟仍有限制 |
-| [真实主网运行与费用记录](docs/tapeweave-mainnet-run-2026-10-26.md) | 11 笔真实交易、成功 UOP、逐笔费用与公开复核入口 |
-| [CreateX／AA 操作与核验](docs/tapeweave-createx-deployment-2026-10-26.md) | 明确区分工厂 RPC 模拟、钱包 UOP 与真实链上证明 |
-| [部署后动作、恢复与完整运行核验](docs/tapeweave-host-run-2026-10-26.md) | 核源码身份、当前版本、单步回执和两卡四拍事件／最终状态；不签名或发送 |
-| [真实制造记录](docs/tapeweave-manufacture-2026-10-18.md) | pulse ID1、alternating ID2；不是宿主部署记录 |
+| [Work integration](research/tapeweave/demo/WORK-INTEGRATION.md) | Work packages, receiving adapters and ordinary-code baseline |
+| [Demo implementation](research/tapeweave/demo/README.md) | Finite NAND/LATCH execution and implementation limits |
+| [Persistence](research/tapeweave/demo/PERSISTENCE.md) | Local SQLite transactions, backup and recovery |
+| [Integration boundaries](research/tapeweave/INTEGRATION.md) | Timing, ownership and failure boundaries |
+| [Contracts](contracts/README.md) | Contract tests, CreateX deployment and verification |
+| [Mainnet report](docs/tapeweave-mainnet-run-2026-10-26.md) | Eleven transactions, fees and public reproduction |
+| [Wallet guide](research/tapeweave/demo/WALLET-PLAY.md) | Ordinary plugin sessions, receipts and unknown-request recovery |
+| [AA guide](research/tapeweave/demo/AA-WALLET.md) | Account capabilities, confirmation and UserOperation checks |
+| [Bilingual UI](docs/tapeweave-bilingual-demo-2026-10-26.md) | Language behavior, package preservation and regression checks |
+| [Development archive](docs/tapeweave-readme-history-2026-10-26.md) | Earlier feature notes, test runs and stage-specific limitations |
 
-## 发布与许可
+## Source and licensing
 
-公开仓库：[0xCaptain888/TapeWeave](https://github.com/0xCaptain888/TapeWeave)。GitHub Pages从`main`根目录提供静态页面，不运行SQLite服务；主网页可在用户明确确认后请求插件钱包发送宿主交互。发布不包含数据库、凭据、Python缓存和node_modules。
-
-第三方片段的原有许可文件保留；本仓库未额外授予统一开源许可证。
+Source code is publicly available. Existing third-party license notices remain in place; this repository does **not** currently grant an additional repository-wide open-source license. Do not infer unrestricted reuse rights from public visibility. A licensing decision is separate from this documentation update.

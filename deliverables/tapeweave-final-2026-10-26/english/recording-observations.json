@@ -1,0 +1,117 @@
+{
+  "sourceCommit": "62e30e5792f56b132def67a9e3aea6e638466f92",
+  "recordedAt": "2026-10-26T14:16:19.588Z",
+  "uiLanguage": "en",
+  "recording": "real browser operation; no provider/RPC substitutions",
+  "voice": "Microsoft en-US-GuyNeural synthetic male narration",
+  "observations": [
+    {
+      "scene": "01-introduction",
+      "reusedActualRecording": true,
+      "source": "https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html",
+      "newSignature": false,
+      "newTransaction": false
+    },
+    {
+      "scene": "02-create",
+      "reusedActualRecording": true,
+      "source": "https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html",
+      "newSignature": false,
+      "newTransaction": false
+    },
+    {
+      "scene": "03-deliver",
+      "reusedActualRecording": true,
+      "source": "https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html",
+      "newSignature": false,
+      "newTransaction": false
+    },
+    {
+      "scene": "04-protect",
+      "durationTarget": 20.616,
+      "wallSeconds": 20.618,
+      "source": "https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html",
+      "networkPostMethods": [],
+      "newSignature": false,
+      "newTransaction": false
+    },
+    {
+      "scene": "05-applications",
+      "durationTarget": 22.2,
+      "wallSeconds": 22.202,
+      "source": "https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/exhibit.html",
+      "networkPostMethods": [],
+      "newSignature": false,
+      "newTransaction": false
+    },
+    {
+      "scene": "06-mainnet",
+      "durationTarget": 20.592,
+      "wallSeconds": 20.593,
+      "source": "https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html",
+      "networkPostMethods": [],
+      "newSignature": false,
+      "newTransaction": false
+    },
+    {
+      "scene": "07-read",
+      "realPublicRpc": true,
+      "snapshot": {
+        "host": "0x440c3cc7ddd50566126754199df7336499ee1e20",
+        "block": "0x46d0ae2",
+        "block_hash": "0xdf28b59ca45bce894ac82d35c8d75b2e5fb6b9c53ff89c1775a022429e5968d5",
+        "verified_host": true,
+        "provider_agreement": false,
+        "snapshot": {
+          "player": "0xc055d5c6d6d02d797074829120c85e7843f8cb3f",
+          "circuit": 1,
+          "version": 4,
+          "training": {
+            "latch": 0,
+            "score": 2,
+            "resource": 2
+          },
+          "door": {
+            "latch": 0,
+            "score": 1,
+            "resource": 1
+          }
+        },
+        "matches_recorded_final_state": true
+      }
+    },
+    {
+      "scene": "07-read",
+      "durationTarget": 21.599999999999998,
+      "wallSeconds": 21.601,
+      "source": "https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html",
+      "networkPostMethods": [
+        "eth_chainId",
+        "eth_blockNumber",
+        "eth_getBlockByNumber",
+        "eth_getCode",
+        "eth_call"
+      ],
+      "newSignature": false,
+      "newTransaction": false
+    },
+    {
+      "scene": "08-wallet",
+      "durationTarget": 24.24,
+      "wallSeconds": 24.243,
+      "source": "https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/native.html",
+      "networkPostMethods": [],
+      "newSignature": false,
+      "newTransaction": false
+    },
+    {
+      "scene": "09-close",
+      "durationTarget": 23.808,
+      "wallSeconds": 23.809,
+      "source": "https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html",
+      "networkPostMethods": [],
+      "newSignature": false,
+      "newTransaction": false
+    }
+  ]
+}

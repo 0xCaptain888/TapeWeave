@@ -3,7 +3,9 @@ import {readFile,writeFile,mkdir,rename,access} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import assert from 'node:assert/strict';
-const output=fileURLToPath(new URL('./',import.meta.url));
+const assets=fileURLToPath(new URL('./',import.meta.url));
+const english=process.env.TAPEWEAVE_VIDEO_LANGUAGE==='en';
+const output=assets+(english?'english/':'');
 const scenes=JSON.parse(await readFile(new URL('scenes.json',import.meta.url),'utf8'));
 const origin='https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/';
 let browser;
@@ -27,13 +29,14 @@ try{
  for(const scene of scenes){
   try{await access(output+scene.id+'.webm');observations.push({scene:scene.id,reusedActualRecording:true,source:origin+scene.page,newSignature:false,newTransaction:false});continue;}catch{}
   browser=await chromium.launch({headless:true,executablePath:'/Users/lyh/Library/Caches/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-mac-arm64/chrome-headless-shell',args:['--no-sandbox','--single-process','--in-process-gpu','--disable-gpu']});
-  const audio=output+scene.id+'.mp3';
+  const audio=assets+scene.id+'.mp3';
   const duration=Number(execFileSync('/opt/homebrew/bin/ffprobe',['-v','error','-show_entries','format=duration','-of','csv=p=0',audio],{encoding:'utf8'}).trim())+1.2;
   const context=await browser.newContext({viewport:{width:1600,height:900},recordVideo:{dir:output+'raw',size:{width:1600,height:900}},permissions:['clipboard-read','clipboard-write']});
   const page=await context.newPage();const requests=[];
   page.on('request',request=>{if(request.method()==='POST'){try{requests.push(JSON.parse(request.postData()).method);}catch{}}});
   const started=Date.now();
-  await page.goto(origin+scene.page,{waitUntil:'networkidle',timeout:45000});
+  await page.goto(origin+scene.page+(english?'?lang=en':''),{waitUntil:'networkidle',timeout:45000});
+  if(english)await page.waitForFunction(()=>document.documentElement.lang==='en');
   await overlay(page,scene);
   if(scene.id==='02-create'){
    await page.locator('#title').fill('Charge & Light');await focus(page,'.work-create');await click(page,'#build');await page.waitForFunction(()=>!document.getElementById('recharge').disabled);
@@ -50,7 +53,7 @@ try{
    }else{
     const before=await page.locator('#state').innerText(),corrupt=JSON.parse(savedPackage);corrupt.artifact.sha256='0'.repeat(64);
     await focus(page,'.work-delivery');await page.locator('#incoming').fill(JSON.stringify(corrupt,null,2));await click(page,'#load');
-    assert.equal(await page.locator('#state').innerText(),before);assert.match(await page.locator('#status').innerText(),/失败|不匹配/);await focus(page,'#status');
+    assert.equal(await page.locator('#state').innerText(),before);assert.match(await page.locator('#status').innerText(),/失败|不匹配|do not match|failed/i);await focus(page,'#status');
    }
   }else if(scene.id==='05-applications'){
    await click(page,'#start');await focus(page,'.exhibit-grid');await click(page,'#a-charge');await page.waitForTimeout(1000);await click(page,'#a-use');
@@ -80,5 +83,5 @@ try{
   console.log('RECORDED '+scene.id);
   await browser.close();browser=null;
  }
- await writeFile(output+'recording-observations.json',JSON.stringify({sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),recordedAt:new Date().toISOString(),recording:'real browser operation; no provider/RPC substitutions',voice:'Microsoft en-US-GuyNeural synthetic male narration',observations},null,2));
+ await writeFile(output+'recording-observations.json',JSON.stringify({sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),recordedAt:new Date().toISOString(),uiLanguage:english?'en':'zh',recording:'real browser operation; no provider/RPC substitutions',voice:'Microsoft en-US-GuyNeural synthetic male narration',observations},null,2));
 }finally{await browser?.close();}

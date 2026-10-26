@@ -1,11 +1,12 @@
-import json, pathlib, re, subprocess, time
+import json, pathlib, re, subprocess, time, os
 from PIL import Image, ImageDraw, ImageFont
 
-ROOT = pathlib.Path(__file__).resolve().parent
+ASSETS = pathlib.Path(__file__).resolve().parent
+ROOT = ASSETS/'english' if os.environ.get('TAPEWEAVE_VIDEO_LANGUAGE') == 'en' else ASSETS
 FF = '/opt/homebrew/bin/ffmpeg'
 FP = '/opt/homebrew/bin/ffprobe'
 SPEED = 1.08
-scenes = json.loads((ROOT/'scenes.json').read_text())
+scenes = json.loads((ASSETS/'scenes.json').read_text())
 font = ImageFont.truetype('/System/Library/Fonts/Supplemental/Arial.ttf', 36)
 def duration(path):
     return float(subprocess.check_output([FP,'-v','error','-show_entries','format=duration','-of','csv=p=0',str(path)]))
@@ -18,7 +19,7 @@ offset=0
 srt=[]
 timeline=[]
 for scene in scenes:
-    sid=scene['id']; audio=ROOT/(sid+'.mp3'); video=ROOT/(sid+'.webm')
+    sid=scene['id']; audio=ASSETS/(sid+'.mp3'); video=ROOT/(sid+'.webm')
     deadline=time.monotonic()+600
     while not video.exists():
         if time.monotonic()>deadline:raise RuntimeError('Recording missing: '+sid)
