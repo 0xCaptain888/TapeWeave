@@ -10,6 +10,7 @@ assert.equal(a.ready_to_send,false);
 assert.equal(a.broadcast,false);
 assert.equal(a.simulated,false);
 assert.equal(a.wallet_creation_adapter,null);
+assert.equal(a.account_address,null);
 assert.equal(a.initcode,a.creation_bytecode+a.constructor_args.slice(2));
 const decoded = ethers.AbiCoder.defaultAbiCoder().decode(['address','bytes32','bytes32'],a.constructor_args);
 assert.equal(decoded[0],a.processor);

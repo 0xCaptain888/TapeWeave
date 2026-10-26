@@ -1,18 +1,28 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TapeWeave 链上宿主接入准备</title><link rel="stylesheet" href="style.css"></head><body><main><nav class="brand-bar" aria-label="主导航"><a class="brand-home" href="work.html"><span class="brand-symbol" aria-hidden="true"></span><span class="brand-label">TapeWeave<small>INTERACTION, WOVEN.</small></span></a><div class="brand-nav"><a href="work.html">作品交付</a><a href="manage.html">作品管理</a><a href="studio.html">规则工作室</a></div></nav><p class="eyebrow">CHAIN / PREPARATION ONLY</p>
-<h1>链上宿主接入准备 · 未部署</h1>
-<p>没有官方部署地址。本页不连接钱包、不签名、不广播。只读取你显式输入的候选地址，生成供审阅的调用参数；有代码或返回相似状态不代表它是经过验证的TapeWeave宿主。</p>
-<p><a href="studio.html">本地行为工作室</a> · <a href="index.html">固定挑战</a></p>
-<label>候选宿主地址 <input id="host" maxlength="42" placeholder="尚未部署，请勿使用随机地址"></label>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TapeWeave 主网运行与实时读取</title><link rel="stylesheet" href="style.css"><style>.chain-proof{margin:1.5rem 0;padding:1.2rem;border:1px solid #456b64;border-radius:16px}.chain-proof code,.chain-proof a,td{overflow-wrap:anywhere}table{width:100%;border-collapse:collapse}th,td{padding:.6rem;text-align:left;border-bottom:1px solid #456b64}#evidence-state{white-space:pre-wrap}#snapshot{overflow:auto}#evidence-list a{display:inline-block;margin:.3rem 1rem .3rem 0}input{max-width:100%;box-sizing:border-box}</style></head><body><main><nav class="brand-bar" aria-label="主导航"><a class="brand-home" href="work.html"><span class="brand-symbol" aria-hidden="true"></span><span class="brand-label">TapeWeave<small>INTERACTION, WOVEN.</small></span></a><div class="brand-nav"><a href="work.html">作品交付</a><a href="manage.html">作品管理</a><a href="studio.html">规则工作室</a></div></nav><p class="eyebrow">X LAYER MAINNET / REAL EXECUTION</p>
+<h1>两张卡，真实主网运行</h1>
+<p>AA 钱包通过 CreateX 部署 TapeWeaveHost，再分别开局并执行四步“等待 → 等待 → 触发 → 触发”。部署及两局合计 11 笔真实交易。下方先展示已发布的历史记录，点击实时读取才会请求公共 RPC。</p>
+<section class="chain-proof" aria-labelledby="proof-title"><h2 id="proof-title">主网交易记录 · 2026-10-26</h2>
+<p id="evidence-status" role="status">正在载入公开运行记录…</p><p id="evidence-host"></p>
+<table><thead><tr><th>行为卡／会话</th><th>训练分数</th><th>开门次数／余钥匙</th></tr></thead><tbody id="evidence-sessions"></tbody></table>
+<p id="evidence-state"></p><div id="evidence-list"></div>
+<p><a href="mainnet-evidence.json">下载公开回执与运行记录 JSON</a> · <a href="../../../docs/tapeweave-mainnet-run-2026-10-26.md">部署、费用及复核说明</a></p>
+<p>这是作者发布的历史快照，不是独立用户或签名凭据。完整核验工具重新获取部署、事件与历史状态；本页实时读取只核当前运行时代码及当前会话，不重新验证 11 笔历史交易。</p></section>
+<h2>实时读取链上会话</h2>
+<p>选择已运行的会话后点击读取，不需要连接钱包。默认宿主会与公开记录中的完整运行时代码逐字节对比；自填候选地址只做未认证读取。</p>
+<button id="card1" disabled>读取蓄能卡会话</button> <button id="card2" disabled>读取交替卡会话</button>
+<label>宿主地址 <input id="host" maxlength="42" placeholder="等待公开记录载入"></label>
 <label>会话ID <input id="session" inputmode="numeric" value="1"></label>
-<button id="read">仅从第一RPC读取固定块会话</button>
+<button id="read">从公共 RPC 读取固定块会话</button>
 <p id="status" role="status"></p><pre id="snapshot"></pre>
-<h2>生成调用草案（不发送）</h2>
+<details><summary>开发者：生成调用草案（不发送）</summary>
+<p>本页不签名、不广播，也不把历史成功视作新交易授权。</p>
 <label>操作 <select id="operation"><option value="open">开局</option><option value="act">动作</option></select></label>
 <label>审查卡 <select id="circuit"><option value="1">蓄能 ID1</option><option value="2">交替 ID2</option></select></label>
 <label>预期版本 <select id="version"><option>0</option><option>1</option><option>2</option><option>3</option></select></label>
 <label>动作 <select id="trigger"><option value="0">等待</option><option value="1">触发</option></select></label>
 <button id="plan">生成未验证草案</button>
 <textarea id="draft" rows="10" readonly aria-label="未发送调用草案"></textarea>
-<p>草案不代表模拟通过。真实发送前必须确认官方部署路径、运行时代码与配置、钱包调用者、最新版本及模拟；过期版本必须失败，不能自动重试成新动作。本页面不检查源码身份，不提供发送按钮。读取是单RPC观察，不是双端绑定或认证成绩。</p>
+<p>草案不代表模拟通过。真实发送前核对钱包、最新版本、模拟和费用；过期版本必须失败，不能自动改版本重发。只读是单 RPC 观察，不是独立提供商共识。</p>
+<p><a href="../../../docs/tapeweave-host-run-2026-10-26.md">部署后操作与完整回执核验工具</a> · <a href="studio.html">本地行为工作室</a></p></details>
 <script type="module" src="chain-page.mjs"></script></main></body></html>

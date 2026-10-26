@@ -1,0 +1,22 @@
+name: Browser regression
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.22.0'
+      - name: Offline modules and publishing guards
+        run: node research/tapeweave/demo/check.mjs
+      - name: Chain page in real Chrome with substituted RPC
+        env:
+          CHROME: /usr/bin/google-chrome
+        run: node research/tapeweave/demo/test-chain-browser.mjs

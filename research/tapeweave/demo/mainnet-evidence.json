@@ -1,0 +1,462 @@
+{
+  "format": "tapeweave-public-mainnet-evidence-v1",
+  "recorded_at": "2026-10-26T05:52:58.873Z",
+  "chain_id": 196,
+  "deployment_number": "1",
+  "host": "0x440c3CC7DdD50566126754199Df7336499eE1E20",
+  "account_address": "0xc055d5c6D6D02D797074829120c85e7843f8Cb3f",
+  "expected_runtime": "0x608060405234801561000f575f5ffd5b506004361061007a575f3560e01c806356f6a8971161005857806356f6a897146100f457806373cd83361461010757806383c4b7a31461010f578063ce1b1d43146101bd575f5ffd5b806328cfd1cf1461007e57806344ee09e4146100935780634e0b83e3146100cd575b5f5ffd5b61009161008c366004610b0a565b6101fc565b005b6100ba7f0845098e85be840e7d9ea542f7a05ac6e95b2c2366b444c697c4f13dbc7b15ab81565b6040519081526020015b60405180910390f35b6100ba7f8b59def3d00eef6d675f047f10887e945a0fc70f55707b84b977817353b7b34d81565b6100ba610102366004610b4b565b61059f565b6100ba5f5481565b6101ac61011d366004610b6b565b600160208181525f92835260409283902080548451606080820187529483015460ff818116835261010080830482168488015262010000928390048216848a01528851978801895260029095015480821688529485048116958701959095529092048316948401949094526001600160a01b03841693600160a01b8104831693600160a81b9091049092169185565b6040516100c4959493929190610b82565b6101e47f000000000000000000000000dfc1abf794ef40b9eeeba1d875e7ab2b21a0a14681565b6040516001600160a01b0390911681526020016100c4565b5f83815260016020526040902080546001600160a01b031633146102505760405162461bcd60e51b8152602060048201526006602482015265383630bcb2b960d11b60448201526064015b60405180910390fd5b805460ff848116600160a81b90920416148015610279575080546004600160a81b90910460ff16105b6102af5760405162461bcd60e51b81526020600482015260076024820152663b32b939b4b7b760c91b6044820152606401610247565b80546102c490600160a01b900460ff16610692565b80545f90600160a81b900460ff1615806102e957508154600160a81b900460ff166002145b6102f3575f6102f6565b60015b90505f60018260ff16901b8461030c575f61030f565b60015b845460018601549290911792505f9182916103389160ff600160a01b909204821691168561078c565b865460028801549294509092505f9182916103619160ff600160a01b909204821691168761078c565b885460018a01549294509092506103889160ff600160a01b90920482169116878787610967565b865460028801546103a99160ff600160a01b90910481169116878585610967565b5f8160ff1660011480156103d7575087546103d090600290600160a81b900460ff16610c00565b60ff166001145b80156103ef5750600288015462010000900460ff1615155b6103f9575f6103fc565b60015b6001898101805460ff191660ff89811691909117808355939450879391929161042c918591610100900416610c41565b92506101000a81548160ff021916908360ff16021790555083886001015f0160028282829054906101000a900460ff166104669190610c41565b825461010092830a60ff81810219909216928216029190911790925560028b01805460ff19168784161780825585945090926001926104aa92869291900416610c41565b92506101000a81548160ff021916908360ff16021790555080886002015f0160028282829054906101000a900460ff166104e49190610c60565b92506101000a81548160ff021916908360ff160217905550875f01601581819054906101000a900460ff1661051890610c79565b82546101009290920a60ff818102199093169183160217909155885460408051600160a81b909204831682528b1515602083015286831690820152838216606082015290821660808201528b907fb26d4ded5191059a26c7d19c74bac9188c71df7ea0c5cf9e0c6359b0b2be74769060a00160405180910390a25050505050505050505050565b5f8160ff16600114806105b557508160ff166002145b6105eb5760405162461bcd60e51b815260206004820152600760248201526618da5c98dd5a5d60ca1b6044820152606401610247565b6105f482610692565b5f5f815461060190610c97565b91829055505f8181526001602090815260409182902080546001600160a81b0319163360ff60a01b19811691909117600160a01b60ff891690810291909117835560028301805462ff00001916620200001790559351938452939450929184917fcd79ecb8b02601f8233f68f1879a20f66616a11140945180a66d50282bf40726910160405180910390a350919050565b6040805160ff83166024808301919091528251808303909101815260449091019091526020810180516001600160e01b0316631fe25f2b60e11b1790525f906106dd90610200610a1a565b90505f818060200190518101906106f49190610d6d565b90508260ff16600114610727577f8b59def3d00eef6d675f047f10887e945a0fc70f55707b84b977817353b7b34d610749565b7f0845098e85be840e7d9ea542f7a05ac6e95b2c2366b444c697c4f13dbc7b15ab5b81516020830120146107875760405162461bcd60e51b81526020600482015260076024820152661b995d1b1a5cdd60ca1b6044820152606401610247565b505050565b6040805160f884811b6001600160f81b03199081166020840152835160018185030181526021840185529185901b16604183015282516022818403018152604283019093525f9283928392610830926374140d0d60e11b926107f79260ff8c16929091606601610dca565b60408051601f198184030181529190526020810180516001600160e01b03166001600160e01b03199093169290921790915260c0610a1a565b9050805160c01461086f5760405162461bcd60e51b8152602060048201526009602482015268737465702073697a6560b81b6044820152606401610247565b5f5f828060200190518101906108859190610df4565b915091508151600114801561089b575080516001145b80156108c057506002825f815181106108b6576108b6610e59565b016020015160f81c105b80156108e557506002815f815181106108db576108db610e59565b016020015160f81c105b61091d5760405162461bcd60e51b815260206004820152600960248201526873746570206269747360b81b6044820152606401610247565b815f8151811061092f5761092f610e59565b602001015160f81c60f81b60f81c815f8151811061094f5761094f610e59565b016020015190955060f81c9350505050935093915050565b60018084169084811c8116905f9060ff89161461098657828718610996565b610991836001610c60565b871682175b90505f8860ff166001146109b657836109b0896001610c60565b166109ba565b8388165b90508160ff168660ff161480156109d657508060ff168560ff16145b610a0f5760405162461bcd60e51b815260206004820152600a6024820152693a3930b739b4ba34b7b760b11b6044820152606401610247565b505050505050505050565b60605f7f000000000000000000000000dfc1abf794ef40b9eeeba1d875e7ab2b21a0a14690505f5f5f5f87516020890186622dc6c0fa91503d9050818015610a625750848111155b610a9f5760405162461bcd60e51b815260206004820152600e60248201526d1c1c9bd8d95cdcdbdc881c99585960921b6044820152606401610247565b8067ffffffffffffffff811115610ab857610ab8610caf565b6040519080825280601f01601f191660200182016040528015610ae2576020820181803683370190505b509350805f602086013e50505092915050565b803560ff81168114610b05575f5ffd5b919050565b5f5f5f60608486031215610b1c575f5ffd5b83359250610b2c60208501610af5565b915060408401358015158114610b40575f5ffd5b809150509250925092565b5f60208284031215610b5b575f5ffd5b610b6482610af5565b9392505050565b5f60208284031215610b7b575f5ffd5b5035919050565b6001600160a01b038616815260ff8581166020830152841660408201526101208101610bd1606083018560ff815116825260ff602082015116602083015260ff60408201511660408301525050565b825160ff90811660c08401526020840151811660e08401526040840151166101008301525b9695505050505050565b5f60ff831680610c1e57634e487b7160e01b5f52601260045260245ffd5b8060ff84160691505092915050565b634e487b7160e01b5f52601160045260245ffd5b60ff8181168382160190811115610c5a57610c5a610c2d565b92915050565b60ff8281168282160390811115610c5a57610c5a610c2d565b5f60ff821660ff8103610c8e57610c8e610c2d565b60010192915050565b5f60018201610ca857610ca8610c2d565b5060010190565b634e487b7160e01b5f52604160045260245ffd5b5f5b83811015610cdd578181015183820152602001610cc5565b50505f910152565b5f82601f830112610cf4575f5ffd5b815167ffffffffffffffff811115610d0e57610d0e610caf565b604051601f8201601f19908116603f0116810167ffffffffffffffff81118282101715610d3d57610d3d610caf565b604052818152838201602001851015610d54575f5ffd5b610d65826020830160208701610cc3565b949350505050565b5f60208284031215610d7d575f5ffd5b815167ffffffffffffffff811115610d93575f5ffd5b610d6584828501610ce5565b5f8151808452610db6816020860160208601610cc3565b601f01601f19169290920160200192915050565b838152606060208201525f610de26060830185610d9f565b8281036040840152610bf68185610d9f565b5f5f60408385031215610e05575f5ffd5b825167ffffffffffffffff811115610e1b575f5ffd5b610e2785828601610ce5565b925050602083015167ffffffffffffffff811115610e43575f5ffd5b610e4f85828601610ce5565b9150509250929050565b634e487b7160e01b5f52603260045260245ffdfea26469706673582212208903949dfeb0c4b9c05db663fe0bd73bf0d124985676c6eb4ae08e82a073e90e64736f6c634300081e0033",
+  "runtime_code_hash": "0xd9b8a0f70b59f0d8d03e7c6aec4b616e57810fb1412bb8d7f693bb1b37adf26e",
+  "manifest": {
+    "format": "tapeweave-host-run-v1",
+    "deployment": {
+      "transaction_hash": "0x0fc88535960a02bf3f6fd0b213f87c773a13c0c1a2abe345a9451a437edc697c",
+      "user_operation_hash": "0x9e8c5fdc0515e14fdab2138d5645a968f8f6a205cda2d1a172a2f40ee11c85c3",
+      "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032"
+    },
+    "sessions": [
+      {
+        "circuit": 1,
+        "session_id": "1",
+        "open": {
+          "transaction_hash": "0xfc0366a65db3d53e54143f841e3d58c04f8422383495d4e74599d13641f38d8c",
+          "user_operation_hash": "0x8d34b05809cb3c5191b313494294b25e058ba2a25c8e60f7b6259c6c091c38b5",
+          "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032"
+        },
+        "actions": [
+          {
+            "transaction_hash": "0xaece012f0255cae6b5eaf525104a0dc486d9e07e0f51e971563f62db9665d6ba",
+            "user_operation_hash": "0x3dc057e2c7a72135b6b58d9147db1e669f0b561307e16a816e9b65a4804cd934",
+            "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+            "trigger": false
+          },
+          {
+            "transaction_hash": "0x85efc5df518fb79317e7ca22e86d5627b6f85bde12201ff645c4679f93f423e4",
+            "user_operation_hash": "0x1d1e2d193ab93a924bee67b435361bb97295f17cb835e6b89bc8552044612ae4",
+            "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+            "trigger": false
+          },
+          {
+            "transaction_hash": "0x9e24d05846b9b12695c55ab7bc90bc550222d5bb4469ad10095f672f1cab9fef",
+            "user_operation_hash": "0x0b1828ea57ea7f9dd09da74a6a1ce6dcee10dd38daebaa53d21c587de9aab1e3",
+            "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+            "trigger": true
+          },
+          {
+            "transaction_hash": "0x765cfee238e0835dac83b9d1e70603f58a7d9c5312bbfa806a7074160d32f09e",
+            "user_operation_hash": "0xeb296252f4a6e87c316b063b04284845396d161433d6bdf55be45c3f6808e5ca",
+            "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+            "trigger": true
+          }
+        ]
+      },
+      {
+        "circuit": 2,
+        "session_id": "2",
+        "open": {
+          "transaction_hash": "0x1472929929ff6e14155541950f5fef18179308693f3184e66117f758fb03e0a7",
+          "user_operation_hash": "0x7056734a62781b4610f4e36b05e7d5dd0f3fbc899018b737746bd85542acf38d",
+          "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032"
+        },
+        "actions": [
+          {
+            "transaction_hash": "0x12265810d6087962511bc7c7397d01c67695901a6ca91a1dc308dc2adad9b8b3",
+            "user_operation_hash": "0x6e2bcd37214c804e90de3bc300727f50da548e8c8f56bf3005cdb1d68c3b3142",
+            "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+            "trigger": false
+          },
+          {
+            "transaction_hash": "0x5cc5841ea859747b6abe7cc9e3b3fa66dde9805b000d2164f138d41f26e751df",
+            "user_operation_hash": "0x999638f92f0d4182c1015f78b6c1db91e04d5e5985c68bbf3bf5001fd5c98487",
+            "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+            "trigger": false
+          },
+          {
+            "transaction_hash": "0x38d521b8bc17c31a9ad61989bb9afa8e3891a5193ada4c481bc9faab4e120eb6",
+            "user_operation_hash": "0xa2528737bfba5075960e2b6e62f428a691a6665a510ea06b9f1d784c16d61ee1",
+            "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+            "trigger": true
+          },
+          {
+            "transaction_hash": "0xd8d56ec1c03f442e69251b9d7582af896c8c71c9d7520ce1763591c505ccac45",
+            "user_operation_hash": "0x7dd811a5bdd147cb2bf497011a6ea54c0911e59b85a2fc4c12d90008780dfd3e",
+            "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+            "trigger": true
+          }
+        ]
+      }
+    ]
+  },
+  "proof": {
+    "format": "tapeweave-host-run-proof-v1",
+    "status": "BOTH_CARD_RUNS_VERIFIED",
+    "chain_id": 196,
+    "host": "0x440c3CC7DdD50566126754199Df7336499eE1E20",
+    "account_address": "0xc055d5c6D6D02D797074829120c85e7843f8Cb3f",
+    "deployment": {
+      "format": "tapeweave-createx-deployment-proof-v1",
+      "status": "DEPLOYMENT_CODE_AND_FACTORY_EVENT_VERIFIED",
+      "chain_id": 196,
+      "transaction_hash": "0x0fc88535960a02bf3f6fd0b213f87c773a13c0c1a2abe345a9451a437edc697c",
+      "block": "0x46c924e",
+      "block_hash": "0x775eca83c792016a621a8fea32a1fe07053260505c86486b2968d20e06be9580",
+      "creation_log_index": "0x5d",
+      "deployment_address": "0x440c3CC7DdD50566126754199Df7336499eE1E20",
+      "account_address": "0xc055d5c6D6D02D797074829120c85e7843f8Cb3f",
+      "runtime_code_hash": "0xd9b8a0f70b59f0d8d03e7c6aec4b616e57810fb1412bb8d7f693bb1b37adf26e",
+      "initcode_hash": "0x9ffe4fc56d84c487083a5464ba1fcc154c62105764b12821b4a88294b1033207",
+      "user_operation": {
+        "verified": true,
+        "user_operation_hash": "0x9e8c5fdc0515e14fdab2138d5645a968f8f6a205cda2d1a172a2f40ee11c85c3",
+        "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+        "trust_basis": "explicit caller-supplied EntryPoint; verify this address against the wallet deployment",
+        "signature_revalidated": false
+      },
+      "observations": [
+        {
+          "endpoint": "https://rpc.xlayer.tech",
+          "confirmations": "494",
+          "processor_code_hash": "0x57aa306fd0be97087da3534e03398f5ff4efd533b5be4e45a405ce86fa6717d5"
+        }
+      ],
+      "provider_agreement": false,
+      "confirmed_at_depth": 2,
+      "mainnet_host_actions_verified": false,
+      "broadcast_by_verifier": false,
+      "scope": "deployment receipt and historical code/configuration; not current availability, gameplay or finality guarantee"
+    },
+    "sessions": [
+      {
+        "session_id": "1",
+        "circuit": 1,
+        "triggers": [
+          false,
+          false,
+          true,
+          true
+        ],
+        "final_state": {
+          "player": "0xc055d5c6d6d02d797074829120c85e7843f8cb3f",
+          "circuit": 1,
+          "version": 4,
+          "training": {
+            "latch": 0,
+            "score": 2,
+            "resource": 2
+          },
+          "door": {
+            "latch": 0,
+            "score": 1,
+            "resource": 1
+          }
+        },
+        "steps": [
+          {
+            "transaction_hash": "0xfc0366a65db3d53e54143f841e3d58c04f8422383495d4e74599d13641f38d8c",
+            "block": "0x46c93c3",
+            "block_hash": "0x7c038d7ef9ae88d056c327ae9550e9787bc69151adecc703783e1059410b4241",
+            "log_index": "0x30",
+            "operation": "Opened",
+            "version": 0,
+            "user_operation": {
+              "verified": true,
+              "user_operation_hash": "0x8d34b05809cb3c5191b313494294b25e058ba2a25c8e60f7b6259c6c091c38b5",
+              "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+              "trust_basis": "explicit caller-supplied EntryPoint; verify this address against the wallet deployment",
+              "signature_revalidated": false
+            },
+            "observations": [
+              {
+                "endpoint": "https://rpc.xlayer.tech",
+                "confirmations": "121"
+              }
+            ]
+          },
+          {
+            "transaction_hash": "0xaece012f0255cae6b5eaf525104a0dc486d9e07e0f51e971563f62db9665d6ba",
+            "block": "0x46c93c8",
+            "block_hash": "0xf937a68639f7df83b4d8462dd8c592a94f88dbfc0c86a1010a2ea07d5ba3c829",
+            "log_index": "0x1f",
+            "operation": "Acted",
+            "version": 1,
+            "user_operation": {
+              "verified": true,
+              "user_operation_hash": "0x3dc057e2c7a72135b6b58d9147db1e669f0b561307e16a816e9b65a4804cd934",
+              "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+              "trust_basis": "explicit caller-supplied EntryPoint; verify this address against the wallet deployment",
+              "signature_revalidated": false
+            },
+            "observations": [
+              {
+                "endpoint": "https://rpc.xlayer.tech",
+                "confirmations": "117"
+              }
+            ]
+          },
+          {
+            "transaction_hash": "0x85efc5df518fb79317e7ca22e86d5627b6f85bde12201ff645c4679f93f423e4",
+            "block": "0x46c93cd",
+            "block_hash": "0xa94efef99af9747264eb59e2d30667d9449634e7d726533eb0327279c0dcf709",
+            "log_index": "0x45",
+            "operation": "Acted",
+            "version": 2,
+            "user_operation": {
+              "verified": true,
+              "user_operation_hash": "0x1d1e2d193ab93a924bee67b435361bb97295f17cb835e6b89bc8552044612ae4",
+              "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+              "trust_basis": "explicit caller-supplied EntryPoint; verify this address against the wallet deployment",
+              "signature_revalidated": false
+            },
+            "observations": [
+              {
+                "endpoint": "https://rpc.xlayer.tech",
+                "confirmations": "112"
+              }
+            ]
+          },
+          {
+            "transaction_hash": "0x9e24d05846b9b12695c55ab7bc90bc550222d5bb4469ad10095f672f1cab9fef",
+            "block": "0x46c93d2",
+            "block_hash": "0x5f97dad13d06c5e00ba74ac382924f4cdee1927282a71bbb160ef4dc329a921c",
+            "log_index": "0x31",
+            "operation": "Acted",
+            "version": 3,
+            "user_operation": {
+              "verified": true,
+              "user_operation_hash": "0x0b1828ea57ea7f9dd09da74a6a1ce6dcee10dd38daebaa53d21c587de9aab1e3",
+              "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+              "trust_basis": "explicit caller-supplied EntryPoint; verify this address against the wallet deployment",
+              "signature_revalidated": false
+            },
+            "observations": [
+              {
+                "endpoint": "https://rpc.xlayer.tech",
+                "confirmations": "108"
+              }
+            ]
+          },
+          {
+            "transaction_hash": "0x765cfee238e0835dac83b9d1e70603f58a7d9c5312bbfa806a7074160d32f09e",
+            "block": "0x46c93d8",
+            "block_hash": "0x81dac061043a4b505dea29af593d54dec2b84e74a5eee266e951eaa6ecd97c13",
+            "log_index": "0xb",
+            "operation": "Acted",
+            "version": 4,
+            "user_operation": {
+              "verified": true,
+              "user_operation_hash": "0xeb296252f4a6e87c316b063b04284845396d161433d6bdf55be45c3f6808e5ca",
+              "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+              "trust_basis": "explicit caller-supplied EntryPoint; verify this address against the wallet deployment",
+              "signature_revalidated": false
+            },
+            "observations": [
+              {
+                "endpoint": "https://rpc.xlayer.tech",
+                "confirmations": "104"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "session_id": "2",
+        "circuit": 2,
+        "triggers": [
+          false,
+          false,
+          true,
+          true
+        ],
+        "final_state": {
+          "player": "0xc055d5c6d6d02d797074829120c85e7843f8cb3f",
+          "circuit": 2,
+          "version": 4,
+          "training": {
+            "latch": 0,
+            "score": 1,
+            "resource": 1
+          },
+          "door": {
+            "latch": 0,
+            "score": 0,
+            "resource": 2
+          }
+        },
+        "steps": [
+          {
+            "transaction_hash": "0x1472929929ff6e14155541950f5fef18179308693f3184e66117f758fb03e0a7",
+            "block": "0x46c93e0",
+            "block_hash": "0x9c36864fa4e36dd705f130f92770978aa7eb944ef6077ad37e36e58f640c2f4e",
+            "log_index": "0x22",
+            "operation": "Opened",
+            "version": 0,
+            "user_operation": {
+              "verified": true,
+              "user_operation_hash": "0x7056734a62781b4610f4e36b05e7d5dd0f3fbc899018b737746bd85542acf38d",
+              "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+              "trust_basis": "explicit caller-supplied EntryPoint; verify this address against the wallet deployment",
+              "signature_revalidated": false
+            },
+            "observations": [
+              {
+                "endpoint": "https://rpc.xlayer.tech",
+                "confirmations": "96"
+              }
+            ]
+          },
+          {
+            "transaction_hash": "0x12265810d6087962511bc7c7397d01c67695901a6ca91a1dc308dc2adad9b8b3",
+            "block": "0x46c93e5",
+            "block_hash": "0x6eca9cf62bc85793152c7ab273a33b4c68190e83c7847591b41f211da5e2b58e",
+            "log_index": "0x14",
+            "operation": "Acted",
+            "version": 1,
+            "user_operation": {
+              "verified": true,
+              "user_operation_hash": "0x6e2bcd37214c804e90de3bc300727f50da548e8c8f56bf3005cdb1d68c3b3142",
+              "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+              "trust_basis": "explicit caller-supplied EntryPoint; verify this address against the wallet deployment",
+              "signature_revalidated": false
+            },
+            "observations": [
+              {
+                "endpoint": "https://rpc.xlayer.tech",
+                "confirmations": "92"
+              }
+            ]
+          },
+          {
+            "transaction_hash": "0x5cc5841ea859747b6abe7cc9e3b3fa66dde9805b000d2164f138d41f26e751df",
+            "block": "0x46c93ea",
+            "block_hash": "0x9e61b7a5dea95f2bea54d453c82d2b421695ad23b55777755316322d9aac1972",
+            "log_index": "0x26",
+            "operation": "Acted",
+            "version": 2,
+            "user_operation": {
+              "verified": true,
+              "user_operation_hash": "0x999638f92f0d4182c1015f78b6c1db91e04d5e5985c68bbf3bf5001fd5c98487",
+              "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+              "trust_basis": "explicit caller-supplied EntryPoint; verify this address against the wallet deployment",
+              "signature_revalidated": false
+            },
+            "observations": [
+              {
+                "endpoint": "https://rpc.xlayer.tech",
+                "confirmations": "89"
+              }
+            ]
+          },
+          {
+            "transaction_hash": "0x38d521b8bc17c31a9ad61989bb9afa8e3891a5193ada4c481bc9faab4e120eb6",
+            "block": "0x46c93f1",
+            "block_hash": "0xa99470632b83003c060f499e7dc0612b6139d641c6097fd8fa560c7b51a9cda5",
+            "log_index": "0xd",
+            "operation": "Acted",
+            "version": 3,
+            "user_operation": {
+              "verified": true,
+              "user_operation_hash": "0xa2528737bfba5075960e2b6e62f428a691a6665a510ea06b9f1d784c16d61ee1",
+              "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+              "trust_basis": "explicit caller-supplied EntryPoint; verify this address against the wallet deployment",
+              "signature_revalidated": false
+            },
+            "observations": [
+              {
+                "endpoint": "https://rpc.xlayer.tech",
+                "confirmations": "82"
+              }
+            ]
+          },
+          {
+            "transaction_hash": "0xd8d56ec1c03f442e69251b9d7582af896c8c71c9d7520ce1763591c505ccac45",
+            "block": "0x46c93f8",
+            "block_hash": "0x2e05738dd6490d851a780ac6e809aff58fca22391bb02e920f44221d2bfccadb",
+            "log_index": "0x14",
+            "operation": "Acted",
+            "version": 4,
+            "user_operation": {
+              "verified": true,
+              "user_operation_hash": "0x7dd811a5bdd147cb2bf497011a6ea54c0911e59b85a2fc4c12d90008780dfd3e",
+              "entry_point": "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+              "trust_basis": "explicit caller-supplied EntryPoint; verify this address against the wallet deployment",
+              "signature_revalidated": false
+            },
+            "observations": [
+              {
+                "endpoint": "https://rpc.xlayer.tech",
+                "confirmations": "76"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "transaction_count": 11,
+    "confirmed_at_depth": 2,
+    "provider_agreement": false,
+    "all_user_operations_verified": true,
+    "signature_revalidated": false,
+    "broadcast_by_verifier": false,
+    "scope": "RPC-observed deployment, ordered events and final historical states; not independent users, audit, demand or current availability"
+  },
+  "fees": [
+    {
+      "transaction_hash": "0x0fc88535960a02bf3f6fd0b213f87c773a13c0c1a2abe345a9451a437edc697c",
+      "outer_fee": "0",
+      "user_operation_actual_gas_cost": "0"
+    },
+    {
+      "transaction_hash": "0xfc0366a65db3d53e54143f841e3d58c04f8422383495d4e74599d13641f38d8c",
+      "outer_fee": "0",
+      "user_operation_actual_gas_cost": "0"
+    },
+    {
+      "transaction_hash": "0xaece012f0255cae6b5eaf525104a0dc486d9e07e0f51e971563f62db9665d6ba",
+      "outer_fee": "0",
+      "user_operation_actual_gas_cost": "0"
+    },
+    {
+      "transaction_hash": "0x85efc5df518fb79317e7ca22e86d5627b6f85bde12201ff645c4679f93f423e4",
+      "outer_fee": "0",
+      "user_operation_actual_gas_cost": "0"
+    },
+    {
+      "transaction_hash": "0x9e24d05846b9b12695c55ab7bc90bc550222d5bb4469ad10095f672f1cab9fef",
+      "outer_fee": "0",
+      "user_operation_actual_gas_cost": "0"
+    },
+    {
+      "transaction_hash": "0x765cfee238e0835dac83b9d1e70603f58a7d9c5312bbfa806a7074160d32f09e",
+      "outer_fee": "0",
+      "user_operation_actual_gas_cost": "0"
+    },
+    {
+      "transaction_hash": "0x1472929929ff6e14155541950f5fef18179308693f3184e66117f758fb03e0a7",
+      "outer_fee": "0",
+      "user_operation_actual_gas_cost": "0"
+    },
+    {
+      "transaction_hash": "0x12265810d6087962511bc7c7397d01c67695901a6ca91a1dc308dc2adad9b8b3",
+      "outer_fee": "0",
+      "user_operation_actual_gas_cost": "0"
+    },
+    {
+      "transaction_hash": "0x5cc5841ea859747b6abe7cc9e3b3fa66dde9805b000d2164f138d41f26e751df",
+      "outer_fee": "0",
+      "user_operation_actual_gas_cost": "0"
+    },
+    {
+      "transaction_hash": "0x38d521b8bc17c31a9ad61989bb9afa8e3891a5193ada4c481bc9faab4e120eb6",
+      "outer_fee": "0",
+      "user_operation_actual_gas_cost": "0"
+    },
+    {
+      "transaction_hash": "0xd8d56ec1c03f442e69251b9d7582af896c8c71c9d7520ce1763591c505ccac45",
+      "outer_fee": "0",
+      "user_operation_actual_gas_cost": "0"
+    }
+  ],
+  "outer_fee_total_wei": "0",
+  "user_operation_fee_total_wei": "0",
+  "scope": "Author-published snapshot. Re-run the read-only verifier against RPC; JSON is not signed proof. Browser checks runtime and current session only. One RPC origin; signatures not revalidated."
+}
