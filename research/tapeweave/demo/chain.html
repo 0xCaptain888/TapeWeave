@@ -21,6 +21,21 @@
 <button id="wallet-recover" disabled>绑定恢复哈希</button><button id="wallet-verify" disabled>核验交易回执</button>
 <p>待处理记录保存在本机。结果不明时不能重发；请保留站点数据。浏览器关闭后可回到本页继续核验。</p></div>
 <p id="wallet-receipt"></p>
+<details open><summary>我的会话与交易历史</summary>
+<p id="history-status" role="status">正在读取本机记录…</p>
+<label>当前账户的会话 <select id="history-select" disabled aria-label="选择我的历史会话"></select></label>
+<button id="history-load" disabled>读取所选会话并续用</button>
+<details><summary>查看本机交易记录</summary><ol id="history-list"></ol></details>
+<details><summary>从链上发现已有会话（只读、分段扫描）</summary>
+<p>只查询固定宿主、当前钱包账户的开局事件。公共端点每段最多100块，不自动扫描全链；查询失败不推进起点。可填入已知开局交易附近的区块，发现后选择会话并重新读取状态。</p>
+<label>起始区块（十进制） <input id="history-from" inputmode="numeric" maxlength="78" disabled></label>
+<label>本段区块数 <select id="history-span" disabled><option value="100">100</option><option value="20">20</option><option value="1">1</option></select></label>
+<button id="history-scan" disabled>扫描当前账户的下一段</button></details>
+<details><summary>导出／合并历史备份</summary>
+<p>备份是未签名的本机缓存。导入不恢复发送权限，不覆盖待处理交易；同哈希冲突或损坏数据拒绝合并。最多500笔回执、1000个发现会话、1 MiB。</p>
+<button id="history-export" disabled>生成历史备份</button><button id="history-import" disabled>校验并合并粘贴的备份</button>
+<label>复制备份，或在这里粘贴完整 JSON <textarea id="history-archive" rows="6" disabled aria-label="钱包历史备份"></textarea></label>
+</details></details>
 <p><a href="WALLET-PLAY.md">操作、恢复与验证边界</a> · 主网操作可能需要 gas；历史 AA 交易的 0 费用不代表普通插件账户免费。</p></section>
 <section class="chain-proof" aria-labelledby="proof-title"><h2 id="proof-title">主网交易记录 · 2026-10-26</h2>
 <p id="evidence-status" role="status">正在载入公开运行记录…</p><p id="evidence-host"></p>
@@ -45,4 +60,4 @@
 <textarea id="draft" rows="10" readonly aria-label="未发送调用草案"></textarea>
 <p>草案不代表模拟通过。真实发送前核对钱包、最新版本、模拟和费用；过期版本必须失败，不能自动改版本重发。只读是单 RPC 观察，不是独立提供商共识。</p>
 <p><a href="../../../docs/tapeweave-host-run-2026-10-26.md">部署后操作与完整回执核验工具</a> · <a href="studio.html">本地行为工作室</a></p></details>
-<script type="module" src="chain-page.mjs?v=wallet-20261026-1"></script><script type="module" src="chain-wallet-page.mjs?v=wallet-20261026-1"></script></main></body></html>
+<script type="module" src="chain-page.mjs?v=wallet-20261026-1"></script><script type="module" src="chain-wallet-page.mjs?v=history-20261026-1"></script></main></body></html>

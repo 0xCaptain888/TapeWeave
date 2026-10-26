@@ -80,13 +80,44 @@ try{
   assert.equal(snapshot.snapshot.version,4);
   snapshots.push(snapshot);
  }
- const allowed=new Set(['eth_chainId','eth_blockNumber','eth_getBlockByNumber','eth_getCode','eth_call']);
+ const discovery=await evaluate(`(async()=>{
+  try{
+   const {WalletRun}=await import('./chain-wallet.mjs?v=history-20261026-1');
+   const {discoverOpened}=await import('./chain-history.mjs');
+   const response=await fetch('mainnet-evidence.json');
+   if(!response.ok)throw Error('public evidence HTTP '+response.status);
+   const evidence=await response.json();
+   let last=0;
+   const rpc=async(method,params)=>{
+    const delay=250-(Date.now()-last);if(delay>0)await new Promise(r=>setTimeout(r,delay));last=Date.now();
+    const res=await fetch('https://rpc.xlayer.tech',{method:'POST',redirect:'error',
+     headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method,params}),
+     signal:AbortSignal.timeout(12000)});
+    if(!res.ok)throw Error('discovery RPC HTTP '+res.status);
+    const text=await res.text();if(text.length>131072)throw Error('discovery RPC response too large');
+    const j=JSON.parse(text);
+    if(j.error||j.id!==1||j.jsonrpc!=='2.0'||!Object.hasOwn(j,'result'))throw Error('discovery RPC error');
+    return j.result;
+   };
+   const storage={getItem(){throw Error('readonly smoke cannot access wallet records');}};
+   const run=new WalletRun({rpc,storage});
+   return await discoverOpened(run,{account:evidence.account_address.toLowerCase(),
+    from:BigInt(evidence.proof.sessions[0].steps[0].block).toString(),span:100});
+  }catch(e){return {error:e.message};}
+ })()`);
+ assert.ok(!discovery.error,'production discovery: '+discovery.error);
+ assert.deepEqual(discovery.observations.map(x=>[x.session,x.circuit]),[['1',1],['2',2]]);
+ assert.equal(discovery.completeFromDeployment,false,'bounded range never claims full history');
+ assert.equal(BigInt(discovery.to)-BigInt(discovery.from),99n);
+ assert.equal(await evaluate("document.getElementById('wallet-account').textContent"),'未连接钱包');
+ const allowed=new Set(['eth_chainId','eth_blockNumber','eth_getBlockByNumber','eth_getCode','eth_call','eth_getLogs']);
  assert.ok(methods.length>=12,'observed real RPC requests');
+ assert.ok(methods.includes('eth_getLogs'),'real account-filtered log discovery observed');
  assert.ok(methods.every(m=>allowed.has(m)),'read-only RPC methods only');
  console.log(JSON.stringify({status:'LIVE_PUBLIC_DEMO_BROWSER_PASSED',
   page:origin+'/TapeWeave/research/tapeweave/demo/chain.html',
   real_https:true,real_rpc:true,fetch_substituted:false,wallet_used:false,wallet_ui_loaded:true,
-  rpc_methods:[...new Set(methods)],snapshots},null,2));
+  rpc_methods:[...new Set(methods)],snapshots,discovery},null,2));
 }finally{
  for(const p of pending.values()){clearTimeout(p.timer);p.reject(Error('Browser closing'));}
  socket?.close();

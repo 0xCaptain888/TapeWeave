@@ -14,6 +14,12 @@ TapeWeave希望创作者设计的“遇到什么条件、采取什么动作”�
 
 👉 **[制作并交付互动作品](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html)** · **[钱包试玩与真实主网记录](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html)** · [高级规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html)
 
+### 新增：我的会话、回执历史与备份
+
+钱包页按当前账户显示本机会话与已核验回执；刷新后连接原账户，选择会话即可重新读取链上状态并续用。支持历史 JSON 导出／校验合并，以及按固定宿主和当前账户分段扫描开局事件。公共 RPC 每段最多100块，明确显示扫描范围，不声称已自动索引完整历史。
+
+备份只是未签名缓存，不能认证来源或授权交易。保存历史成功后才清除待处理意图，损坏／同哈希冲突／存储失败不会自动丢弃原记录。[使用及恢复边界](research/tapeweave/demo/WALLET-PLAY.md) · [当前完成与余项总表](docs/tapeweave-current-status-2026-10-26.md)。旧阶段文档顶部已标明历史适用范围。
+
 ### 新增：浏览器钱包完整试玩
 
 主网页首屏可选择检测到的 OKX／MetaMask 等插件钱包，在自己的会话运行两张卡。每笔先模拟并显示费用，点击确认后才打开钱包；核验回执后继续下一步。固定宿主完整代码校验、账户／网络／版本保护、拒签处理、待处理交易持久化和未知哈希恢复均已接入；不会自动签名或重发。

@@ -10,8 +10,9 @@ const root=new URL('./',import.meta.url),evidence=JSON.parse(await readFile(new 
 const fixture=`<script>
 window.fixtureEvidence=${JSON.stringify(evidence).replaceAll('<','\\u003c')};
 const word=n=>BigInt(n).toString(16).padStart(64,'0'),account='0x'+'12'.repeat(20),host=window.fixtureEvidence.host;
-window.fixture={sendCount:0,chain:'0xc4',account,nonce:0,state:null,transaction:null,receipt:null,reject:false,badHash:false,handlers:new Map()};
+window.fixture={sendCount:0,chain:'0xc4',account,nonce:0,state:null,transaction:null,receipt:null,reject:false,badHash:false,handlers:new Map(),id:2,states:new Map(),transactions:new Map(),receipts:new Map(),scanCalls:[],scanFailure:false};
 const f=window.fixture,blockHash='0x'+'bb'.repeat(32);
+if(window.parent!==window&&window.parent.fixture){f.states=new Map(window.parent.fixture.states);f.state=structuredClone(window.parent.fixture.state);f.id=window.parent.fixture.id;}
 function advance(s,t){
  const recharge=Number(s.version===0||s.version===2),step=old=>s.circuit===1?{latch:recharge|(old&(1-t)),request:old&t}:{latch:old^t,request:(1-old)&t};
  const a=step(s.training.latch),b=step(s.door.latch),effect=Number(b.request===1&&s.version%2===1&&s.door.resource>0);
@@ -29,34 +30,41 @@ const provider={on:(name,fn)=>f.handlers.set(name,fn),removeListener:(name,fn)=>
   const version=f.state?.version;
   let data,topics;
   if(open){
+   f.id++;
    f.state={player:f.account,circuit:Number(BigInt('0x'+tx.data.slice(10))),version:0,training:{latch:0,score:0,resource:0},door:{latch:0,score:0,resource:2}};
-   data='0x'+word(f.state.circuit);topics=['0xcd79ecb8b02601f8233f68f1879a20f66616a11140945180a66d50282bf40726','0x'+word(3),'0x'+'0'.repeat(24)+f.account.slice(2)];
+   data='0x'+word(f.state.circuit);topics=['0xcd79ecb8b02601f8233f68f1879a20f66616a11140945180a66d50282bf40726','0x'+word(f.id),'0x'+'0'.repeat(24)+f.account.slice(2)];
   }else{
    const trigger=Number(BigInt('0x'+tx.data.slice(-64))),a=advance(f.state,trigger);f.state=a.state;
    data='0x'+[version+1,trigger,a.a.request,a.b.request,a.effect].map(word).join('');
-   topics=['0xb26d4ded5191059a26c7d19c74bac9188c71df7ea0c5cf9e0c6359b0b2be7476','0x'+word(3)];
+   topics=['0xb26d4ded5191059a26c7d19c74bac9188c71df7ea0c5cf9e0c6359b0b2be7476','0x'+word(f.id)];
   }
   f.transaction={...tx,hash,input:tx.data,blockHash,blockNumber:'0x10'};
   f.receipt={transactionHash:hash,from:f.account,to:host.toLowerCase(),status:'0x1',blockNumber:'0x10',blockHash,gasUsed:'0x186a0',effectiveGasPrice:'0x2',
    logs:[{address:host,transactionHash:hash,blockNumber:'0x10',blockHash,removed:false,logIndex:'0x0',topics,data}]};
+  f.states.set(String(f.id),structuredClone(f.state));f.transactions.set(hash,structuredClone(f.transaction));f.receipts.set(hash,structuredClone(f.receipt));
   f.nonce++;if(f.badHash){f.badHash=false;return 'bad';}return hash;
  }};
 window.addEventListener('eip6963:requestProvider',()=>window.dispatchEvent(new CustomEvent('eip6963:announceProvider',{detail:{info:{name:'<img src=x onerror=alert(1)> Mock Wallet'},provider}})));
 window.fetch=async(url,options)=>{
  if(url==='mainnet-evidence.json')return new Response(JSON.stringify(window.fixtureEvidence));
- const q=JSON.parse(options.body),s=f.state??window.fixtureEvidence.proof.sessions[0].final_state;
+ const q=JSON.parse(options.body),requested=q.method==='eth_call'&&q.params[0].data.startsWith('0x83c4b7a3')?BigInt('0x'+q.params[0].data.slice(10)).toString():null,
+ s=f.states.get(requested)??f.state??window.fixtureEvidence.proof.sessions[0].final_state;
  let result;
  switch(q.method){
   case 'eth_chainId':result='0xc4';break;
-  case 'eth_blockNumber':result='0x11';break;
+  case 'eth_blockNumber':result='0x46c9a1e';break;
   case 'eth_getBlockByNumber':result={number:q.params[0],hash:blockHash};break;
   case 'eth_getCode':result=q.params[0].toLowerCase()===host.toLowerCase()?window.fixtureEvidence.expected_runtime:'0x';break;
   case 'eth_call':result=q.params[0].data.startsWith('0x83c4b7a3')?'0x'+'0'.repeat(24)+s.player.slice(2)+[s.circuit,s.version,s.training.latch,s.training.score,s.training.resource,s.door.latch,s.door.score,s.door.resource].map(word).join(''):q.params[0].data.startsWith('0x56f6a897')?'0x'+word(3):'0x';break;
   case 'eth_estimateGas':result='0x186a0';break;
   case 'eth_gasPrice':result='0x2';break;
   case 'eth_getTransactionCount':result='0x'+f.nonce.toString(16);break;
-  case 'eth_getTransactionByHash':result=f.transaction;break;
-  case 'eth_getTransactionReceipt':result=f.receipt;break;
+  case 'eth_getTransactionByHash':result=f.transactions.get(q.params[0]);break;
+  case 'eth_getTransactionReceipt':result=f.receipts.get(q.params[0]);break;
+  case 'eth_getLogs':
+   f.scanCalls.push(q.params[0]);
+   if(f.scanFailure)return new Response(JSON.stringify({jsonrpc:'2.0',id:1,error:{code:-32000,message:'fixture scan failure'}}));
+   result=[];break;
   default:throw Error('unexpected fixture RPC '+q.method);
  }
  return new Response(JSON.stringify({jsonrpc:'2.0',id:1,result}));
@@ -84,6 +92,7 @@ try{
  expect($('wallet-open').disabled,'duplicate open blocked');
  $('wallet-verify').click();await idle();
  expect($('wallet-session').value==='3'&&$('wallet-state').textContent.includes('0/4'),'receipt opens own session');
+ expect($('history-select').options.length===1,'verified open saved to account history');
  for(const id of ['wallet-wait','wallet-wait','wallet-trigger','wallet-trigger']){
   $(id).click();await idle();expect(!$('wallet-confirm').disabled,'action simulated');
   $('wallet-confirm').click();await idle();$('wallet-verify').click();await idle();
@@ -96,17 +105,55 @@ try{
  expect(!$('wallet-pending').hidden&&$('wallet-open').disabled,'unknown send blocks duplicate');
  $('wallet-hash').value=f.transaction.hash;$('wallet-recover').click();await idle();
  $('wallet-verify').click();await idle();expect($('wallet-state').textContent.includes('交替卡'),'unknown hash recovered and verified');
+ expect($('history-select').options.length===2&&$('history-list').children.length===6,'both sessions and six successful receipts saved');
+ $('history-select').value='3';$('history-select').dispatchEvent(new Event('change'));
+ $('history-load').click();await idle();
+ expect($('wallet-session').value==='3'&&$('wallet-state').textContent.includes('4/4'),'history selection performs live session read');
+ $('history-export').click();await idle();
+ const backup=$('history-archive').value;
+ expect(JSON.parse(backup).entries.length===6,'history archive includes completed receipts');
+ $('history-import').click();await idle();expect($('history-list').children.length===6,'reimport is idempotent');
+ const before=localStorage.getItem('tapeweave-wallet-history-v1');$('history-archive').value='{"bad":true}';
+ $('history-import').click();await idle();expect(localStorage.getItem('tapeweave-wallet-history-v1')===before,'invalid archive preserves history');
+ $('history-archive').value=backup;
+ const scanFrom=$('history-from').value;$('history-scan').click();await idle();
+ expect(BigInt($('history-from').value)===BigInt(scanFrom)+100n,'successful scan advances exactly 100 blocks');
+ expect(f.scanCalls.length===1&&BigInt(f.scanCalls[0].toBlock)-BigInt(f.scanCalls[0].fromBlock)===99n,'bounded actual UI log query');
+ const afterScan=$('history-from').value;f.scanFailure=true;$('history-scan').click();await idle();
+ expect($('history-from').value===afterScan,'failed scan preserves cursor');f.scanFailure=false;
+ const frame=document.createElement('iframe');frame.src='/chain.html?restored=1';document.body.append(frame);
+ await wait(()=>frame.contentDocument?.getElementById('restored-verdict')?.textContent?.startsWith('PASS'));
+ expect(frame.contentDocument.getElementById('restored-verdict').textContent==='PASS history fresh document','history persists across real documents');frame.remove();
  const sends=f.sendCount;f.account='0x'+'34'.repeat(20);f.handlers.get('accountsChanged')?.([f.account]);
  expect($('wallet-account').textContent==='未连接钱包'&&$('wallet-open').disabled,'account event invalidates authority');
+ expect($('history-select').options.length===0&&$('history-list').children.length===0,'disconnected account history cleared from view');
+ $('wallet-connect').click();await idle();
+ expect($('history-select').options.length===0,'other account cannot inherit sessions');
+ f.account=account;f.handlers.get('accountsChanged')?.([account]);$('wallet-connect').click();await idle();
+ expect($('history-select').options.length===2,'reconnect restores saved session options');
  expect(f.sendCount===sends,'no automatic send on change');
  out.textContent='PASS wallet browser fixture';
 }catch(e){out.textContent='FAIL '+e.message;}
 </script>`;
-const files=new Set(['chain.html','chain-page.mjs','chain-host.mjs','chain-wallet-page.mjs','chain-wallet.mjs','style.css']);
+const restoredChecks=`<script type="module">
+const out=document.createElement('pre');out.id='restored-verdict';document.body.append(out);
+try{
+ const $=id=>document.getElementById(id),wait=async(fn)=>{for(let i=0;i<3000;i++){if(fn())return;await new Promise(r=>setTimeout(r,10));}throw Error('restored UI timeout');};
+ await wait(()=>$('wallet-provider').options.length===1&&!$('wallet-connect').disabled);
+ if(!$('wallet-open').disabled)throw Error('cached history cannot reconnect or authorize sends');
+ $('wallet-connect').click();await wait(()=>!$('wallet-connect').disabled);
+ if($('history-select').options.length!==2)throw Error('restored sessions missing');
+ $('history-select').value='3';$('history-select').dispatchEvent(new Event('change'));
+ $('history-load').click();await wait(()=>!$('wallet-connect').disabled);
+ if(!$('wallet-state').textContent.includes('4/4')||window.fixture.sendCount!==0)throw Error('restored session not re-read without writes');
+ out.textContent='PASS history fresh document';
+}catch(e){out.textContent='FAIL '+e.message;}
+</script>`;
+const files=new Set(['chain.html','chain-page.mjs','chain-host.mjs','chain-wallet-page.mjs','chain-wallet.mjs','chain-history.mjs','style.css']);
 const server=createServer(async(req,res)=>{try{
- const file=new URL(req.url,'http://localhost').pathname.slice(1);if(!files.has(file)){res.writeHead(404);return res.end();}
+ const url=new URL(req.url,'http://localhost'),file=url.pathname.slice(1);if(!files.has(file)){res.writeHead(404);return res.end();}
  let text=await readFile(new URL(file,root),'utf8');
- if(file==='chain.html')text=text.replace(/<script type="module" src="chain-page\.mjs(?:\?[^"]*)?"><\/script>/,script=>fixture+script)+checks;
+ if(file==='chain.html')text=text.replace(/<script type="module" src="chain-page\.mjs(?:\?[^"]*)?"><\/script>/,script=>fixture+script)+(url.searchParams.has('restored')?restoredChecks:checks);
  res.setHeader('Content-Type',file.endsWith('.mjs')?'text/javascript':file.endsWith('.css')?'text/css':'text/html');res.end(text);
 }catch{res.writeHead(500);res.end();}});
 const dir=await mkdtemp(join(tmpdir(),'tw-wallet-browser-'));
@@ -115,5 +162,5 @@ try{
  const html=await runBrowser(process.env.CHROME??'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
   ['--headless=new','--no-first-run','--no-default-browser-check','--user-data-dir='+dir,'--virtual-time-budget=100000','--dump-dom',`http://127.0.0.1:${server.address().port}/chain.html`],{timeout:110000});
  assert.match(html,/<pre id="wallet-verdict">PASS wallet browser fixture<\/pre>/);
- console.log('PASS real Chrome wallet UI: discovery, chain, preview, rejection, open + four steps, unknown-hash recovery, account change; substituted provider/RPC only');
+ console.log('PASS real Chrome wallet UI: fees, four steps, recovery, account history, backup merge, bounded discovery/failure, fresh-document restoration and account isolation; substituted provider/RPC only');
 }finally{server.closeAllConnections();await new Promise(r=>server.close(r));await rm(dir,{recursive:true,force:true});}

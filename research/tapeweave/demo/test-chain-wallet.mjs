@@ -161,4 +161,15 @@ await test('pending intent in another tab prevents send after preflight',async()
  f.run.rpc=async(method,params)=>{if(method==='eth_getBlockByNumber'&&++reads===2)f.storage.setItem(STORAGE_KEY,JSON.stringify(p));return rpc(method,params);};
  await assert.rejects(f.run.send(),/另一页面/);assert.equal(f.sendCount,0);
 });
+await test('journal failure preserves recoverable pending; successful retry persists before clearing',async()=>{
+ const f=fixture(),p=await f.prepare();await f.run.send();f.mine(p);
+ f.run.onVerified=async()=>{throw Error('journal quota');};
+ await assert.rejects(f.run.verify(),/journal quota/);assert.ok(f.run.pending());
+ let journal;
+ f.run.onVerified=async(intent,result)=>{
+  assert.ok(f.run.pending());journal={intent,result};
+ };
+ await f.run.verify();assert.equal(journal.result.session,'3');assert.equal(journal.result.block,'0x10');
+ assert.equal(journal.intent.hash,HASH);assert.equal(f.run.pending(),null);
+});
 console.log(`PASS ${passed} wallet scenarios; author fixtures, no real wallet or mainnet transaction`);

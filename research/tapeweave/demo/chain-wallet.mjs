@@ -47,11 +47,11 @@ export function validatePending(p){
  return p;
 }
 export class WalletRun{
- constructor({rpc,storage,now=()=>Date.now(),digest=async code=>{
+ constructor({rpc,storage,now=()=>Date.now(),onVerified=async()=>{},digest=async code=>{
   const bytes=Uint8Array.from(code.slice(2).match(/../g),x=>parseInt(x,16));
   return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),x=>x.toString(16).padStart(2,'0')).join('');
  }}){
-  this.rpc=rpc;this.storage=storage;this.now=now;this.digest=digest;
+  this.rpc=rpc;this.storage=storage;this.now=now;this.digest=digest;this.onVerified=onVerified;
   this.provider=null;this.account=null;this.epoch=0;this.preview=null;this.busy=false;this.onchange=()=>{};
  }
  invalidate(){this.epoch++;this.preview=null;this.onchange();}
@@ -208,7 +208,11 @@ export class WalletRun{
   const status=quantity(r.status);
   if(status!==0n&&status!==1n)throw Error('回执状态错误');
   const fee=quantity(r.gasUsed)*quantity(r.effectiveGasPrice);
-  if(status===0n){await this.sameBlock(b);this.finish(p);return {failed:true,hash:p.hash,fee:fee.toString()};}
+  if(status===0n){
+   await this.sameBlock(b);
+   const result={failed:true,hash:p.hash,fee:fee.toString(),block:r.blockNumber,blockHash:r.blockHash};
+   await this.onVerified(structuredClone(p),structuredClone(result));this.finish(p);return result;
+  }
   await this.codeAt(b.number);
   if(!Array.isArray(r.logs)||r.logs.length>256)throw Error('回执日志错误');
   const logs=r.logs.filter(l=>l.address?.toLowerCase()===p.tx.to);
@@ -229,8 +233,11 @@ export class WalletRun{
   const state=decodeSession(await this.rpc('eth_call',[{to:HOST,data:sessionCall(id)},b.number]));
   if(state.player!==p.account||state.circuit!==p.circuit||state.version<expected.version||
    (state.version===expected.version&&!equal(state,expected)))throw Error('回执所在块的会话状态不符');
-  await this.sameBlock(b);this.finish(p);
-  return {hash:p.hash,session:id,state,fee:fee.toString(),laterActionsInBlock:state.version>expected.version};
+  quantity(l.logIndex);await this.sameBlock(b);
+  const result={hash:p.hash,session:id,state,fee:fee.toString(),block:r.blockNumber,blockHash:r.blockHash,
+   logIndex:l.logIndex,laterActionsInBlock:state.version>expected.version};
+  // Persist the public verified observation before clearing the recoverable intent.
+  await this.onVerified(structuredClone(p),structuredClone(result));this.finish(p);return result;
  }
  finish(p){
   // Never remove a different tab's pending action.
