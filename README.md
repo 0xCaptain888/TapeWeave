@@ -6,7 +6,7 @@
 
 TapeWeave lets creators package finite interaction rules, replay them across compatible applications, and inspect how each input becomes an application-controlled outcome. The prototype combines TapeOut circuit experiments with verifiable X Layer mainnet integration.
 
-**[Try the English demo](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=en)** · **[中文 Demo](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=zh)** · **[English video · 2:57](deliverables/tapeweave-final-2026-10-26/english/TapeWeave-Final-Demo.mp4)** · **[Mainnet evidence](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html?lang=en)**
+**[Try the English demo](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=en)** · **[中文 Demo](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=zh)** · **[Watch English demo · YouTube · 2:57](https://www.youtube.com/watch?v=yAIqXygFKH0)** · **[Mainnet evidence](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/chain.html?lang=en)**
 
 No wallet or tokens are needed for the local interaction demo or public chain reads. Optional wallet actions require explicit confirmation.
 
@@ -60,11 +60,11 @@ Published historical snapshots and new RPC reads are shown separately. A fresh r
 
 ## Demo and submission materials
 
-- **[English-interface demo video](deliverables/tapeweave-final-2026-10-26/english/TapeWeave-Final-Demo.mp4):** 177.2205 seconds, 1080p, English synthetic male narration, chapter titles and burned captions. [SRT](deliverables/tapeweave-final-2026-10-26/english/TapeWeave-English.srt) · [Thumbnail](deliverables/tapeweave-final-2026-10-26/english/TapeWeave-Thumbnail.jpg) · [Quality checks](deliverables/tapeweave-final-2026-10-26/english/QUALITY-CHECK.md).
+- **[Watch the English demo on YouTube](https://www.youtube.com/watch?v=yAIqXygFKH0):** English interface, English synthetic male narration, chapter titles and burned captions. Original video: 177.2205 seconds, 1080p. [Download MP4](deliverables/tapeweave-final-2026-10-26/english/TapeWeave-Final-Demo.mp4) · [SRT](deliverables/tapeweave-final-2026-10-26/english/TapeWeave-English.srt) · [Thumbnail](deliverables/tapeweave-final-2026-10-26/english/TapeWeave-Thumbnail.jpg) · [Quality checks](deliverables/tapeweave-final-2026-10-26/english/QUALITY-CHECK.md).
 - [English project description](deliverables/tapeweave-final-2026-10-26/SUBMISSION-EN.md) · [Reviewer quickstart](deliverables/tapeweave-final-2026-10-26/JUDGE-QUICKSTART.md).
 - [Original materials bundle](deliverables/tapeweave-final-2026-10-26/TapeWeave-Submission-Pack.zip): earlier Chinese-interface video with English narration/subtitles. Use the separate English edition above for the latest video.
 
-The English video is complete; YouTube upload and event submission are separate steps and are not claimed complete here. Filming used actual browser operations and a fresh read-only RPC check, without new signatures or transactions.
+The entrant has supplied the YouTube demo link above. Event submission is a separate step and is not claimed complete here. Filming used actual browser operations and a fresh read-only RPC check, without new signatures or transactions.
 
 ## Current scope and limitations
 
@@ -85,7 +85,7 @@ TapeWeave 探索让创作者设计的有限互动规则，成为可以交付、�
 
 先打开[中文作品页](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/work.html?lang=zh)，生成作品，点击“补能 → 触发”，再试用导入和刷新恢复。无需钱包或买币。进阶使用[规则工作室](https://0xcaptain888.github.io/TapeWeave/research/tapeweave/demo/studio.html?lang=zh)；链上操作与本地试玩分开，任何签名都需用户确认。
 
-目前已完成双语界面、规则交付与恢复、两个自编应用示例，以及真实 X Layer 宿主部署和两卡交互。独立团队采用、商业价值、完整 UOP 独立模拟和 Android 逐项证据仍有待验证。英文 Demo 成片已完成，上传视频和提交报名不因此自动完成。
+目前已完成双语界面、规则交付与恢复、两个自编应用示例，以及真实 X Layer 宿主部署和两卡交互。独立团队采用、商业价值、完整 UOP 独立模拟和 Android 逐项证据仍有待验证。[英文 Demo 已提供 YouTube 观看入口](https://www.youtube.com/watch?v=yAIqXygFKH0)，提交报名仍是独立步骤。
 
 ## Run locally
 
