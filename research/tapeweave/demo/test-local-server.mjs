@@ -26,6 +26,9 @@ try{
  assert.equal((await fetch(app.origin+'/state.sqlite')).status,404);
  assert.equal((await fetch(app.origin+'/local-server.mjs')).status,404);
  const page=await fetch(app.origin+'/');assert.equal(page.status,200);assert.ok(page.headers.get('content-security-policy').includes("frame-ancestors 'none'"));assert.ok((await page.text()).includes('SQLite'));
+ for(const path of ['/?lang=en','/durable.html?lang=zh','/local-work.html?lang=en'])assert.equal((await fetch(app.origin+path)).status,200,path);
+ for(const path of ['/durable.html?token=secret','/durable.html?lang=de','/durable.html?lang=en&lang=zh','/durable.html?lang=en&extra=1','/i18n.mjs?lang=en','/api/show?lang=en'])assert.equal((await fetch(app.origin+path)).status,400,path);
+ assert.equal((await fetch(app.origin+'/durable.html?lang=en',{method:'POST'})).status,400,'POST language query rejected');
  assert.deepEqual((await call('list',{after:''})).data,{sessions:[],next:null,authenticated:false});
  assert.equal((await call('list',{after:''},{Authorization:''})).status,403);
  assert.equal((await call('list',{after:'bad cursor'})).status,400);

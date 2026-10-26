@@ -40,7 +40,11 @@ export async function startLocalServer({database,port=0}={}){
   if(req.headers.host!==new URL(origin).host)return send(403,{error:'非法Host'});
   if(req.headers.origin && req.headers.origin!==origin)return send(403,{error:'非法Origin'});
   const url=new URL(req.url,origin);
-  if(url.search)return send(400,{error:'不接受查询参数'});
+  // UI language is the only supported query, and only for static HTML GETs.
+  // API calls and non-HTML resources retain the no-query boundary.
+  const languageQuery=req.method==='GET'&&assets.get(url.pathname)?.[0].endsWith('.html')&&
+   /^\?lang=(?:en|zh)$/.test(url.search);
+  if(url.search&&!languageQuery)return send(400,{error:'不接受查询参数'});
   if(url.pathname.startsWith('/api/')){
    const supplied=Buffer.from(req.headers.authorization??''),expected=Buffer.from('Bearer '+token);
    if(supplied.length!==expected.length||!timingSafeEqual(supplied,expected))return send(403,{error:'本地访问凭据无效，请使用启动URL'});

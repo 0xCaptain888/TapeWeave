@@ -33,4 +33,6 @@ Previously generated video files are not automatically rewritten by this change.
 
 ## Publishing
 
+Publication follow-up: GitHub's normal Chrome run caught a local persistence refresh regression: the new language query was rejected by the local server's existing no-query rule. The server now permits only one exact `lang=en` or `lang=zh` query on allowlisted static HTML GETs. Queries on APIs / scripts, unsupported languages, duplicate parameters, extra fields and POSTs remain rejected. HTTP regression coverage includes these cases. This fix does not relax local API authentication or expose any database files.
+
 No push, external upload or Pages deployment is implied by local edits. Once the source is pushed and Pages finishes, verify both direct entries, dynamically updated text, state preservation and wallet disclaimers on the public site before calling the live demo updated.
